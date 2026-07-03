@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hernandez Corp — Ficha del DM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0A0C0E;
+    --panel:#15191D;
+    --panel-alt:#1B2126;
+    --gold:#D4AF37;
+    --gold-dim:#8A742A;
+    --red:#C0202A;
+    --red-glow:#FF4552;
+    --teal:#2FE6B0;
+    --hazard:#F2C230;
+    --ink:#ECE8DE;
+    --ink-dim:#9BA1A6;
+    --green:#4FBF6B;
+    --yellow:#E3B23C;
+    --purple:#9B6BD6;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:radial-gradient(ellipse at 50% -10%, #1c2126 0%, var(--void) 55%);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    padding-bottom:60px;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px;}
+
+  /* nav */
+  nav{
+    position:sticky;top:0;z-index:10;
+    background:rgba(10,12,14,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid #2a2f34;
+    overflow-x:auto;
+    white-space:nowrap;
+  }
+  nav .navlist{display:flex;gap:4px;padding:10px 16px;max-width:760px;margin:0 auto;}
+  nav a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.68rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    text-decoration:none;
+    padding:6px 10px;
+    border-radius:999px;
+    border:1px solid #2a2f34;
+    flex-shrink:0;
+  }
+  nav a:hover, nav a:focus-visible{color:var(--gold);border-color:var(--gold-dim);}
+
+  header{text-align:center;padding:28px 0 10px;}
+  .hazard-strip{
+    height:8px;border-radius:4px;
+    background:repeating-linear-gradient(45deg, var(--hazard) 0 14px, #1a1a1a 14px 28px);
+    opacity:.85;margin-bottom:18px;
+  }
+  .wordmark{
+    font-family:'Oswald', sans-serif;font-weight:700;font-size:1.9rem;
+    letter-spacing:.04em;text-transform:uppercase;color:var(--gold);margin:0;
+    text-shadow:0 0 18px rgba(212,175,55,.3);
+  }
+  .wordmark span{color:var(--red);}
+  .subtitle{
+    font-family:'IBM Plex Mono', monospace;font-size:.72rem;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink-dim);margin:6px 0 0;
+  }
+
+  section{margin-top:38px;scroll-margin-top:60px;}
+  .section-head{
+    display:flex;align-items:baseline;gap:10px;margin-bottom:14px;
+    border-bottom:1px solid #2a2f34;padding-bottom:8px;
+  }
+  .section-title{
+    font-family:'Oswald', sans-serif;font-weight:600;font-size:1.15rem;
+    letter-spacing:.03em;text-transform:uppercase;color:var(--ink);margin:0;
+  }
+  .section-note{
+    font-family:'IBM Plex Mono', monospace;font-size:.68rem;color:var(--ink-dim);
+  }
+
+  .tier{margin-bottom:18px;}
+  .tier-label{
+    display:inline-block;font-family:'IBM Plex Mono', monospace;font-size:.66rem;
+    letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:999px;
+    margin-bottom:8px;
+  }
+  .tier-facil .tier-label{background:rgba(79,191,107,.15);color:var(--green);}
+  .tier-neutral .tier-label{background:rgba(227,178,60,.15);color:var(--yellow);}
+  .tier-mortal .tier-label{background:rgba(255,69,82,.15);color:var(--red-glow);}
+
+  table{
+    width:100%;border-collapse:collapse;background:var(--panel);
+    border-radius:10px;overflow:hidden;border:1px solid #2a2f34;
+  }
+  th, td{
+    text-align:left;padding:9px 10px;font-size:.8rem;border-bottom:1px solid #22262b;
+  }
+  th{
+    font-family:'IBM Plex Mono', monospace;font-size:.62rem;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--ink-dim);background:var(--panel-alt);
+  }
+  td.num{font-family:'IBM Plex Mono', monospace;color:var(--teal);}
+  td.blank{color:#4d5459;font-style:italic;}
+  tr:last-child td{border-bottom:none;}
+
+  .warn{
+    margin-top:10px;font-size:.74rem;color:var(--ink-dim);
+    background:rgba(192,32,42,.08);border-left:2px solid var(--red);
+    padding:8px 10px;border-radius:0 6px 6px 0;
+  }
+
+  .archetype-card{
+    background:var(--panel);border:1px solid #2a2f34;border-radius:10px;
+    padding:12px 14px;margin-bottom:10px;
+  }
+  .archetype-name{
+    font-family:'Oswald', sans-serif;font-weight:600;font-size:.9rem;
+    letter-spacing:.02em;text-transform:uppercase;color:var(--teal);margin:0 0 6px;
+  }
+  .archetype-row{font-size:.76rem;color:var(--ink-dim);margin-bottom:2px;}
+  .archetype-row b{color:var(--ink);font-weight:500;}
+
+  .rarity-tag{
+    display:inline-block;font-family:'IBM Plex Mono', monospace;font-size:.6rem;
+    letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:999px;
+  }
+  .rarity-común{background:#2a2f34;color:var(--ink-dim);}
+  .rarity-poco{background:rgba(47,230,176,.15);color:var(--teal);}
+  .rarity-raro{background:rgba(155,107,214,.18);color:var(--purple);}
+  .rarity-jackpot{background:linear-gradient(90deg, var(--red), var(--gold));color:#1a1400;}
+
+  .flavor-box{
+    background:var(--panel);border:1px solid #2a2f34;border-radius:10px;
+    padding:14px 16px;margin-bottom:12px;
+  }
+  .flavor-label{
+    font-family:'IBM Plex Mono', monospace;font-size:.64rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--gold);margin:0 0 6px;
+  }
+  .flavor-text{font-size:.82rem;line-height:1.55;color:var(--ink);margin:0;}
+  .flavor-list{margin:0;padding-left:18px;font-size:.78rem;line-height:1.7;color:var(--ink-dim);}
+
+  .fine-print{text-align:center;font-size:.66rem;color:#4d5459;margin-top:40px;}
+</style>
+</head>
+<body>
+<nav>
+  <div class="navlist">
+    <a href="#mobs">Mobs</a>
+    <a href="#arquetipos">Arquetipos</a>
+    <a href="#buffs">Buffs</a>
+    <a href="#botin">Botín</a>
+    <a href="#narrativa">Narrativa</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header>
+    <div class="hazard-strip"></div>
+    <p class="wordmark">HERNANDEZ<span>CORP</span></p>
+    <p class="subtitle">Ficha del DM · Referencia rápida de mesa</p>
+  </header>
+
+  <section id="mobs">
+    <div class="section-head">
+      <h2 class="section-title">Tabla de Mobs</h2>
+      <span class="section-note">Nivel 5-6 · party de 3</span>
+    </div>
+
+    <div class="tier tier-facil">
+      <span class="tier-label">Fácil</span>
+      <table>
+        <tr><th>#</th><th>Minions</th><th>CR</th><th>Élite</th><th>CR</th><th>Pág.</th></tr>
+        <tr><td class="num">1</td><td>Wolf (x3)</td><td class="num">1/4</td><td>Winter Wolf</td><td class="num">3</td><td class="num">373 / 334</td></tr>
+        <tr><td class="num">2</td><td>Bandit (x4)</td><td class="num">1/8</td><td>Bandit Captain</td><td class="num">2</td><td class="num">26 / 27</td></tr>
+        <tr><td class="num">3</td><td>Goblin Warrior (x4)</td><td class="num">1/4</td><td>Goblin Boss</td><td class="num">1</td><td class="num">142 / 143</td></tr>
+        <tr><td class="num">4</td><td>Giant Spider (x3)</td><td class="num">1</td><td>Phase Spider</td><td class="num">3</td><td class="num">359 / 238</td></tr>
+        <tr><td class="num">5</td><td>Zombie (x4)</td><td class="num">1/4</td><td>Ogre Zombie</td><td class="num">2</td><td class="num">346 / 346</td></tr>
+      </table>
+    </div>
+
+    <div class="tier tier-neutral">
+      <span class="tier-label">Neutral</span>
+      <table>
+        <tr><th>#</th><th>Minions</th><th>CR</th><th>Élite</th><th>CR</th><th>Pág.</th></tr>
+        <tr><td class="num">1</td><td>Gnoll Warrior (x3)</td><td class="num">1/2</td><td>Gnoll Fang of Yeenoghu</td><td class="num">1</td><td class="num">140 / 141</td></tr>
+        <tr><td class="num">2</td><td>Hobgoblin Warrior (x4)</td><td class="num">1/2</td><td>Hobgoblin Captain</td><td class="num">3</td><td class="num">170 / 171</td></tr>
+        <tr><td class="num">3</td><td>Specter (x2)</td><td class="num">1</td><td>Green Hag</td><td class="num">3</td><td class="num">290 / 156</td></tr>
+        <tr><td class="num">4</td><td>Githyanki Warrior (x4)</td><td class="num">3</td><td>Githyanki Knight</td><td class="num">8</td><td class="num">134 / 135</td></tr>
+        <tr><td class="num">5</td><td>Ogre (x2)</td><td class="num">2</td><td>Hill Giant</td><td class="num">5</td><td class="num">231 / 155</td></tr>
+      </table>
+      <p class="warn">Cambio: los Orcos no existen como stat block en el Manual 2024 (fueron removidos como especie de monstruo). Reemplazado por Githyanki Warrior + Githyanki Knight — mismo rol de tropa con líder.</p>
+    </div>
+
+    <div class="tier tier-mortal">
+      <span class="tier-label">Mortal</span>
+      <table>
+        <tr><th>#</th><th>Minions</th><th>CR</th><th>Élite</th><th>CR</th><th>Pág.</th></tr>
+        <tr><td class="num">1</td><td>Ogre (x3)</td><td class="num">2</td><td>Hill Giant</td><td class="num">5</td><td class="num">231 / 155</td></tr>
+        <tr><td class="num">2</td><td>Kobold Warrior (x4)</td><td class="num">1/8</td><td>Young Dragon (color a elección)</td><td class="num">8-10</td><td class="num">185 / ver nota</td></tr>
+        <tr><td class="num">3</td><td>Cultist (x4)</td><td class="num">1/8</td><td>Behir</td><td class="num">11</td><td class="num">84 / 34</td></tr>
+        <tr><td class="num">4</td><td>Cultist (x2-3)</td><td class="num">1/8</td><td>Vampire Spawn (x2)</td><td class="num">5 c/u</td><td class="num">84 / 315</td></tr>
+        <tr><td class="num">5</td><td>Zombie (x3)</td><td class="num">1/4</td><td>Flesh Golem</td><td class="num">5</td><td class="num">346 / 121</td></tr>
+      </table>
+      <p class="warn">Young Dragon, Behir y los 2 Vampire Spawn son duros de verdad para nivel 5-6 con 3 PJs. Riesgo real de muerte — a propósito.</p>
+      <p class="warn">Young Dragon por color: Black 38 · Blue 48 · Brass 54 · Bronze 58 · Copper 78 · Gold 144 · Green 152 · Red 254 · Silver 278 · White 328.</p>
+    </div>
+  </section>
+
+  <section id="arquetipos">
+    <div class="section-head">
+      <h2 class="section-title">Modificadores de Arquetipo</h2>
+      <span class="section-note">Reskin sobre el mob base</span>
+    </div>
+
+    <div class="archetype-card">
+      <p class="archetype-name">🐺 Bestia Salvaje</p>
+      <p class="archetype-row">Resistencia: <b>—</b> · Vulnerabilidad: <b>—</b></p>
+      <p class="archetype-row">Extra: <b>Ventaja para derribar/agarrar. Ataque de garra o mordida extra, 1/combate.</b></p>
+    </div>
+    <div class="archetype-card">
+      <p class="archetype-name">❄️ No-muerto Gélido</p>
+      <p class="archetype-row">Resistencia: <b>Frío, Necrótico</b> · Vulnerabilidad: <b>Radiante</b></p>
+      <p class="archetype-row">Extra: <b>+1d6 daño frío en ataques cuerpo a cuerpo.</b></p>
+    </div>
+    <div class="archetype-card">
+      <p class="archetype-name">🔥 Elemental Ígneo</p>
+      <p class="archetype-row">Resistencia: <b>Fuego</b> · Vulnerabilidad: <b>Frío</b></p>
+      <p class="archetype-row">Extra: <b>Aura: 1d6 fuego a quien empiece su turno adyacente.</b></p>
+    </div>
+    <div class="archetype-card">
+      <p class="archetype-name">☠️ Aberración Tóxica</p>
+      <p class="archetype-row">Resistencia: <b>Veneno (inmune a envenenado)</b> · Vulnerabilidad: <b>Psíquico</b></p>
+      <p class="archetype-row">Extra: <b>+1d6 daño veneno en ataques.</b></p>
+    </div>
+    <div class="archetype-card">
+      <p class="archetype-name">🔪 Humanoide Letal</p>
+      <p class="archetype-row">Resistencia: <b>—</b> · Vulnerabilidad: <b>—</b></p>
+      <p class="archetype-row">Extra: <b>Ventaja en iniciativa. Ataque furtivo extra +2d6, 1/combate.</b></p>
+    </div>
+    <div class="archetype-card">
+      <p class="archetype-name">⚡ Constructo Voltaico</p>
+      <p class="archetype-row">Resistencia: <b>Trueno</b> · Vulnerabilidad: <b>Fuerza</b></p>
+      <p class="archetype-row">Extra: <b>Reacción: 1d6 trueno a quien lo golpee cuerpo a cuerpo.</b></p>
+    </div>
+  </section>
+
+  <section id="buffs">
+    <div class="section-head">
+      <h2 class="section-title">Tabla de Buffs</h2>
+      <span class="section-note">Grupal · pesos de probabilidad</span>
+    </div>
+    <table>
+      <tr><th>Buff</th><th>Prob.</th><th>Efecto</th></tr>
+      <tr><td>Subir de nivel</td><td class="num">5%</td><td>El grupo sube un nivel completo.</td></tr>
+      <tr><td>Sin buff</td><td class="num">20%</td><td>La corporación no ofrece nada esta vez.</td></tr>
+      <tr><td>Punto de inspiración</td><td class="num">15%</td><td>Cada jugador recibe un punto de inspiración.</td></tr>
+      <tr><td>Ventaja en salvaciones</td><td class="num">15%</td><td>Hasta el próximo descanso.</td></tr>
+      <tr><td>Resistencia a un daño</td><td class="num">15%</td><td>A elección, hasta el próximo descanso.</td></tr>
+      <tr><td>Curación completa</td><td class="num">15%</td><td>El grupo recupera todos los PG antes del combate.</td></tr>
+      <tr><td>Dado de superioridad</td><td class="num">15%</td><td>1d8 para cada jugador, uso único.</td></tr>
+    </table>
+  </section>
+
+  <section id="botin">
+    <div class="section-head">
+      <h2 class="section-title">Tabla de Botín (d100)</h2>
+      <span class="section-note">Rango según nivel</span>
+    </div>
+    <p class="warn">Fácil → tirar 1-80 · Neutral → tirar 41-80 · Mortal → tirar 41-100</p>
+
+    <table>
+      <tr><th>Rango</th><th>Ítem</th><th>Rareza</th></tr>
+      <tr><td class="num">01–05</td><td>Poción de Curación</td><td><span class="rarity-tag rarity-común">Común</span></td></tr>
+      <tr><td class="num">06–10</td><td>Munición Mágica +1 (5 unidades)</td><td><span class="rarity-tag rarity-común">Común</span></td></tr>
+      <tr><td class="num">11–14</td><td>Aceite de Afilado de Armas</td><td><span class="rarity-tag rarity-común">Común</span></td></tr>
+      <tr><td class="num">15–18</td><td>Pergamino de Protección</td><td><span class="rarity-tag rarity-común">Común</span></td></tr>
+      <tr><td class="num">19–22</td><td>Vela de Invocación</td><td><span class="rarity-tag rarity-común">Común</span></td></tr>
+      <tr><td class="num">23–26</td><td>Piedra de la Suerte (menor)</td><td><span class="rarity-tag rarity-común">Común</span></td></tr>
+      <tr><td class="num">27–30</td><td>Poción de Resistencia</td><td><span class="rarity-tag rarity-común">Común</span></td></tr>
+      <tr><td class="num">31–34</td><td>Cuerda Sarmentosa</td><td><span class="rarity-tag rarity-común">Común</span></td></tr>
+      <tr><td class="num">35–37</td><td>Fuego Alquímico (3 frascos)</td><td><span class="rarity-tag rarity-común">Común</span></td></tr>
+      <tr><td class="num">38–40</td><td>Polvo de Estornudos y Ahogos</td><td><span class="rarity-tag rarity-común">Común</span></td></tr>
+      <tr><td class="num">41–44</td><td>Capa de Protección</td><td><span class="rarity-tag rarity-poco">Poco Común</span></td></tr>
+      <tr><td class="num">45–48</td><td>Botas de Elfo</td><td><span class="rarity-tag rarity-poco">Poco Común</span></td></tr>
+      <tr><td class="num">49–52</td><td>Anillo de Nadar</td><td><span class="rarity-tag rarity-poco">Poco Común</span></td></tr>
+      <tr><td class="num">53–56</td><td>Bolsa de Contención</td><td><span class="rarity-tag rarity-poco">Poco Común</span></td></tr>
+      <tr><td class="num">57–60</td><td>Arma +1</td><td><span class="rarity-tag rarity-poco">Poco Común</span></td></tr>
+      <tr><td class="num">61–64</td><td>Cuerno de Curación</td><td><span class="rarity-tag rarity-poco">Poco Común</span></td></tr>
+      <tr><td class="num">65–68</td><td>Guantelete del Escalador</td><td><span class="rarity-tag rarity-poco">Poco Común</span></td></tr>
+      <tr><td class="num">69–72</td><td>Pergamino de Hechizo Nivel 2</td><td><span class="rarity-tag rarity-poco">Poco Común</span></td></tr>
+      <tr><td class="num">73–76</td><td>Poción de Fuerza de Gigante de las Colinas</td><td><span class="rarity-tag rarity-poco">Poco Común</span></td></tr>
+      <tr><td class="num">77–80</td><td>Talismán de la Bestia Sabia</td><td><span class="rarity-tag rarity-poco">Poco Común</span></td></tr>
+      <tr><td class="num">81–83</td><td>Armadura +1</td><td><span class="rarity-tag rarity-raro">Raro</span></td></tr>
+      <tr><td class="num">84–86</td><td>Cinturón de Fuerza de Gigante de las Colinas</td><td><span class="rarity-tag rarity-raro">Raro</span></td></tr>
+      <tr><td class="num">87–89</td><td>Bufanda del Camuflaje</td><td><span class="rarity-tag rarity-raro">Raro</span></td></tr>
+      <tr><td class="num">90–92</td><td>Amuleto de Salud</td><td><span class="rarity-tag rarity-raro">Raro</span></td></tr>
+      <tr><td class="num">93–95</td><td>Arma +2</td><td><span class="rarity-tag rarity-raro">Raro</span></td></tr>
+      <tr><td class="num">96–97</td><td>Manto de Alas</td><td><span class="rarity-tag rarity-jackpot">Jackpot</span></td></tr>
+      <tr><td class="num">98</td><td>Guantelete de Poder de Ogro</td><td><span class="rarity-tag rarity-jackpot">Jackpot</span></td></tr>
+      <tr><td class="num">99</td><td>Anillo de Regeneración</td><td><span class="rarity-tag rarity-jackpot">Jackpot</span></td></tr>
+      <tr><td class="num">100</td><td>Jackpot Absoluto — ítem legendario o +1 nivel</td><td><span class="rarity-tag rarity-jackpot">Jackpot</span></td></tr>
+    </table>
+  </section>
+
+  <section id="narrativa">
+    <div class="section-head">
+      <h2 class="section-title">Ganchos Narrativos</h2>
+      <span class="section-note">Cortos, a propósito</span>
+    </div>
+
+    <div class="flavor-box">
+      <p class="flavor-label">Apertura</p>
+      <p class="flavor-text">Los jugadores llegan a las instalaciones de Hernandez Corp. Les explican el programa de adaptación, les sacan sangre, y los llevan a la Sala de Pruebas — un cuarto con la máquina tragamonedas gigante en el medio.</p>
+    </div>
+
+    <div class="flavor-box">
+      <p class="flavor-label">Entre combates (altavoz corporativo)</p>
+      <ul class="flavor-list">
+        <li>"Muestra recolectada. Cortisol en niveles óptimos."</li>
+        <li>"Adaptación celular detectada. Continúen, sujetos."</li>
+        <li>"La corporación aprecia su cooperación... continua."</li>
+        <li>"Frecuencia cardíaca registrada. Excelente material genético."</li>
+        <li>"Prueba en curso. No se han reportado fallecimientos aún."</li>
+        <li>"Sus datos serán utilizados para crear grandes héroes. O algo así."</li>
+        <li>"Nivel de adrenalina: satisfactorio. Prosigan."</li>
+        <li>"Hernandez Corp les agradece su inmediata disponibilidad."</li>
+      </ul>
+    </div>
+
+    <div class="flavor-box">
+      <p class="flavor-label">Cierre</p>
+      <p class="flavor-text">Después del tercer combate, se llevan sus recompensas y Hernandez Corp los "libera" con una línea final ambigua/inquietante — dejando gancho abierto por si querés reusar la corporación en un futuro one-shot.</p>
+    </div>
+  </section>
+
+  <p class="fine-print">Hernandez Corp — Ficha de referencia interna. No compartir con los sujetos de prueba.</p>
+</div>
+</body>
+</html>
