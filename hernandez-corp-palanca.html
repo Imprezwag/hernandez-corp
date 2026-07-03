@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hernandez Corp — Sala de Pruebas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0A0C0E;
+    --panel:#15191D;
+    --panel-alt:#1B2126;
+    --gold:#D4AF37;
+    --gold-dim:#8A742A;
+    --red:#C0202A;
+    --red-glow:#FF4552;
+    --teal:#2FE6B0;
+    --hazard:#F2C230;
+    --ink:#ECE8DE;
+    --ink-dim:#9BA1A6;
+    --green:#4FBF6B;
+    --yellow:#E3B23C;
+    --purple:#9B6BD6;
+    --radius:10px;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse at 50% -10%, #1c2126 0%, var(--void) 55%);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:0 0 60px;
+  }
+
+  .page{
+    width:100%;
+    max-width:520px;
+    padding:22px 16px 0;
+  }
+
+  /* ---------- hazard divider ---------- */
+  .hazard-strip{
+    height:8px;
+    border-radius:4px;
+    background:repeating-linear-gradient(
+      45deg,
+      var(--hazard) 0 14px,
+      #1a1a1a 14px 28px
+    );
+    opacity:.85;
+    margin:0 0 18px;
+  }
+
+  /* ---------- header ---------- */
+  header{text-align:center;margin-bottom:6px;}
+  .wordmark{
+    font-family:'Oswald', sans-serif;
+    font-weight:700;
+    font-size:2.1rem;
+    letter-spacing:.04em;
+    text-transform:uppercase;
+    color:var(--gold);
+    text-shadow:0 0 18px rgba(212,175,55,.35);
+    margin:0;
+  }
+  .wordmark span{color:var(--red);}
+  .subtitle{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.72rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    margin:4px 0 2px;
+  }
+  .consent{
+    font-size:.72rem;
+    color:var(--ink-dim);
+    font-style:italic;
+    margin:0 0 18px;
+  }
+
+  /* ---------- counter ---------- */
+  .counter{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    margin-bottom:16px;
+  }
+  .counter-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.78rem;
+    letter-spacing:.1em;
+    color:var(--ink-dim);
+    text-transform:uppercase;
+  }
+  .counter-dots{display:flex;gap:6px;}
+  .dot{
+    width:10px;height:10px;border-radius:50%;
+    background:#2a2f34;
+    border:1px solid #3a4046;
+    transition:background .3s, border-color .3s, box-shadow .3s;
+  }
+  .dot.filled{
+    background:var(--teal);
+    border-color:var(--teal);
+    box-shadow:0 0 8px rgba(47,230,176,.7);
+  }
+
+  /* ---------- machine ---------- */
+  .machine{
+    position:relative;
+    background:linear-gradient(180deg, var(--panel) 0%, var(--panel-alt) 100%);
+    border:2px solid var(--gold-dim);
+    border-radius:16px;
+    padding:20px 16px 26px;
+    box-shadow:0 0 0 1px rgba(0,0,0,.4), 0 20px 40px -20px rgba(0,0,0,.8);
+  }
+  .marquee{
+    position:absolute;
+    inset:6px;
+    border-radius:12px;
+    pointer-events:none;
+    background-image:
+      radial-gradient(circle, var(--gold) 2.2px, transparent 2.6px);
+    background-size:22px 22px;
+    background-position: top left, top right;
+    background-repeat: repeat-x;
+    background-position-y: 0px, calc(100% - 2px);
+    opacity:.55;
+    animation:flicker 2.6s infinite steps(2);
+  }
+  @keyframes flicker{
+    0%,100%{opacity:.55;}
+    50%{opacity:.15;}
+  }
+
+  .machine-title{
+    text-align:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.68rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 14px;
+    position:relative;
+  }
+
+  .reels{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:8px;
+    background:#0D1013;
+    border-radius:10px;
+    border:1px solid #2a2f34;
+    padding:10px 8px;
+    position:relative;
+  }
+  .reel-col{display:flex;flex-direction:column;align-items:center;gap:4px;}
+  .reel-eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.58rem;
+    letter-spacing:.08em;
+    color:var(--ink-dim);
+    text-transform:uppercase;
+  }
+  .reel{
+    width:100%;
+    min-height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:#000;
+    border-radius:6px;
+    border:1px solid #2a2f34;
+    padding:6px 4px;
+    font-family:'Oswald', sans-serif;
+    font-weight:600;
+    font-size:.85rem;
+    letter-spacing:.02em;
+    text-transform:uppercase;
+    color:var(--teal);
+    text-shadow:0 0 6px rgba(47,230,176,.5);
+    filter:blur(0px);
+    transition:filter .1s;
+    line-height:1.15;
+  }
+  .reel.spinning{
+    filter:blur(1.5px);
+    color:#6d7580;
+    text-shadow:none;
+  }
+  .reel.landed{
+    animation:land .4s ease-out;
+  }
+  @keyframes land{
+    0%{transform:scale(1.12);}
+    60%{transform:scale(.97);}
+    100%{transform:scale(1);}
+  }
+
+  /* ---------- lever ---------- */
+  .lever-wrap{
+    display:flex;
+    justify-content:center;
+    margin-top:20px;
+  }
+  .lever-btn{
+    -webkit-appearance:none;
+    appearance:none;
+    border:none;
+    cursor:pointer;
+    background:linear-gradient(180deg, var(--red-glow), var(--red) 60%, #7a1017);
+    color:#fff;
+    font-family:'Oswald', sans-serif;
+    font-weight:700;
+    font-size:1rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:16px 40px;
+    border-radius:999px;
+    box-shadow:0 6px 0 #6e0f16, 0 10px 20px rgba(192,32,42,.35);
+    transition:transform .08s, box-shadow .08s;
+  }
+  .lever-btn:active{
+    transform:translateY(4px);
+    box-shadow:0 2px 0 #6e0f16, 0 4px 10px rgba(192,32,42,.35);
+  }
+  .lever-btn:disabled{
+    opacity:.4;
+    cursor:not-allowed;
+    box-shadow:0 6px 0 #333;
+    background:#3a3f44;
+  }
+  .lever-btn:focus-visible{
+    outline:3px solid var(--gold);
+    outline-offset:3px;
+  }
+  .lever-hint{
+    text-align:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.64rem;
+    color:var(--ink-dim);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    margin-top:8px;
+  }
+
+  /* ---------- readout ---------- */
+  .readout{
+    margin-top:18px;
+    background:#0D1013;
+    border:1px solid #2a2f34;
+    border-radius:10px;
+    padding:14px 16px;
+    font-family:'IBM Plex Mono', monospace;
+    display:none;
+  }
+  .readout.visible{display:block;}
+  .readout-row{
+    margin-bottom:10px;
+    padding-bottom:10px;
+    border-bottom:1px dashed #2a2f34;
+  }
+  .readout-row:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .readout-key{
+    font-size:.62rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    margin-bottom:3px;
+  }
+  .readout-val{
+    font-size:.95rem;
+    font-weight:600;
+    letter-spacing:.02em;
+  }
+  .readout-val.level-facil{color:var(--green);}
+  .readout-val.level-neutral{color:var(--yellow);}
+  .readout-val.level-mortal{color:var(--red-glow);}
+  .readout-sub{
+    margin-top:4px;
+    font-size:.72rem;
+    color:var(--ink-dim);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.4;
+  }
+  .announcer{
+    margin-top:14px;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:.78rem;
+    font-style:italic;
+    color:var(--teal);
+    text-align:center;
+    opacity:0;
+    transition:opacity .6s;
+  }
+  .announcer.visible{opacity:1;}
+
+  /* ---------- reward section ---------- */
+  .reward{
+    margin-top:18px;
+    background:var(--panel);
+    border:1px solid var(--gold-dim);
+    border-radius:12px;
+    padding:16px;
+    opacity:.4;
+    transition:opacity .4s;
+  }
+  .reward.unlocked{opacity:1;}
+  .reward-title{
+    font-family:'Oswald', sans-serif;
+    font-weight:600;
+    font-size:.85rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 4px;
+  }
+  .reward-range{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.68rem;
+    color:var(--ink-dim);
+    margin-bottom:12px;
+  }
+  .reward-controls{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .reward-dial{
+    min-width:64px;
+    text-align:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:1.5rem;
+    font-weight:600;
+    background:#0D1013;
+    border:1px solid #2a2f34;
+    border-radius:8px;
+    padding:8px 6px;
+    color:var(--teal);
+  }
+  .reward-btn{
+    flex:1;
+    -webkit-appearance:none;
+    appearance:none;
+    border:none;
+    cursor:pointer;
+    background:linear-gradient(180deg, var(--gold), var(--gold-dim));
+    color:#1a1400;
+    font-family:'Oswald', sans-serif;
+    font-weight:700;
+    font-size:.85rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:12px 10px;
+    border-radius:8px;
+    transition:transform .08s;
+  }
+  .reward-btn:active{transform:translateY(2px);}
+  .reward-btn:disabled{opacity:.35;cursor:not-allowed;}
+  .reward-btn:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
+
+  .reward-result{
+    margin-top:12px;
+    display:none;
+    text-align:center;
+  }
+  .reward-result.visible{display:block;}
+  .rarity-badge{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.6rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:3px 8px;
+    border-radius:999px;
+    margin-bottom:6px;
+  }
+  .rarity-común{background:#2a2f34;color:var(--ink-dim);}
+  .rarity-poco-común{background:rgba(47,230,176,.15);color:var(--teal);}
+  .rarity-raro{background:rgba(155,107,214,.18);color:var(--purple);}
+  .rarity-jackpot{
+    background:linear-gradient(90deg, var(--red), var(--gold));
+    color:#1a1400;
+    animation:pulse-jackpot 1s infinite;
+  }
+  @keyframes pulse-jackpot{
+    0%,100%{box-shadow:0 0 6px rgba(212,175,55,.4);}
+    50%{box-shadow:0 0 18px rgba(255,69,82,.7);}
+  }
+  .reward-item-name{
+    font-family:'Oswald', sans-serif;
+    font-size:1.05rem;
+    font-weight:600;
+    color:var(--ink);
+  }
+
+  /* ---------- log ---------- */
+  .log{margin-top:18px;}
+  .log summary{
+    cursor:pointer;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.7rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    padding:8px 0;
+  }
+  .log-entry{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.68rem;
+    color:var(--ink-dim);
+    border-left:2px solid var(--gold-dim);
+    padding:6px 0 6px 10px;
+    margin-bottom:6px;
+    line-height:1.5;
+  }
+  .log-entry b{color:var(--ink);}
+
+  /* ---------- footer / instructions ---------- */
+  details.howto{
+    margin-top:20px;
+    background:var(--panel);
+    border:1px solid #2a2f34;
+    border-radius:10px;
+    padding:10px 14px;
+  }
+  details.howto summary{
+    cursor:pointer;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.72rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+  details.howto p{
+    font-size:.78rem;
+    color:var(--ink-dim);
+    line-height:1.5;
+    margin:10px 0 2px;
+  }
+
+  .reset-link{
+    display:block;
+    text-align:center;
+    margin-top:26px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.62rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-dim);
+    background:none;
+    border:none;
+    text-decoration:underline;
+    cursor:pointer;
+    width:100%;
+  }
+
+  .fine-print{
+    text-align:center;
+    font-size:.66rem;
+    color:#4d5459;
+    margin-top:18px;
+    line-height:1.5;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .marquee, .rarity-jackpot, .readout, .reel{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hazard-strip"></div>
+
+  <header>
+    <p class="wordmark">HERNANDEZ<span>CORP</span></p>
+    <p class="subtitle">División de Adaptación Biológica · Sala de Pruebas 03</p>
+    <p class="consent">Consentimiento informado: ya firmado en su nombre. Gracias por su inmediata disponibilidad.</p>
+  </header>
+
+  <div class="counter">
+    <span class="counter-label">Muestra</span>
+    <div class="counter-dots" id="counterDots">
+      <div class="dot" data-i="0"></div>
+      <div class="dot" data-i="1"></div>
+      <div class="dot" data-i="2"></div>
+    </div>
+    <span class="counter-label" id="counterText">0 / 3</span>
+  </div>
+
+  <div class="machine">
+    <div class="marquee"></div>
+    <p class="machine-title">Prueba de Adaptación — Extracción en curso</p>
+
+    <div class="reels">
+      <div class="reel-col">
+        <span class="reel-eyebrow">Nivel</span>
+        <div class="reel" id="reel1">— — —</div>
+      </div>
+      <div class="reel-col">
+        <span class="reel-eyebrow">Arquetipo</span>
+        <div class="reel" id="reel2">— — —</div>
+      </div>
+      <div class="reel-col">
+        <span class="reel-eyebrow">Buff</span>
+        <div class="reel" id="reel3">— — —</div>
+      </div>
+    </div>
+
+    <div class="lever-wrap">
+      <button class="lever-btn" id="leverBtn">Tirar de la palanca</button>
+    </div>
+    <p class="lever-hint">Extracción de muestra sanguínea en curso</p>
+  </div>
+
+  <div class="readout" id="readout">
+    <div class="readout-row">
+      <div class="readout-key">Nivel de la prueba</div>
+      <div class="readout-val" id="rvLevel">—</div>
+    </div>
+    <div class="readout-row">
+      <div class="readout-key">Arquetipo detectado</div>
+      <div class="readout-val" id="rvArchetype">—</div>
+      <div class="readout-sub" id="rvArchetypeEffect"></div>
+    </div>
+    <div class="readout-row">
+      <div class="readout-key">Buff del grupo</div>
+      <div class="readout-val" id="rvBuff">—</div>
+      <div class="readout-sub" id="rvBuffEffect"></div>
+    </div>
+  </div>
+  <p class="announcer" id="announcer"></p>
+
+  <div class="reward" id="rewardSection">
+    <p class="reward-title">Botín — reclamar tras el combate</p>
+    <p class="reward-range" id="rewardRange">Disponible tras la Prueba de Adaptación.</p>
+    <div class="reward-controls">
+      <div class="reward-dial" id="rewardDial">--</div>
+      <button class="reward-btn" id="rewardBtn" disabled>Girar botín</button>
+    </div>
+    <div class="reward-result" id="rewardResult">
+      <span class="rarity-badge" id="rarityBadge">—</span>
+      <div class="reward-item-name" id="rewardItemName">—</div>
+    </div>
+  </div>
+
+  <details class="log">
+    <summary>Registro de muestras (<span id="logCount">0</span>)</summary>
+    <div id="logEntries"></div>
+  </details>
+
+  <details class="howto">
+    <summary>¿Cómo funciona esta máquina?</summary>
+    <p>Tiren de la palanca al inicio de cada prueba. Los tres rodillos definen el nivel de dificultad del combate (y un número secreto que solo el DM interpreta), un arquetipo que modifica al enemigo, y un buff para todo el grupo. Después de resolver el combate en mesa, giren el botín: el rango de números disponibles depende del nivel que salió.</p>
+  </details>
+
+  <button class="reset-link" id="resetBtn">Reiniciar programa</button>
+
+  <p class="fine-print">Hernandez Corp no se responsabiliza por mutaciones, muerte súbita, ni pérdida de extremidades. Buena suerte, sujetos.</p>
+
+</div>
+
+<script>
+(function(){
+  const LEVELS = [
+    { name:'FÁCIL', key:'facil', className:'level-facil', range:[1,80] },
+    { name:'NEUTRAL', key:'neutral', className:'level-neutral', range:[41,80] },
+    { name:'MORTAL', key:'mortal', className:'level-mortal', range:[41,100] }
+  ];
+
+  const ARCHETYPES = [
+    { name:'BESTIA SALVAJE', effect:'Ventaja para derribar o agarrar. Ataque de garra o mordida extra, una vez por combate.' },
+    { name:'NO-MUERTO GÉLIDO', effect:'Resiste frío y necrótico. Vulnerable a radiante. +1d6 de daño frío en ataques cuerpo a cuerpo.' },
+    { name:'ELEMENTAL ÍGNEO', effect:'Resiste fuego. Vulnerable a frío. Aura: 1d6 de fuego a quien empiece su turno adyacente.' },
+    { name:'ABERRACIÓN TÓXICA', effect:'Resiste e inmune a veneno. Vulnerable a psíquico. +1d6 de daño veneno en ataques.' },
+    { name:'HUMANOIDE LETAL', effect:'Ventaja en iniciativa. Ataque furtivo extra (+2d6), una vez por combate.' },
+    { name:'CONSTRUCTO VOLTAICO', effect:'Resiste trueno. Vulnerable a fuerza. Reacción: 1d6 de trueno a quien lo golpee cuerpo a cuerpo.' }
+  ];
+
+  const BUFFS = [
+    { name:'SUBIR DE NIVEL', weight:5, effect:'El grupo entero sube un nivel de personaje. Actualicen sus fichas.' },
+    { name:'SIN BUFF', weight:20, effect:'La corporación no ofrece nada esta vez. Suerte, sujetos.' },
+    { name:'PUNTO DE INSPIRACIÓN', weight:15, effect:'Cada jugador recibe un punto de inspiración.' },
+    { name:'VENTAJA EN SALVACIONES', weight:15, effect:'Ventaja en tiradas de salvación hasta el próximo descanso.' },
+    { name:'RESISTENCIA A UN DAÑO', weight:15, effect:'Resistencia a un tipo de daño a elección, hasta el próximo descanso.' },
+    { name:'CURACIÓN COMPLETA', weight:15, effect:'El grupo recupera todos los puntos de golpe antes del combate.' },
+    { name:'DADO DE SUPERIORIDAD', weight:15, effect:'Cada jugador gana un dado de superioridad (1d8) para usar una vez.' }
+  ];
+
+  const ANNOUNCER_LINES = [
+    'Muestra recolectada. Cortisol en niveles óptimos.',
+    'Adaptación celular detectada. Continúen, sujetos.',
+    'La corporación aprecia su cooperación... continua.',
+    'Frecuencia cardíaca registrada. Excelente material genético.',
+    'Prueba en curso. No se han reportado fallecimientos aún.',
+    'Sus datos serán utilizados para crear grandes héroes. O algo así.',
+    'Nivel de adrenalina: satisfactorio. Prosigan.',
+    'Hernandez Corp les agradece su inmediata disponibilidad.'
+  ];
+
+  const REWARD_TABLE = [
+    {min:1,max:5,name:'Poción de Curación',rarity:'común'},
+    {min:6,max:10,name:'Munición Mágica +1 (5 unidades)',rarity:'común'},
+    {min:11,max:14,name:'Aceite de Afilado de Armas',rarity:'común'},
+    {min:15,max:18,name:'Pergamino de Protección',rarity:'común'},
+    {min:19,max:22,name:'Vela de Invocación',rarity:'común'},
+    {min:23,max:26,name:'Piedra de la Suerte (menor)',rarity:'común'},
+    {min:27,max:30,name:'Poción de Resistencia',rarity:'común'},
+    {min:31,max:34,name:'Cuerda Sarmentosa',rarity:'común'},
+    {min:35,max:37,name:'Fuego Alquímico (3 frascos)',rarity:'común'},
+    {min:38,max:40,name:'Polvo de Estornudos y Ahogos',rarity:'común'},
+    {min:41,max:44,name:'Capa de Protección',rarity:'poco-común'},
+    {min:45,max:48,name:'Botas de Elfo',rarity:'poco-común'},
+    {min:49,max:52,name:'Anillo de Nadar',rarity:'poco-común'},
+    {min:53,max:56,name:'Bolsa de Contención',rarity:'poco-común'},
+    {min:57,max:60,name:'Arma +1',rarity:'poco-común'},
+    {min:61,max:64,name:'Cuerno de Curación',rarity:'poco-común'},
+    {min:65,max:68,name:'Guantelete del Escalador',rarity:'poco-común'},
+    {min:69,max:72,name:'Pergamino de Hechizo Nivel 2',rarity:'poco-común'},
+    {min:73,max:76,name:'Poción de Fuerza de Gigante de las Colinas',rarity:'poco-común'},
+    {min:77,max:80,name:'Talismán de la Bestia Sabia',rarity:'poco-común'},
+    {min:81,max:83,name:'Armadura +1',rarity:'raro'},
+    {min:84,max:86,name:'Cinturón de Fuerza de Gigante de las Colinas',rarity:'raro'},
+    {min:87,max:89,name:'Bufanda del Camuflaje',rarity:'raro'},
+    {min:90,max:92,name:'Amuleto de Salud',rarity:'raro'},
+    {min:93,max:95,name:'Arma +2',rarity:'raro'},
+    {min:96,max:97,name:'Manto de Alas',rarity:'jackpot'},
+    {min:98,max:98,name:'Guantelete de Poder de Ogro',rarity:'jackpot'},
+    {min:99,max:99,name:'Anillo de Regeneración',rarity:'jackpot'},
+    {min:100,max:100,name:'JACKPOT ABSOLUTO — Ítem legendario o +1 nivel',rarity:'jackpot'}
+  ];
+
+  // ---------- state ----------
+  let pullCount = 0;
+  let currentLevel = null;
+  let rewardClaimedThisRound = true;
+  let log = [];
+
+  // ---------- helpers ----------
+  function randInt(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+  function weightedPick(arr){
+    const total = arr.reduce((s,x)=>s+x.weight,0);
+    let r = Math.random()*total;
+    for (const item of arr){
+      if (r < item.weight) return item;
+      r -= item.weight;
+    }
+    return arr[arr.length-1];
+  }
+
+  function findReward(n){
+    return REWARD_TABLE.find(r => n >= r.min && n <= r.max);
+  }
+
+  function reduceMotion(){
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  // ---------- reel spin ----------
+  function spinReel(el, pool, finalText, duration){
+    return new Promise(resolve => {
+      if (reduceMotion()){
+        el.textContent = finalText;
+        el.classList.add('landed');
+        setTimeout(()=>el.classList.remove('landed'), 300);
+        resolve();
+        return;
+      }
+      el.classList.add('spinning');
+      let elapsed = 0;
+      const step = 60;
+      const interval = setInterval(() => {
+        el.textContent = pool[randInt(0, pool.length-1)];
+        elapsed += step;
+        if (elapsed >= duration){
+          clearInterval(interval);
+          el.classList.remove('spinning');
+          el.textContent = finalText;
+          el.classList.add('landed');
+          setTimeout(()=>el.classList.remove('landed'), 400);
+          resolve();
+        }
+      }, step);
+    });
+  }
+
+  // ---------- DOM refs ----------
+  const leverBtn = document.getElementById('leverBtn');
+  const reel1 = document.getElementById('reel1');
+  const reel2 = document.getElementById('reel2');
+  const reel3 = document.getElementById('reel3');
+  const readout = document.getElementById('readout');
+  const rvLevel = document.getElementById('rvLevel');
+  const rvArchetype = document.getElementById('rvArchetype');
+  const rvArchetypeEffect = document.getElementById('rvArchetypeEffect');
+  const rvBuff = document.getElementById('rvBuff');
+  const rvBuffEffect = document.getElementById('rvBuffEffect');
+  const announcer = document.getElementById('announcer');
+  const rewardSection = document.getElementById('rewardSection');
+  const rewardRange = document.getElementById('rewardRange');
+  const rewardBtn = document.getElementById('rewardBtn');
+  const rewardDial = document.getElementById('rewardDial');
+  const rewardResult = document.getElementById('rewardResult');
+  const rarityBadge = document.getElementById('rarityBadge');
+  const rewardItemName = document.getElementById('rewardItemName');
+  const counterText = document.getElementById('counterText');
+  const dots = document.querySelectorAll('.dot');
+  const logEntries = document.getElementById('logEntries');
+  const logCount = document.getElementById('logCount');
+  const resetBtn = document.getElementById('resetBtn');
+
+  function updateCounter(){
+    counterText.textContent = pullCount + ' / 3';
+    dots.forEach((d,i) => d.classList.toggle('filled', i < pullCount));
+  }
+
+  function addLogEntry(text){
+    log.push(text);
+    logCount.textContent = log.length;
+    const row = document.createElement('div');
+    row.className = 'log-entry';
+    row.innerHTML = text;
+    logEntries.prepend(row);
+  }
+
+  async function pullLever(){
+    if (pullCount >= 3) return;
+    leverBtn.disabled = true;
+    rewardBtn.disabled = true;
+    rewardSection.classList.remove('unlocked');
+    rewardResult.classList.remove('visible');
+    readout.classList.remove('visible');
+    announcer.classList.remove('visible');
+    rewardDial.textContent = '--';
+
+    pullCount++;
+    updateCounter();
+
+    const level = LEVELS[randInt(0,2)];
+    const number = randInt(1,5);
+    const archetype = ARCHETYPES[randInt(0, ARCHETYPES.length-1)];
+    const buff = weightedPick(BUFFS);
+
+    currentLevel = level;
+    rewardClaimedThisRound = false;
+
+    const levelPool = LEVELS.map(l => l.name);
+    const archetypePool = ARCHETYPES.map(a => a.name);
+    const buffPool = BUFFS.map(b => b.name);
+
+    await Promise.all([
+      spinReel(reel1, levelPool, level.name + ' Nº' + number, 900),
+      spinReel(reel2, archetypePool, archetype.name, 1300),
+      spinReel(reel3, buffPool, buff.name, 1700)
+    ]);
+
+    rvLevel.textContent = level.name + '  ·  Muestra #' + number;
+    rvLevel.className = 'readout-val ' + level.className;
+    rvArchetype.textContent = archetype.name;
+    rvArchetypeEffect.textContent = archetype.effect;
+    rvBuff.textContent = buff.name;
+    rvBuffEffect.textContent = buff.effect;
+    readout.classList.add('visible');
+
+    announcer.textContent = '"' + ANNOUNCER_LINES[randInt(0, ANNOUNCER_LINES.length-1)] + '"';
+    announcer.classList.add('visible');
+
+    rewardRange.textContent = 'Rango habilitado: ' + level.range[0] + '–' + level.range[1];
+    rewardSection.classList.add('unlocked');
+    rewardBtn.disabled = false;
+
+    addLogEntry('<b>Muestra ' + pullCount + ':</b> ' + level.name + ' Nº' + number + ' · ' + archetype.name + ' · ' + buff.name);
+
+    leverBtn.disabled = (pullCount >= 3);
+    leverBtn.textContent = pullCount >= 3 ? 'Programa completo' : 'Tirar de la palanca';
+  }
+
+  async function pullReward(){
+    if (!currentLevel || rewardClaimedThisRound) return;
+    rewardBtn.disabled = true;
+    rewardResult.classList.remove('visible');
+
+    const [min, max] = currentLevel.range;
+
+    if (reduceMotion()){
+      const n = randInt(min, max);
+      const item = findReward(n);
+      revealReward(n, item);
+      return;
+    }
+
+    let elapsed = 0;
+    const duration = 1100;
+    const step = 50;
+    const interval = setInterval(() => {
+      rewardDial.textContent = String(randInt(min, max)).padStart(2,'0');
+      elapsed += step;
+      if (elapsed >= duration){
+        clearInterval(interval);
+        const n = randInt(min, max);
+        const item = findReward(n);
+        revealReward(n, item);
+      }
+    }, step);
+  }
+
+  function revealReward(n, item){
+    rewardDial.textContent = String(n).padStart(2,'0');
+    rarityBadge.textContent = item.rarity.replace('-', ' ');
+    rarityBadge.className = 'rarity-badge rarity-' + item.rarity;
+    rewardItemName.textContent = item.name;
+    rewardResult.classList.add('visible');
+    rewardClaimedThisRound = true;
+
+    const lastEntry = logEntries.firstChild;
+    if (lastEntry){
+      lastEntry.innerHTML += ' · Botín: ' + n + ' (' + item.name + ')';
+    }
+  }
+
+  function resetAll(){
+    pullCount = 0;
+    currentLevel = null;
+    rewardClaimedThisRound = true;
+    log = [];
+    updateCounter();
+    logEntries.innerHTML = '';
+    logCount.textContent = '0';
+    readout.classList.remove('visible');
+    announcer.classList.remove('visible');
+    rewardSection.classList.remove('unlocked');
+    rewardResult.classList.remove('visible');
+    rewardDial.textContent = '--';
+    reel1.textContent = '— — —';
+    reel2.textContent = '— — —';
+    reel3.textContent = '— — —';
+    leverBtn.disabled = false;
+    leverBtn.textContent = 'Tirar de la palanca';
+    rewardBtn.disabled = true;
+    rewardRange.textContent = 'Disponible tras la Prueba de Adaptación.';
+  }
+
+  leverBtn.addEventListener('click', pullLever);
+  rewardBtn.addEventListener('click', pullReward);
+  resetBtn.addEventListener('click', resetAll);
+
+  updateCounter();
+})();
+</script>
+</body>
+</html>
