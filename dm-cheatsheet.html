@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheatsheet DM — Circuito Ancestro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --hull:#111a1d; --plate:#18262a; --plate-2:#1f3136; --line:#2c4348;
+  --ink:#dfe9e8; --ink-dim:#7d9498; --sodium:#e8a33d; --signal:#4fd1c0;
+  --alarm:#e06a5a; --read:#c9dbe0; --r:3px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--hull);color:var(--ink);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;font-size:15px;line-height:1.55;
+  padding-bottom:50px;
+  background-image:repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,0,0,.14) 3px 4px)}
+
+/* ---- barra de pestañas fija ---- */
+.bar{position:sticky;top:0;z-index:50;background:var(--plate);
+  border-bottom:1px solid var(--line);box-shadow:0 4px 14px rgba(0,0,0,.45)}
+.brand{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ink-dim);padding:9px 14px 0;
+  display:flex;justify-content:space-between}
+.brand b{color:var(--signal);font-weight:500}
+.tabs{display:flex;gap:4px;padding:8px 14px 9px;overflow-x:auto;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;background:transparent;border:1px solid var(--line);color:var(--ink-dim);
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;
+  text-transform:uppercase;padding:8px 12px;border-radius:var(--r);cursor:pointer;
+  transition:background .12s,color .12s,border-color .12s}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--signal);border-color:var(--signal);
+  color:var(--hull);font-weight:600}
+.tab:focus-visible{outline:2px solid var(--sodium);outline-offset:2px}
+
+main{padding:20px 14px 0;max-width:900px;margin:0 auto}
+.panel[hidden]{display:none}
+
+h1{font-family:'IBM Plex Sans Condensed',sans-serif;font-size:26px;font-weight:700;
+  text-transform:uppercase;letter-spacing:-.01em;line-height:1.08;margin-bottom:4px}
+.lede{font-size:13.5px;color:var(--ink-dim);margin-bottom:18px;max-width:60ch}
+
+h2{font-family:'IBM Plex Sans Condensed',sans-serif;font-size:15px;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;margin:24px 0 11px;
+  padding-bottom:5px;border-bottom:1px solid var(--line);display:flex;
+  align-items:baseline;gap:9px}
+h2 .n{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;
+  color:var(--sodium);margin-left:auto;font-weight:500}
+h3{font-family:'IBM Plex Sans Condensed',sans-serif;font-size:14.5px;font-weight:700;
+  margin-bottom:5px;letter-spacing:.02em}
+
+.card{background:var(--plate);border:1px solid var(--line);border-radius:var(--r);
+  padding:13px 14px;margin-bottom:9px}
+.card p + p{margin-top:6px}
+.card p{font-size:13.5px}
+
+/* ---- leer en voz alta ---- */
+.read{background:var(--plate-2);border:1px solid var(--line);border-left:3px solid var(--signal);
+  border-radius:var(--r);padding:14px 15px;margin-bottom:9px}
+.read p{font-size:16px;line-height:1.62;color:var(--read)}
+.read p + p{margin-top:11px}
+.read::before{content:"En voz alta";display:block;font-family:'IBM Plex Mono',monospace;
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--signal);margin-bottom:8px}
+
+/* ---- solo DM ---- */
+.dm{background:rgba(232,163,61,.07);border:1px dashed var(--sodium);
+  border-radius:var(--r);padding:12px 14px;margin-bottom:9px}
+.dm::before{content:"Solo DM";display:block;font-family:'IBM Plex Mono',monospace;
+  font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--sodium);margin-bottom:7px}
+.dm p{font-size:13.5px;color:var(--ink)}
+.dm p + p{margin-top:6px}
+
+.hi{color:var(--signal);font-weight:500}
+.warn{color:var(--sodium);font-weight:500}
+.bad{color:var(--alarm);font-weight:500}
+.dim{color:var(--ink-dim)}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl{background:var(--plate);border:1px solid var(--line);border-radius:var(--r);
+  overflow:hidden;margin-bottom:9px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-dim);font-weight:500}
+td.v{font-family:'IBM Plex Mono',monospace;color:var(--sodium);text-align:right;
+  white-space:nowrap;font-weight:600}
+tbody tr:last-child td{border-bottom:none}
+
+.stat{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);
+  background:var(--hull);border:1px solid var(--line);border-radius:var(--r);
+  padding:9px 11px;margin:8px 0;line-height:1.7}
+.stat b{color:var(--sodium);font-weight:600}
+
+ol,ul{margin:6px 0 0 17px;font-size:13.5px}
+li{margin-bottom:5px}
+li::marker{color:var(--ink-dim)}
+
+.turns{counter-reset:t;list-style:none;margin-left:0}
+.turns li{position:relative;padding-left:30px;margin-bottom:8px}
+.turns li::before{counter-increment:t;content:"R" counter(t);
+  position:absolute;left:0;top:1px;font-family:'IBM Plex Mono',monospace;font-size:10px;
+  letter-spacing:.08em;color:var(--sodium);border:1px solid var(--line);
+  border-radius:2px;padding:1px 4px;background:var(--hull)}
+
+.hero{border-left:2px solid var(--signal)}
+.grid2{display:grid;gap:9px}
+@media(min-width:700px){.grid2{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="brand"><span>Circuito Ancestro · Cheatsheet DM</span><b>5 jugadores · nivel 6</b></div>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-p="esc" aria-selected="true">Escenario</button>
+    <button class="tab" role="tab" data-p="creep" aria-selected="false">Creeps</button>
+    <button class="tab" role="tab" data-p="ol1" aria-selected="false">Oleada 1</button>
+    <button class="tab" role="tab" data-p="ol2" aria-selected="false">Oleada 2</button>
+    <button class="tab" role="tab" data-p="rosh" aria-selected="false">Roshan</button>
+    <button class="tab" role="tab" data-p="jung" aria-selected="false">Jungla</button>
+    <button class="tab" role="tab" data-p="hg" aria-selected="false">Highground</button>
+    <button class="tab" role="tab" data-p="her" aria-selected="false">Héroes</button>
+    <button class="tab" role="tab" data-p="oro" aria-selected="false">Oro</button>
+  </div>
+</div>
+
+<main>
+
+<!-- ================= ESCENARIO ================= -->
+<section class="panel" id="esc" role="tabpanel">
+  <h1>Escenario</h1>
+  <p class="lede">Todo lo azul se lee en voz alta, tal cual está. Lo ámbar es solo para vos.</p>
+
+  <h2>Apertura — la Fuente<span class="n">00</span></h2>
+  <div class="read">
+    <p>Están de pie sobre una rejilla de metal. Abajo, a través de los huecos, se ve un pozo de líquido azul que se mueve solo. La luz que sube de ahí les da a todos el mismo color de enfermo.</p>
+    <p>No hay puertas. Hay paredes.</p>
+    <p>Cada uno de ustedes firmó algo. Un tratamiento que no podían pagar. Una condena que alguien conmutó. Una deuda que era de otro y ahora es de ustedes. Hernandez Corp compró ese papel, y hoy les ofrece la única forma de romperlo.</p>
+    <p>Y entonces habla el Announcer. La voz sale de todas partes al mismo tiempo, y es una voz amable.</p>
+    <p>«Buenos días, contratistas. Bienvenidos al Circuito. Las condiciones son simples y ya las aceptaron: crucen el sector, alcancen el Trono enemigo, y su saldo queda en cero. Del otro lado hay cinco personas con el mismo contrato y la misma esperanza. Solo un lado cancela.»</p>
+    <p>«Si ellos llegan primero, la deuda de ustedes no se perdona. Se reasigna. A quien figure como contacto de emergencia en su expediente.»</p>
+    <p>«Les deseamos una jornada rentable.»</p>
+    <p>Una pared se abre. Es un pasillo largo, y al fondo se escucha algo que camina.</p>
+    <p>Y arranca la cuenta.</p>
+    <p>«Treinta segundos para el combate.»</p>
+    <p>El líquido del pozo se queda quieto. Las luces de la Fuente bajan a la mitad.</p>
+    <p>«Diez segundos para el combate.»</p>
+    <p>Lo que camina en el pasillo ya está cerca. Se escucha cuántos son.</p>
+    <p>«El combate comienza.»</p>
+  </div>
+  <div class="dm">
+    <p><span class="warn">Cantá la cuenta regresiva de verdad</span>, con pausas reales entre los treinta y los diez. Es el momento de máxima tensión de la sesión y no cuesta nada.</p>
+    <p>Si el grupo es fan de Dota, la traducción literal va a hacer clic sola. Si querés el guiño completo, decilo en inglés: <b>«Thirty seconds to battle»</b>, <b>«Ten seconds to battle»</b>, <b>«The battle begins!»</b></p>
+    <p>Tirá iniciativa <b>antes</b> de decir la última frase. Que caiga sobre el tablero ya armado.</p>
+  </div>
+  <div class="dm">
+    <p>No expliques nada más. Si preguntan por el lore, el Tendero contesta con una cláusula. Que arranquen peleando.</p>
+    <p>Antes de tirar iniciativa: recordales que <span class="warn">el oro del last hit es de quien remata</span>, y que vos llevás la cuenta.</p>
+  </div>
+
+  <h2>Cuando cae AXE<span class="n">01</span></h2>
+  <div class="read">
+    <p>El grandote cae de rodillas primero, y después de costado, y hace mucho más ruido del que hacía cuando peleaba.</p>
+    <p>Tiene el antebrazo al descubierto. Ahí, quemada en la piel, hay una marca. Un número de expediente, con el logo de Hernandez Corp arriba.</p>
+    <p>Es el mismo formato que el de ustedes. El número es distinto.</p>
+    <p>«Baja confirmada. Se acredita al equipo. Continúen.»</p>
+  </div>
+  <div class="dm">
+    <p><span class="warn">No lo comentes. No lo subrayes. No respondas preguntas sobre esto.</span> Si insisten, el Announcer dice «esa información no está disponible» y sigue.</p>
+    <p>Esta es la única siembra del giro. Cierra en el Trono.</p>
+  </div>
+
+  <h2>Post-Roshan — la bifurcación<span class="n">02</span></h2>
+  <div class="read">
+    <p>«Felicitaciones. El sujeto R-0 llevaba en ese pozo más tiempo del que ustedes llevan vivos.»</p>
+    <p>Desde acá se ven dos caminos. Uno baja, y vuelve a la Fuente: curarse, comprar, respirar.</p>
+    <p>El otro sube. Es un sector de biomasa sin iluminar, denso, donde la vegetación crece sobre las estructuras. Y en algún lugar de ahí adentro hay dos contratistas rivales que todavía no saben que ustedes mataron a R-0.</p>
+    <p>«Recordatorio: mientras ustedes deciden, el otro lado sigue produciendo.»</p>
+  </div>
+
+  <h2>El Highground<span class="n">03</span></h2>
+  <div class="read">
+    <p>La rampa termina en una plataforma elevada. Arriba hay una torre, y detrás de la torre hay una estructura que late: un cilindro de vidrio del tamaño de una casa, lleno del mismo líquido azul de la Fuente, con cables que se pierden hacia arriba.</p>
+    <p>Y adelante están ellos. Los cuatro. Los mismos que ustedes mataron, de pie, enteros, esperando.</p>
+    <p>«Última fase. Se recuerda a los contratistas que el Trono permanece protegido mientras la torre se mantenga operativa.»</p>
+    <p>El grandote levanta la mano. No es un gesto de ataque. Los saluda.</p>
+    <p>«Buena suerte. Que la disfruten.»</p>
+    <p>Y baja la mano, y agarra el hacha.</p>
+  </div>
+  <div class="dm">
+    <p>Ese saludo es el <b>«gl hf»</b> con el que arranca toda partida de Dota. Decilo sin ironía, como cortesía real entre profesionales.</p>
+    <p><span class="warn">Es la segunda siembra del giro.</span> Los rivales los saludan porque son exactamente como ellos.</p>
+  </div>
+
+  <h2>El cierre<span class="n">04</span></h2>
+  <div class="read">
+    <p>El cilindro se raja. El líquido azul sale y cae por la plataforma, y donde toca, las cosas dejan de moverse.</p>
+    <p>«Trono destruido. Contrato cumplido. Saldo en cero.»</p>
+    <p>Los cuerpos de los cuatro rivales están donde cayeron. Y ahora que hay tiempo para mirarlos, todos tienen la marca en el antebrazo. Todos tienen el mismo formato.</p>
+    <p>Y el líquido que se está derramando es el mismo que los curaba a ustedes.</p>
+    <p>«Se informa a los contratistas que la deuda del equipo rival ha sido reasignada exitosamente a sus contactos de emergencia. Gracias por su participación.»</p>
+    <p>«El Circuito reabre el mes próximo.»</p>
+  </div>
+  <div class="dm">
+    <p>Cortá ahí. No expliques. Si alguien pregunta si eran gente como ellos, dejá que lo contesten entre ellos.</p>
+  </div>
+</section>
+
+<!-- ================= CREEPS ================= -->
+<section class="panel" id="creep" role="tabpanel" hidden>
+  <h1>Creeps</h1>
+  <p class="lede">Reskin de cualquier bloque CR 1/2 del MM 2024. Numerados, sin nombre.</p>
+
+  <h2>Bloques<span class="n">stat</span></h2>
+  <div class="stat">
+    <b>CREEP MELEE</b> — CA 13 · 20 PG · Vel 30 ft<br>
+    Ataque +4, cuerpo a cuerpo, <b>1d8+2</b> contundente.<br>
+    <span class="dim">Paga 100 a quien da el last hit.</span>
+  </div>
+  <div class="stat">
+    <b>CREEP DE RANGO</b> — CA 13 · 16 PG · Vel 30 ft<br>
+    Ataque +4, alcance 60 ft, <b>1d6+2</b> perforante.<br>
+    <span class="dim">Paga 150 a quien da el last hit. Se mantiene atrás de los melee.</span>
+  </div>
+  <div class="stat">
+    <b>CATAPULTA</b> — CA 15 · 68 PG · Vel 20 ft <span class="dim">(reskin de Ogre)</span><br>
+    Ataque +6, cuerpo a cuerpo, <b>2d8+4</b> contundente.<br>
+    Contra estructuras hace <b>daño doble</b>.<br>
+    <span class="dim">Paga 300 a quien da el last hit.</span>
+  </div>
+
+  <h2>Cómo correrlos<span class="n">mesa</span></h2>
+  <div class="dm">
+    <p><span class="warn">Una sola iniciativa para todos los creeps.</span> Los movés en bloque, tirás un ataque por creep, listo.</p>
+    <p>No trackees PG uno por uno. Marcá el daño acumulado con un dado encima de la ficha y listo.</p>
+    <p>Los creeps siempre avanzan hacia la torre de los jugadores. Atacan a lo que tengan a 5 ft; si no hay nada, siguen caminando.</p>
+    <p><span class="bad">Si la oleada se estira más de 20 minutos, los que quedan se retiran y pagás igual.</span> No dejes que la Oleada 1 se coma la sesión.</p>
+  </div>
+</section>
+
+<!-- ================= OLEADA 1 ================= -->
+<section class="panel" id="ol1" role="tabpanel" hidden>
+  <h1>Oleada 1</h1>
+  <p class="lede">Línea de mid. Sin héroes. Enseña el last hit y la economía. 20 minutos.</p>
+
+  <h2>Composición<span class="n">11 creeps</span></h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Tanda</th><th>Entra</th><th style="text-align:right">Oro</th></tr></thead>
+    <tbody>
+      <tr><td><b>Primera</b> — 5 melee + 1 de rango</td><td>Ronda 1</td><td class="v">650</td></tr>
+      <tr><td><b>Segunda</b> — 3 melee + 2 de rango</td><td>Ronda 3</td><td class="v">600</td></tr>
+      <tr><td colspan="2"><b>Total en la oleada</b></td><td class="v">1250</td></tr>
+    </tbody>
+  </table></div>
+  <div class="card"><p>Promedio si se reparte parejo: <span class="hi">250 por jugador</span>. No se va a repartir parejo, y esa es la gracia.</p></div>
+
+  <h2>Cómo la jugás<span class="n">guion</span></h2>
+  <ol class="turns">
+    <li>Entran los 6 de la primera tanda por el fondo. Los melee adelante, el de rango 30 ft atrás. Avanzan.</li>
+    <li>Contacto. Los melee pegan a lo que tengan cerca; el de rango dispara al que esté más adelantado.</li>
+    <li>Entra la segunda tanda. <span class="warn">Anunciala en voz alta</span> — «segunda descarga» — para que sepan que hay más oro en camino.</li>
+    <li>Cierre. Si quedan pocos, dejalos morir rápido.</li>
+  </ol>
+  <div class="dm">
+    <p>Esta oleada es un tutorial. <span class="warn">Cantá cada last hit con el nombre del jugador.</span> «Baja confirmada, contratista tres.» Eso instala la mecánica sin explicarla de nuevo.</p>
+    <p>Al terminar, la puerta a la Fuente se abre sola. Que compren. Timer de <b>3 minutos reales</b>, cronómetro a la vista.</p>
+  </div>
+</section>
+
+<!-- ================= OLEADA 2 ================= -->
+<section class="panel" id="ol2" role="tabpanel" hidden>
+  <h1>Oleada 2</h1>
+  <p class="lede">Línea de mid con catapulta y dos contratistas rivales. 25-40 minutos.</p>
+
+  <h2>Composición<span class="n">12 + 2 héroes</span></h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Elemento</th><th>Detalle</th><th style="text-align:right">Oro</th></tr></thead>
+    <tbody>
+      <tr><td><b>Creeps</b></td><td>8 melee + 3 de rango</td><td class="v">1250</td></tr>
+      <tr><td><b>Catapulta</b></td><td>Entra en la ronda 2, va por la torre</td><td class="v">300</td></tr>
+      <tr><td><b>AXE</b></td><td>Individual · al pozo</td><td class="v">200 c/u</td></tr>
+      <tr><td><b>DAZZLE</b></td><td>Individual · al pozo</td><td class="v">200 c/u</td></tr>
+      <tr><td><b>Torre de mid</b></td><td>Opcional, al pozo</td><td class="v">100 c/u</td></tr>
+    </tbody>
+  </table></div>
+  <div class="card"><p>Rinde aprox. <span class="hi">310 individuales + 500 del pozo</span> por jugador.</p></div>
+
+  <h2>Torre de mid<span class="n">stat</span></h2>
+  <div class="stat">
+    <b>TORRE DE MID</b> — CA 16 · 60 PG<br>
+    Inmune a psíquico, veneno y a todas las condiciones.<br>
+    Al inicio de cada ronda: ataque <b>+6</b> contra el enemigo más cercano, alcance 60 ft, <b>2d8+3</b>.<br>
+    <span class="dim">Derribarla paga 500 al pozo y abre el camino al pit y a la jungla.</span>
+  </div>
+
+  <h2>Cómo la jugás<span class="n">guion</span></h2>
+  <ol class="turns">
+    <li>Entran los creeps. AXE camina <b>detrás</b> de ellos, tranquilo. DAZZLE viene último.</li>
+    <li>AXE llega y usa <b>Llamado del Berserker</b>. DAZZLE tira <b>Bless</b>. Entra la catapulta y empieza a caminar hacia la torre.</li>
+    <li>AXE: <b>Action Surge + Cleave</b>. DAZZLE: <b>Spirit Guardians</b> y avanza hacia el grupo.</li>
+    <li>La catapulta llega a la torre. Si no la frenaron, empieza a pegarle con daño doble.</li>
+  </ol>
+  <div class="dm">
+    <p><span class="warn">DAZZLE es la lección.</span> Si no lo matan primero, AXE no cae nunca. Dejá que sufran un poco antes de que se den cuenta — lo van a necesitar en el Highground.</p>
+    <p><span class="bad">Cuando AXE cae, leé el texto del antebrazo</span> (pestaña Escenario, bloque 01) y seguí sin comentar.</p>
+    <p>Los dos héroes <b>reviven</b> en su propia Fuente. Decilo si preguntan. Vuelven en el Highground.</p>
+  </div>
+</section>
+
+<!-- ================= ROSHAN ================= -->
+<section class="panel" id="rosh" role="tabpanel" hidden>
+  <h1>Roshan</h1>
+  <p class="lede">En el pit. Reskin de Stone Giant. 35 minutos. No paga oro.</p>
+
+  <div class="stat">
+    <b>ROSHAN</b> — CA 17 · <b>240 PG</b> · Vel 40 ft · Enorme<br>
+    Inmune a: Derribado, Apresado, Asustado, Envenenado. No puede ser movido contra su voluntad.<br>
+    <b>Resistencia Legendaria 2/día.</b>
+  </div>
+
+  <h2>Rasgos<span class="n">ciclo</span></h2>
+  <div class="card">
+    <h3>Escudo Ancestral</h3>
+    <p>El primer conjuro que lo tenga como <span class="hi">único objetivo</span> falla automáticamente. Se restablece al final de cada tercer turno.</p>
+  </div>
+  <div class="card">
+    <h3>Ciclo de Furia</h3>
+    <p>Turnos 1 y 2: <b>Golpe Aplastante</b>. Turno 3: <b>Onda Sísmica</b>. Y vuelve a empezar.</p>
+  </div>
+
+  <h2>Acciones<span class="n">stat</span></h2>
+  <div class="stat">
+    <b>GOLPE APLASTANTE</b> — Ataque +9, alcance 15 ft, <b>3d10+6</b> contundente.<br>
+    Después tirá <b>1d6</b>: con 5 o 6, el objetivo queda <b>Incapacitado y velocidad 0</b> hasta el final de su próximo turno.
+  </div>
+  <div class="stat">
+    <b>ROCA</b> — Ataque +9, alcance 60/240 ft, <b>2d8+6</b> contundente. Grande o menor queda <b>Derribado</b>.<br>
+    <span class="dim">Solo contra quien esté fuera del pit.</span>
+  </div>
+  <div class="stat">
+    <b>ONDA SÍSMICA</b> <span class="dim">(turno 3)</span> — Salvación de DES <b>CD 16</b>, todos los que estén en el pit.<br>
+    Fallo: <b>4d10</b> contundente y <b>Derribado</b>. Éxito: mitad, no cae.<br>
+    Al final de este turno, el Escudo Ancestral se restablece.
+  </div>
+  <div class="stat">
+    <b>REACCIÓN — DEFLECT MISSILE</b> (recarga 5-6)<br>
+    Reduce el daño de un ataque a distancia en <b>1d10+6</b>. Si lo reduce a 0, salvación de DES <b>CD 17</b> a una criatura a 60 ft o <b>1d10+6</b> de fuerza.
+  </div>
+
+  <h2>Cómo lo jugás<span class="n">mesa</span></h2>
+  <div class="dm">
+    <p><span class="warn">Cantá el ciclo en voz alta.</span> «Primer golpe.» «Segundo golpe.» «Se agacha.» Que lo aprendan es la mitad de la diversión. Si no lo telegrafiás, la Onda Sísmica se siente arbitraria.</p>
+    <p>Entrar o salir del pit cuesta <b>15 ft extra</b> de movimiento por el borde. Adentro te come la Onda; afuera solo te tira rocas, pero Deflect Missile castiga al que dispara.</p>
+    <p><span class="bad">Si querés que vean el ciclo dos veces completas, subilo a 300-320 PG.</span> Con 240 lo bajan en unas 3 rondas.</p>
+    <p>Al morir suelta <b>Aegis</b> y <b>Cheese</b>. Que no los levante la misma persona.</p>
+  </div>
+</section>
+
+<!-- ================= JUNGLA ================= -->
+<section class="panel" id="jung" role="tabpanel" hidden>
+  <h1>Jungla</h1>
+  <p class="lede">Post-Roshan. Elección de ellos. Están RIKI y LINA. 30 minutos.</p>
+
+  <h2>Las dos tiradas<span class="n">check</span></h2>
+  <div class="card">
+    <h3>1 — Encontrar el punto</h3>
+    <p><b>Supervivencia o Percepción, CD 14</b>, tirada de grupo.</p>
+    <p>Éxito: encuentran el nido de biomasa con línea de visión a los dos senderos.</p>
+  </div>
+  <div class="card">
+    <h3>2 — Plantar sin ser vistos</h3>
+    <p><b>Sigilo, CD 15</b>, tirada de grupo.</p>
+    <p><span class="warn">Requiere tener el Observer Ward comprado.</span> Si nadie lo compró, esta tirada no existe y van directo al peor resultado.</p>
+  </div>
+
+  <h2>Resultados<span class="n">3</span></h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Tiradas</th><th>Qué pasa</th></tr></thead>
+    <tbody>
+      <tr><td><b class="hi">Las dos</b></td><td>Ven a RIKI invisible y a LINA. <b>Ronda sorpresa completa.</b> 5 contra 2 con el drop encima.</td></tr>
+      <tr><td><b class="warn">Solo la primera</b></td><td>Ven a LINA y la emboscan. RIKI sigue oculto y entra en la ronda 2 con <b>Assassinate</b> contra el que esté más solo.</td></tr>
+      <tr><td><b class="bad">Ninguna</b></td><td>RIKI abre con <b>Assassinate</b> (crítico automático) contra el más rezagado. LINA entra en la ronda 2 con <b>Fireball</b>.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Oro<span class="n">pozo</span></h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Baja</th><th style="text-align:right">Al pozo</th><th style="text-align:right">Por jugador</th></tr></thead>
+    <tbody>
+      <tr><td>RIKI</td><td class="v">1200</td><td class="v">240</td></tr>
+      <tr><td>LINA</td><td class="v">1200</td><td class="v">240</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="dm">
+    <p>Si les va mal <span class="warn">no pierden oro: pierden recursos.</span> Llegan al Highground sin descanso corto. El castigo es de tiempo, no de economía.</p>
+    <p>La vegetación bloquea línea de visión. Usala: RIKI se esconde y reaparece, nunca pelea de frente dos rondas seguidas.</p>
+    <p>Los dos <b>reviven</b> igual y están en el Highground. Matarlos acá es oro y ventaja, no eliminación.</p>
+    <p><span class="bad">Después de esto van a querer volver a la Fuente.</span> Dejalos. Es la última compra.</p>
+  </div>
+</section>
+
+<!-- ================= HIGHGROUND ================= -->
+<section class="panel" id="hg" role="tabpanel" hidden>
+  <h1>Highground</h1>
+  <p class="lede">Torre, Trono y los cuatro rivales. 45 minutos. El clímax.</p>
+
+  <h2>La regla que ordena todo<span class="n">clave</span></h2>
+  <div class="card" style="border-left:2px solid var(--sodium)">
+    <h3>Backdoor protection</h3>
+    <p><span class="warn">El Trono es inmune mientras la torre esté en pie.</span> Y mientras la torre esté en pie, <span class="warn">los héroes rivales tienen resistencia a todo el daño.</span></p>
+    <p>Por eso la torre es el objetivo real. Decíselos apenas suben — no es un secreto, es la regla del mapa.</p>
+  </div>
+
+  <h2>Estructuras<span class="n">stat</span></h2>
+  <div class="stat">
+    <b>TORRE DEL TRONO</b> — CA 18 · 120 PG<br>
+    Inmune a psíquico, veneno y condiciones.<br>
+    <b>Multiataque:</b> 3 ataques a <b>+7</b>, <b>1d10+4</b> cada uno, contra tres objetivos distintos si es posible.<br>
+    <span class="dim">Siempre empieza por el más cercano. Alguien tiene que tanquearla a propósito.</span>
+  </div>
+  <div class="stat">
+    <b>EL TRONO</b> — CA 15 · 180 PG · no ataca<br>
+    Inmune a psíquico, veneno y condiciones.<br>
+    Cada ronda que sigue en pie: <b>salvación de CON CD 13</b> o <b>Envenenado</b> hasta el final de tu próximo turno.<br>
+    <span class="dim">Es un reloj, no una pelea. La sala pierde presión.</span>
+  </div>
+
+  <h2>Cómo la jugás<span class="n">guion</span></h2>
+  <ol class="turns">
+    <li>AXE al frente, <b>Llamado del Berserker</b>. DAZZLE atrás con <b>Bless</b>. La torre dispara al más cercano.</li>
+    <li>LINA abre con <b>Magic Missile a nivel 3</b>. DAZZLE tira <b>Spirit Guardians</b>. RIKI no aparece.</li>
+    <li>RIKI cae sobre el más aislado. LINA: <b>Scorching Ray</b>. AXE: <b>Action Surge</b>.</li>
+    <li>LINA dispara <b>Fireball + Sobrecarga</b>. Este es el pico de la pelea.</li>
+  </ol>
+
+  <div class="dm">
+    <p><span class="bad">Este encuentro es el que puede reventar.</span> Cuatro héroes + torre + trono contra cinco PJ cansados es mucho.</p>
+    <p><b>Tu dial de dificultad en vivo:</b> arrancan solo <span class="warn">DAZZLE y LINA</span>. AXE y RIKI llegan de refuerzo en la ronda 3. Si el grupo viene fuerte, los ponés a los cuatro desde el arranque.</p>
+    <p><b>Segundo dial:</b> los que mataron en la jungla vuelven con <span class="warn">la mitad de sus espacios de conjuro</span>. Si cazaron bien, la pelea es notablemente más fácil — y eso premia la decisión.</p>
+    <p>Si alguien tiene el <b>Aegis</b>, este es el combate donde se usa. Si tienen el <b>Cheese</b> sin comer, recordáselos antes de subir.</p>
+    <p>Cuando cae el Trono, leé el cierre (pestaña Escenario, bloque 04) y <span class="warn">no expliques nada después</span>.</p>
+  </div>
+</section>
+
+<!-- ================= HEROES ================= -->
+<section class="panel" id="her" role="tabpanel" hidden>
+  <h1>Héroes rivales</h1>
+  <p class="lede">PJ nivel 6. Todos: 2 acciones legendarias y 1 resistencia legendaria. Todos reviven en su Fuente.</p>
+
+  <div class="card"><p><b>Acciones legendarias</b> (2 por ronda, al final del turno de otro): moverse media velocidad · hacer un ataque · aplicar medio efecto de su habilidad firmada.</p></div>
+
+  <div class="grid2">
+    <div class="card hero">
+      <h3>AXE — Ejecutor de Línea</h3>
+      <p class="dim">Goliath · Fighter 6 Battle Master · CA 18 · ~58 PG</p>
+      <p><b>Firmada — Llamado del Berserker:</b> acción. Todos a 15 ft, salvación de SAB CD 14 o solo pueden atacarlo a él hasta el final de su próximo turno.</p>
+      <p><b>Guion:</b> entra al centro del grupo y cleavea. R2 Action Surge. Trip Attack sobre el caster. Interception cada vez que le peguen a Dazzle. Second Wind bajo la mitad.</p>
+      <p class="dim">No lo alejes del grupo: su valor es estar rodeado.</p>
+    </div>
+    <div class="card hero">
+      <h3>DAZZLE — Técnico de Reanimación</h3>
+      <p class="dim">Gnome · Cleric 6 Life · CA 18 · ~45 PG · CD 15</p>
+      <p><b>Firmada — Tejido de Sombra:</b> reacción, 2 usos. Un aliado a 30 ft que caería a 0 PG queda en 1 PG hasta el final de su próximo turno.</p>
+      <p><b>Guion:</b> abre con Bless. R2 Spirit Guardians. Después Healing Word en bonus + Toll the Dead. Se queda a 15 ft de Axe.</p>
+      <p class="dim">Si no lo matan, la pelea no avanza. Esa es la lección.</p>
+    </div>
+    <div class="card hero">
+      <h3>RIKI — Auditor Silencioso</h3>
+      <p class="dim">Halfling · Rogue 6 Assassin · CA 16 · ~38 PG · Sneak 3d6</p>
+      <p><b>Firmada — Cortina de Humo:</b> bonus action. Invisible mientras no ataque ni lance conjuro. Se recarga al final de cada uno de sus turnos.</p>
+      <p><b>Guion:</b> arranca invisible, nadie sabe dónde está. Cae sobre el más aislado con Assassinate. Ataca, se vuelve a esconder, reposiciona.</p>
+      <p class="dim">Nunca pelea de frente dos rondas seguidas. Si lo acorralan, Disengage y sale.</p>
+    </div>
+    <div class="card hero">
+      <h3>LINA — Vector Térmico</h3>
+      <p class="dim">Tiefling · Sorcerer 6 Draconic · CA 16 · ~44 PG · CD 15</p>
+      <p><b>Firmada — Sobrecarga:</b> si lanza conjuros tres turnos seguidos, el objetivo del tercero hace salvación de CON CD 15 o queda <b>Aturdido</b> hasta el final de su próximo turno.</p>
+      <p><b>Guion:</b> abre con Magic Missile a nivel 3 — su ulti, sin tirada, sin escape. R2 Scorching Ray. R3 Fireball + Sobrecarga. Después Quickened Fire Bolt + Misty Step. Shield siempre como reacción.</p>
+      <p class="dim">Su patrón dura tres turnos y termina en explosión. Que se note.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ORO ================= -->
+<section class="panel" id="oro" role="tabpanel" hidden>
+  <h1>Oro</h1>
+  <p class="lede">Vos llevás la cuenta de los last hits. Ellos anotan su total.</p>
+
+  <h2>Valores<span class="n">tabla</span></h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Baja</th><th>Cobra</th><th style="text-align:right">Oro</th></tr></thead>
+    <tbody>
+      <tr><td>Creep melee</td><td>Last hit</td><td class="v">100</td></tr>
+      <tr><td>Creep de rango</td><td>Last hit</td><td class="v">150</td></tr>
+      <tr><td>Catapulta</td><td>Last hit</td><td class="v">300</td></tr>
+      <tr><td>Torre de mid</td><td>Pozo</td><td class="v">100 c/u</td></tr>
+      <tr><td>Contratista en mid</td><td>Pozo</td><td class="v">200 c/u</td></tr>
+      <tr><td>Contratista en jungla</td><td>Pozo</td><td class="v">240 c/u</td></tr>
+      <tr><td>Roshan</td><td>Aegis + Cheese</td><td class="v">—</td></tr>
+      <tr><td>Creeps del Trono</td><td>Nada</td><td class="v">—</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Curva esperada<span class="n">por jugador</span></h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Momento</th><th style="text-align:right">Acumulado</th></tr></thead>
+    <tbody>
+      <tr><td>Después de la Oleada 1</td><td class="v">~250</td></tr>
+      <tr><td>Después de la Oleada 2 <span class="dim">(con torre)</span></td><td class="v">~1060</td></tr>
+      <tr><td>Después de la jungla <span class="dim">(si cazan a los dos)</span></td><td class="v">~1540</td></tr>
+    </tbody>
+  </table></div>
+  <div class="card"><p>Capas del shop: <b>400 / 800 / 1400</b>. Divine Rapier a <b>2500</b>, fuera de capa.</p></div>
+
+  <div class="dm">
+    <p><span class="warn">Cantá cada last hit con el nombre del jugador.</span> Es lo que hace público el marcador sin que lleves una pizarra.</p>
+    <p>Caer a 0: pierde <b>15% de su oro</b>, sale de la Fuente en 3 rondas con un TP Scroll.</p>
+    <p>Timer de compra: <b>3 minutos reales</b>, cronómetro a la vista. Sin eso, el shop se come 20 minutos.</p>
+  </div>
+</section>
+
+</main>
+
+<script>
+const tabs = [...document.querySelectorAll('.tab')];
+const panels = [...document.querySelectorAll('.panel')];
+function show(id){
+  tabs.forEach(t => t.setAttribute('aria-selected', String(t.dataset.p === id)));
+  panels.forEach(p => p.hidden = (p.id !== id));
+  window.scrollTo({top:0});
+}
+tabs.forEach(t => t.addEventListener('click', () => show(t.dataset.p)));
+document.addEventListener('keydown', e => {
+  if (e.target.closest('input,textarea')) return;
+  const i = tabs.findIndex(t => t.getAttribute('aria-selected') === 'true');
+  if (e.key === 'ArrowRight') show(tabs[(i+1) % tabs.length].dataset.p);
+  if (e.key === 'ArrowLeft')  show(tabs[(i-1+tabs.length) % tabs.length].dataset.p);
+});
+</script>
+</body>
+</html>
