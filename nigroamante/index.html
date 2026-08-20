@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#17131C">
+<title>NigroAmante · Druida de Esporas 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@300;500;700&family=Barlow+Semi+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rot:#17131C;
+  --bark:#221B29;
+  --bark-2:#2C2436;
+  --edge:#3B3145;
+  --ink:#D6CDDD;
+  --ink-dim:#8C819A;
+  --spore:#C9DB6B;
+  --ember:#E28A3E;
+  --blood:#C4564E;
+  --font-d:'Spectral',Georgia,serif;
+  --font-b:'Barlow Semi Condensed','Roboto Condensed',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:var(--rot)}
+body{
+  background:var(--rot);
+  color:var(--ink);
+  font-family:var(--font-b);
+  font-size:16px;line-height:1.35;
+  padding-bottom:env(safe-area-inset-bottom);
+  overscroll-behavior:none;
+}
+
+/* ---------- cabecera fija ---------- */
+.top{
+  position:sticky;top:0;z-index:20;
+  background:linear-gradient(180deg,#1D1723 0%,#17131C 100%);
+  border-bottom:1px solid var(--edge);
+}
+.name{
+  display:flex;align-items:baseline;gap:8px;
+  padding:8px 12px 4px;
+}
+.name h1{
+  font-family:var(--font-d);font-weight:500;font-size:17px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--spore);
+}
+.name span{font-size:12px;color:var(--ink-dim);letter-spacing:.08em}
+
+.stats{display:flex;border-top:1px solid var(--edge)}
+.stat{
+  flex:1;text-align:center;padding:5px 2px 6px;
+  border-right:1px solid var(--edge);
+}
+.stat:last-child{border-right:none}
+.stat b{display:block;font-size:19px;font-weight:700;line-height:1}
+.stat i{
+  display:block;font-style:normal;font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-dim);margin-top:3px;
+}
+.stat.hp b{color:var(--blood)}
+.stat.dc b{color:var(--spore)}
+
+/* ---------- pestañas ---------- */
+.tabs{display:flex;background:var(--bark);border-bottom:1px solid var(--edge)}
+.tab{
+  flex:1;padding:10px 1px;border:none;background:none;cursor:pointer;
+  font-family:var(--font-b);font-size:10px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim);
+  border-bottom:2px solid transparent;
+}
+.tab[aria-selected="true"]{color:var(--spore);border-bottom-color:var(--spore)}
+.tab:focus-visible{outline:2px solid var(--ember);outline-offset:-2px}
+
+.panel{display:none;padding:10px 10px 40px}
+.panel.on{display:block}
+
+h2{
+  font-family:var(--font-d);font-size:11px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--ember);
+  margin:14px 0 6px;
+}
+h2:first-child{margin-top:2px}
+
+/* ---------- tablas de datos ---------- */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{
+  text-align:left;font-size:9px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink-dim);
+  padding:0 6px 3px 0;border-bottom:1px solid var(--edge);
+}
+td{padding:6px 6px 6px 0;border-bottom:1px solid var(--bark-2);vertical-align:top}
+td.nm{font-weight:600}
+td.dm{color:var(--spore);font-weight:600;white-space:nowrap}
+td.rg{color:var(--ink-dim);font-size:13px;white-space:nowrap}
+.thirdparty{color:var(--ember);font-size:10px}
+
+/* ---------- secuencia de turno ---------- */
+.beat{
+  display:flex;gap:10px;padding:8px 0;
+  border-bottom:1px solid var(--bark-2);
+}
+.beat .when{
+  flex:0 0 62px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ember);padding-top:3px;font-weight:600;
+}
+.beat .what{flex:1;font-size:14px}
+.beat .what b{color:var(--ink);font-weight:600}
+.beat .what em{font-style:normal;color:var(--spore);font-weight:600}
+.beat .what small{display:block;color:var(--ink-dim);font-size:12px;margin-top:2px}
+
+.total{
+  margin-top:10px;padding:10px 12px;background:var(--bark);
+  border-left:3px solid var(--spore);
+}
+.total b{font-size:24px;color:var(--spore);font-family:var(--font-d)}
+.total span{font-size:12px;color:var(--ink-dim);display:block;letter-spacing:.06em}
+
+.warn{
+  margin-top:10px;padding:8px 10px;font-size:13px;
+  background:rgba(196,86,78,.1);border-left:3px solid var(--blood);
+}
+.warn b{color:var(--blood)}
+
+/* ---------- recursos con pips ---------- */
+.res{padding:9px 0;border-bottom:1px solid var(--bark-2)}
+.res-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.res-head b{font-size:14px;font-weight:600}
+.res-head span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim)}
+.res p{font-size:12px;color:var(--ink-dim);margin-top:2px}
+.pips{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap}
+.pip{
+  width:30px;height:30px;border-radius:50%;cursor:pointer;
+  border:2px solid var(--spore);background:var(--spore);
+  transition:background .12s,opacity .12s;
+}
+.pip[data-spent="1"]{background:transparent;opacity:.32}
+.pip:focus-visible{outline:2px solid var(--ember);outline-offset:2px}
+.pip.ember{border-color:var(--ember);background:var(--ember)}
+
+.acts{display:flex;gap:8px;margin:14px 0 4px}
+.act{
+  flex:1;padding:12px 6px;cursor:pointer;
+  font-family:var(--font-b);font-size:11px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid var(--edge);background:var(--bark);color:var(--ink);
+}
+.act.fire{
+  border-color:var(--ember);color:var(--ember);
+  background:radial-gradient(ellipse at 50% 130%,rgba(226,138,62,.28),transparent 70%),var(--bark);
+}
+.act:active{transform:translateY(1px)}
+.act:focus-visible{outline:2px solid var(--spore);outline-offset:2px}
+
+.note{font-size:12px;color:var(--ink-dim);margin-top:10px;line-height:1.5}
+
+/* ---------- listas de hechizos ---------- */
+.sp{display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--bark-2)}
+.sp .conc{
+  flex:0 0 14px;text-align:center;font-size:13px;color:var(--ember);
+  font-weight:700;padding-top:1px;
+}
+.sp .body{flex:1}
+.sp .body b{font-size:14px;font-weight:600}
+.sp .body small{display:block;font-size:12px;color:var(--ink-dim);margin-top:1px}
+.sp .tag{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--spore)}
+
+.conc-box{
+  margin-top:12px;padding:9px 11px;background:var(--bark);
+  border-left:3px solid var(--ember);font-size:13px;
+}
+.conc-box b{color:var(--ember)}
+.conc-box ol{margin:5px 0 0 16px;font-size:13px}
+.conc-box li{margin-bottom:2px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="name">
+    <h1>NigroAmante</h1>
+    <span>Druida 6 · Esporas</span>
+  </div>
+  <div class="stats">
+    <div class="stat hp"><b>69</b><i>PG</i></div>
+    <div class="stat"><b>18</b><i>CA</i></div>
+    <div class="stat dc"><b>16</b><i>CD</i></div>
+    <div class="stat"><b>+8</b><i>Ataque</i></div>
+    <div class="stat"><b>+3</b><i>Inic</i></div>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-p="turno">Turno</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="ataques">Ataques</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="hechizos">Hechizos</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="combos">Combos</button>
+    <button class="tab" role="tab" aria-selected="false" data-p="recursos">Recursos</button>
+  </nav>
+</header>
+
+<!-- ============ TURNO ============ -->
+<section class="panel on" id="turno" role="tabpanel">
+  <h2>Antes de entrar</h2>
+  <div class="beat">
+    <div class="when">Acción</div>
+    <div class="what"><b>Symbiotic Entity</b> — <em>+24 PG temporales</em>
+      <small>Gasta 1 Wild Shape. Dura 10 min. Duplica Halo y suma 1d6 necrótico en melee.</small></div>
+  </div>
+  <div class="beat">
+    <div class="when">Bonus</div>
+    <div class="what"><b>Shillelagh</b> — bastón a 1d10, usa Sabiduría
+      <small>Dura 1 minuto. Si la pelea se estira, recastealo.</small></div>
+  </div>
+  <div class="beat">
+    <div class="when">Si hay tiempo</div>
+    <div class="what"><b>Aid</b> — +5 PG máximos a 3 criaturas, 8 horas
+      <small>Sin concentración. Es el mejor slot de 2° que gastás en toda la sesión.</small></div>
+  </div>
+
+  <h2>Ronda 1</h2>
+  <div class="beat">
+    <div class="when">Acción</div>
+    <div class="what"><b>Conjure Animals</b> — 3d10 a todo lo que te rodee
+      <small>Concentración. Tu apertura si vas a estar en melee: te convierte en licuadora.</small></div>
+  </div>
+  <div class="beat">
+    <div class="when">o bien</div>
+    <div class="what"><b>Moonbeam</b> — <em>2d10 radiante</em>, CON CD 16
+      <small>Si el jefe está lejos o no te conviene acercarte. Movelo 60 pies con acción bonus y seguís pegando con el bastón.</small></div>
+  </div>
+
+  <h2>Rondas siguientes</h2>
+  <div class="beat">
+    <div class="when">Acción</div>
+    <div class="what"><b>Bastón</b> +8 → <em>1d10+5 fuerza · +1d6 necrótico</em>
+      <small>Elegí fuerza, no contundente: casi nada la resiste.</small></div>
+  </div>
+  <div class="beat">
+    <div class="when">Reacción</div>
+    <div class="what"><b>Halo of Spores</b> — <em>2d6</em>, CON CD 16
+      <small>Cuando alguien entra a 10 pies o empieza su turno ahí. Una vez por ronda.</small></div>
+  </div>
+
+  <div class="total">
+    <b>~21</b><span>daño por ronda sin gastar un solo slot</span>
+  </div>
+
+  <div class="warn">
+    <b>Sin Wild Shape.</b> Podés convertir cualquier slot en un uso — sin acción, una vez por turno. 1 slot = 24 PG temporales al instante.
+  </div>
+
+  <h2>Botones de emergencia</h2>
+  <div class="beat">
+    <div class="when">Reacción</div>
+    <div class="what"><b>Absorb Elements</b> — mitad de daño elemental + 1d6 al próximo golpe</div>
+  </div>
+  <div class="beat">
+    <div class="when">Reacción</div>
+    <div class="what"><b>Fungal Infestation</b> — cadáver Peq/Med a 10 pies se levanta como zombi
+      <small>5 usos, solo vuelven en descanso largo. El zombi actúa después tuyo y obedece sin costarte acción.</small></div>
+  </div>
+  <div class="beat">
+    <div class="when">Acción</div>
+    <div class="what"><b>Guiding Bolt</b> — 4d6 radiante + ventaja para el que le pegue después
+      <small>Gratis 1 vez. Con slot de 3° son 6d6.</small></div>
+  </div>
+</section>
+
+<!-- ============ ATAQUES ============ -->
+<section class="panel" id="ataques" role="tabpanel">
+  <h2>Cuerpo a cuerpo</h2>
+  <table>
+    <tr><th>Nombre</th><th>Alc.</th><th>Tirada</th><th>Daño</th></tr>
+    <tr><td class="nm">Shillelagh</td><td class="rg">—</td><td class="rg">+8</td><td class="dm">1d10+5</td></tr>
+    <tr><td class="nm">Chill Touch</td><td class="rg">Toque</td><td class="rg">+8</td><td class="dm">2d10 nec</td></tr>
+    <tr><td class="nm">Halo of Spores<br><small class="rg">reacción, 10 pies</small></td><td class="rg">10 ft</td><td class="rg">CON 16</td><td class="dm">1d6<br>2d6*</td></tr>
+  </table>
+  <p class="note">* Con Symbiotic Entity activo. Ese estado también suma <b style="color:var(--spore)">+1d6 necrótico</b> a cada golpe con arma.</p>
+
+  <h2>A distancia</h2>
+  <table>
+    <tr><th>Nombre</th><th>Alc.</th><th>Tirada</th><th>Daño</th></tr>
+    <tr><td class="nm">Toll the Dead</td><td class="rg">60 ft</td><td class="rg">SAB 16</td><td class="dm">2d8<br>2d12†</td></tr>
+    <tr><td class="nm">Pins &amp; Needles <span class="thirdparty">✦</span></td><td class="rg">60 ft</td><td class="rg">CON 16</td><td class="dm">2d8</td></tr>
+    <tr><td class="nm">Thorn Whip</td><td class="rg">30 ft</td><td class="rg">+8</td><td class="dm">2d6</td></tr>
+    <tr><td class="nm">Word of Radiance</td><td class="rg">5 ft ⊙</td><td class="rg">CON 16</td><td class="dm">2d6</td></tr>
+  </table>
+  <p class="note">† <b>2d12 si el objetivo ya tiene daño.</b> Es tu mejor truco: salvación de Sabiduría, que suele ser la defensa más floja de los brutos.<br><br>
+  <b style="color:var(--ember)">✦</b> Pins &amp; Needles es de Heliana's Guide (terceros). Confirmalo con el DM.</p>
+
+  <h2>Combo</h2>
+  <p class="note"><b>Thorn Whip</b> arrastra al enemigo 10 pies hacia vos. Ese movimiento lo mete en tu aura y dispara <b>Halo of Spores</b> con la reacción: <b style="color:var(--spore)">2d6 + 2d6</b> en una sola acción, y te queda pegado para el bastón del turno siguiente.</p>
+  <p class="note"><b>Word of Radiance</b> es para cuando estás rodeado: le pega a todos los adyacentes y a nadie más. No lastima aliados.</p>
+</section>
+
+<!-- ============ HECHIZOS ============ -->
+<section class="panel" id="hechizos" role="tabpanel">
+  <h2>Nivel 1 · 4 slots</h2>
+  <div class="sp"><div class="conc"></div><div class="body"><b>Absorb Elements</b><small>Reacción · mitad de daño elemental, +1d6 al próximo golpe</small></div></div>
+  <div class="sp"><div class="conc"></div><div class="body"><b>Cure Wounds</b><small>Acción · Toque · 2d8+5 (4d8+5 a 2° · 6d8+5 a 3°)</small></div></div>
+  <div class="sp"><div class="conc">◆</div><div class="body"><b>Faerie Fire</b><small>60 ft · DES 16 · ventaja para todo el party contra los afectados</small></div></div>
+
+  <h2>Nivel 2 · 3 slots</h2>
+  <div class="sp"><div class="conc"></div><div class="body"><b>Aid</b><small>+5 PG máximos y actuales a 3 criaturas, 8 h · sin concentración</small></div></div>
+  <div class="sp"><div class="conc"></div><div class="body"><b>Barkskin</b><small>Bonus · CA 17 mínima · <span style="color:var(--blood)">no te sirve a vos (CA 18) — es para un aliado</span></small></div></div>
+  <div class="sp"><div class="conc"></div><div class="body"><b>Lesser Restoration</b><small>Bonus · Toque · saca veneno, parálisis, ceguera, sordera</small></div></div>
+  <div class="sp"><div class="conc">◆</div><div class="body"><b>Moonbeam</b><small>120 ft · CON 16 · 2d10 radiante · movelo 60 ft con acción bonus</small></div></div>
+  <div class="sp"><div class="conc">◆</div><div class="body"><b>Spike Growth</b><small>150 ft · terreno difícil + 2d4 cada 5 pies que recorran</small></div></div>
+
+  <h2>Nivel 3 · 3 slots</h2>
+  <div class="sp"><div class="conc">◆</div><div class="body"><b>Aura of Vitality</b><small>2d6 por turno durante 10 rondas · <span class="tag">post-combate</span></small></div></div>
+  <div class="sp"><div class="conc">◆</div><div class="body"><b>Conjure Animals</b><small>Emanación · 3d10 · <span class="tag">tu apertura de jefe</span></small></div></div>
+
+  <div class="conc-box">
+    <b>Solo una concentración a la vez.</b> Tu orden de prioridad:
+    <ol>
+      <li><b>Conjure Animals</b> — pelea de jefe cuerpo a cuerpo</li>
+      <li><b>Moonbeam</b> — jefe lejos, o algo que no querés tener encima</li>
+      <li><b>Spike Growth</b> — grupos numerosos, pasillos</li>
+      <li><b>Faerie Fire</b> — algo esquivo o invisible</li>
+      <li><b>Aura of Vitality</b> — nunca en combate</li>
+    </ol>
+    War Caster te da <b>ventaja</b> en las salvaciones para mantenerla. Tirás con <b>+4</b>.
+  </div>
+
+  <h2>Siempre preparados · no cuentan</h2>
+  <div class="sp"><div class="conc"></div><div class="body"><b>Animate Dead</b><small>1 minuto de casteo · 1 no-muerto por slot de 3° · casteálo en la hoguera, no en combate</small></div></div>
+  <div class="sp"><div class="conc"></div><div class="body"><b>Blindness/Deafness</b><small>120 ft · CON 16 · ciega 1 min, sin concentración</small></div></div>
+  <div class="sp"><div class="conc">◆</div><div class="body"><b>Gaseous Form</b> · <b>Gentle Repose</b> · <b>Speak with Animals</b></div></div>
+  <div class="sp"><div class="conc"></div><div class="body"><b>Guiding Bolt</b><small>Magic Initiate · 120 ft · +8 · 4d6 + ventaja · gratis 1×/descanso largo, o con slot</small></div></div>
+  <div class="sp"><div class="conc"></div><div class="body"><b>Find Familiar</b><small>Wild Companion · gastá un <em>slot</em>, no un Wild Shape</small></div></div>
+</section>
+
+<!-- ============ COMBOS ============ -->
+<section class="panel" id="combos" role="tabpanel">
+  <h2>En la hoguera</h2>
+  <div class="beat">
+    <div class="when">1 slot 1°</div>
+    <div class="what"><b>Find Familiar</b> — búho que Ayuda todos los turnos
+      <small>Gastá un <em>slot</em>, no un Wild Shape. Ventaja para un aliado, gratis, toda la sesión.</small></div>
+  </div>
+  <div class="beat">
+    <div class="when">1 slot 2°</div>
+    <div class="what"><b>Aid</b> — +5 PG máximos a 3 del party, 8 horas
+      <small>Casteálo al arrancar. Sin concentración, te dura casi todo el one-shot.</small></div>
+  </div>
+  <div class="beat">
+    <div class="when">1 slot 3°</div>
+    <div class="what"><b>Animate Dead</b> — no-muerto permanente, 24 horas
+      <small>1 minuto de casteo, solo fuera de combate. Compite con Aura of Vitality: decidí temprano.</small></div>
+  </div>
+  <div class="beat">
+    <div class="when">Bonus</div>
+    <div class="what"><b>Barkskin</b> al más frágil del party — CA 17, 1 hora
+      <small>A vos no te sirve (CA 18). Al mago en CA 12 lo cambia por completo.</small></div>
+  </div>
+
+  <h2>Apertura</h2>
+  <div class="beat">
+    <div class="when">★ Clave</div>
+    <div class="what"><b>Blindness/Deafness</b> — <em>ciego 1 min, sin concentración</em>
+      <small>Lo más subestimado de tu kit. CD 16, gratis de la subclase, y te deja la concentración libre para Conjure Animals. Ventaja para todos contra él, desventaja en todo lo que tire.</small></div>
+  </div>
+  <div class="beat">
+    <div class="when">Timing</div>
+    <div class="what"><b>Guiding Bolt</b> justo antes del turno del pegador
+      <small>Los 4d6 son secundarios: lo que importa es la ventaja para el que le pegue después. No lo tires en el vacío.</small></div>
+  </div>
+  <div class="beat">
+    <div class="when">Timing</div>
+    <div class="what"><b>Toll the Dead</b> nunca de primero
+      <small>2d8 contra un objetivo intacto · <em>2d12 contra uno herido</em>. Esperá a que alguien lo lastime.</small></div>
+  </div>
+
+  <h2>En combate</h2>
+  <div class="beat">
+    <div class="when">Combo</div>
+    <div class="what"><b>Thorn Whip</b> → <b>Spike Growth</b> — <em>+4d4</em>
+      <small>Arrastrar 10 pies a través de las púas cuenta como movimiento. Sumale el latigazo y el Halo.</small></div>
+  </div>
+  <div class="beat">
+    <div class="when">Rodeado</div>
+    <div class="what"><b>Word of Radiance</b> — 2d6 a todos los adyacentes
+      <small>No lastima aliados. Con Halo of Spores encima, estar en el medio del enjambre te conviene.</small></div>
+  </div>
+  <div class="beat">
+    <div class="when">Se cura</div>
+    <div class="what"><b>Chill Touch</b> — bloquea toda regeneración
+      <small>Hasta el final de tu próximo turno. Es toque, así que solo en melee.</small></div>
+  </div>
+
+  <h2>Tu reacción · solo una por ronda</h2>
+  <table>
+    <tr><th>Prioridad</th><th>Cuándo</th></tr>
+    <tr><td class="nm">Absorb Elements</td><td class="rg">Aliento de dragón, trampa elemental</td></tr>
+    <tr><td class="nm">Fungal Infestation</td><td class="rg">Muere algo Peq/Med a 10 pies</td></tr>
+    <tr><td class="nm">Halo of Spores</td><td class="rg">Por defecto, si no pasó lo anterior</td></tr>
+    <tr><td class="nm">Reactive Spell</td><td class="rg">Alguien huye de tu alcance</td></tr>
+  </table>
+  <p class="note">Para <b>Reactive Spell</b> (War Caster) usá <b style="color:var(--spore)">Toll the Dead</b>: no necesita tirada de ataque y lo alcanza aunque ya se haya alejado.</p>
+
+  <h2>Emergencia</h2>
+  <div class="total">
+    <b>24</b><span>PG temporales por un slot de nivel 1</span>
+  </div>
+  <p class="note"><b>Tu mejor curación no es un hechizo de curación.</b> Wild Resurgence convierte un slot en un Wild Shape, y ese Wild Shape en Symbiotic Entity. Sin acción, una vez por turno. Cure Wounds al mismo nivel te da 14.</p>
+  <div class="warn">
+    <b>Los temporales no se apilan.</b> Esperá a que se te agoten antes de re-uppear, o tirás la diferencia a la basura.
+  </div>
+  <div class="beat">
+    <div class="when">Muere uno</div>
+    <div class="what"><b>Gentle Repose</b> al cuerpo — gratis de la subclase
+      <small>Extiende la ventana de Revivify a 10 días. Cargá el cadáver hasta encontrar quien lo levante.</small></div>
+  </div>
+</section>
+
+<!-- ============ RECURSOS ============ -->
+<section class="panel" id="recursos" role="tabpanel">
+  <div class="acts">
+    <button class="act fire" id="fire">🔥 Hoguera</button>
+    <button class="act" id="long">Descanso largo</button>
+  </div>
+  <p class="note">La hoguera devuelve <b>1 Wild Shape</b> y te deja gastar dados de golpe. Los slots y Fungal Infestation <b style="color:var(--blood)">no vuelven</b>.</p>
+
+  <div class="res">
+    <div class="res-head"><b>Wild Shape</b><span>+1 por hoguera</span></div>
+    <p>Cada uso = Symbiotic Entity: 24 PG temporales, 10 min.</p>
+    <div class="pips" data-n="3" data-k="ws"></div>
+  </div>
+
+  <div class="res">
+    <div class="res-head"><b>Fungal Infestation</b><span>descanso largo</span></div>
+    <p>Reacción · cadáver Peq/Med a 10 pies → zombi con 1 PG, 1 hora.</p>
+    <div class="pips" data-n="5" data-k="fi"></div>
+  </div>
+
+  <div class="res">
+    <div class="res-head"><b>Slots de nivel 1</b><span>descanso largo</span></div>
+    <div class="pips ember" data-n="4" data-k="s1"></div>
+  </div>
+  <div class="res">
+    <div class="res-head"><b>Slots de nivel 2</b><span>descanso largo</span></div>
+    <div class="pips ember" data-n="3" data-k="s2"></div>
+  </div>
+  <div class="res">
+    <div class="res-head"><b>Slots de nivel 3</b><span>descanso largo</span></div>
+    <div class="pips ember" data-n="3" data-k="s3"></div>
+  </div>
+
+  <div class="res">
+    <div class="res-head"><b>Dados de golpe</b><span>se gastan en hoguera</span></div>
+    <p>1d8 + 4 por dado.</p>
+    <div class="pips ember" data-n="6" data-k="hd"></div>
+  </div>
+
+  <div class="res">
+    <div class="res-head"><b>Guiding Bolt gratis</b><span>descanso largo</span></div>
+    <div class="pips ember" data-n="1" data-k="gb"></div>
+  </div>
+
+  <div class="res">
+    <div class="res-head"><b>Inspiración Heroica</b><span>descanso largo</span></div>
+    <p>Rasgo Resourceful del Humano. Repetí cualquier d20.</p>
+    <div class="pips ember" data-n="1" data-k="hi"></div>
+  </div>
+
+  <div class="warn">
+    <b>Wild Resurgence.</b> Una vez por turno, sin acción: gastá un slot y recuperás 1 Wild Shape. Y al revés — 1 Wild Shape → 1 slot de nivel 1, una vez por descanso largo.
+  </div>
+
+  <p class="note">Los contadores se guardan solos en el navegador. Para arrancar limpio antes de una sesión, tocá <b>Descanso largo</b>.</p>
+</section>
+
+<script>
+(function(){
+  var KEY='nigroamante-v1';
+  var state={};
+
+  // localStorage puede fallar (visor de artefactos, modo privado). Degrada sin romper.
+  var store={
+    read:function(){
+      try{
+        var raw=window.localStorage.getItem(KEY);
+        return raw?JSON.parse(raw):{};
+      }catch(e){return {}}
+    },
+    write:function(obj){
+      try{window.localStorage.setItem(KEY,JSON.stringify(obj))}catch(e){}
+    }
+  };
+
+  state=store.read();
+
+  // pestañas
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){
+      tabs.forEach(function(x){x.setAttribute('aria-selected','false')});
+      t.setAttribute('aria-selected','true');
+      [].forEach.call(document.querySelectorAll('.panel'),function(p){
+        p.classList.toggle('on',p.id===t.dataset.p);
+      });
+      window.scrollTo(0,0);
+    });
+  });
+
+  // pips
+  [].forEach.call(document.querySelectorAll('.pips'),function(row){
+    var key=row.dataset.k;
+    var n=parseInt(row.dataset.n,10);
+    var saved=state[key]||[];
+    for(var i=0;i<n;i++){
+      var b=document.createElement('button');
+      b.className='pip'+(row.classList.contains('ember')?' ember':'');
+      b.dataset.spent=saved[i]?'1':'0';
+      b.dataset.i=i;
+      b.setAttribute('aria-label','Uso '+(i+1));
+      b.addEventListener('click',function(){
+        this.dataset.spent=this.dataset.spent==='1'?'0':'1';
+        save(row);
+      });
+      row.appendChild(b);
+    }
+  });
+
+  function save(row){
+    var key=row.dataset.k;
+    state[key]=[].map.call(row.children,function(p){
+      return p.dataset.spent==='1'?1:0;
+    });
+    store.write(state);
+  }
+
+  function refill(key){
+    var row=document.querySelector('.pips[data-k="'+key+'"]');
+    if(!row)return;
+    [].forEach.call(row.children,function(p){p.dataset.spent='0'});
+    save(row);
+  }
+  function refillOne(key){
+    var row=document.querySelector('.pips[data-k="'+key+'"]');
+    if(!row)return;
+    var spent=[].filter.call(row.children,function(p){return p.dataset.spent==='1'});
+    if(spent.length){
+      spent[spent.length-1].dataset.spent='0';
+      save(row);
+    }
+  }
+
+  document.getElementById('fire').addEventListener('click',function(){
+    refillOne('ws');
+  });
+  document.getElementById('long').addEventListener('click',function(){
+    ['ws','fi','s1','s2','s3','hd','gb','hi'].forEach(refill);
+  });
+})();
+</script>
+</body>
+</html>
