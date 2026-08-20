@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kagemusha no Yoru ⛩</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --parchment: #f4ead8;
+    --parchment-dark: #e8d8b8;
+    --red: #8b1a1a;
+    --red-deep: #5c0a0a;
+    --gold: #c9921a;
+    --gold-light: #e8b84a;
+    --gold-pale: #f5e4b0;
+    --brown: #4a2e1a;
+    --brown-light: #7a5030;
+    --gray: #6a5a4a;
+    --shadow: rgba(26,18,8,0.18);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--ink);
+    font-family: 'Crimson Pro', Georgia, serif;
+    color: var(--ink);
+    min-height: 100vh;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,0.012) 60px, rgba(255,255,255,0.012) 61px),
+      repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.012) 60px, rgba(255,255,255,0.012) 61px);
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: linear-gradient(180deg, #0e0a04 0%, #1a1208 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 28px 40px 20px;
+    text-align: center;
+    position: relative;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0; right: 0; height: 2px;
+    background: var(--red-deep);
+  }
+  .site-header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 4vw, 38px);
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 6px;
+    text-shadow: 0 0 40px rgba(201,146,26,0.4);
+  }
+  .site-header p {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    color: #a08040;
+    font-size: 16px;
+    margin-top: 6px;
+    letter-spacing: 2px;
+  }
+  .header-meta {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .header-meta span {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #7a6030;
+    border: 1px solid #3a2a10;
+    padding: 4px 12px;
+    border-radius: 2px;
+  }
+
+  /* ── TABS NAV ── */
+  .tabs-nav {
+    background: #120e06;
+    border-bottom: 1px solid #2a1e0a;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) #1a1208;
+    padding: 0 16px;
+    gap: 2px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .tabs-nav::-webkit-scrollbar { height: 3px; }
+  .tabs-nav::-webkit-scrollbar-track { background: #1a1208; }
+  .tabs-nav::-webkit-scrollbar-thumb { background: var(--gold); }
+
+  .tab-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: #6a5030;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 14px 18px 11px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .tab-btn:hover { color: var(--gold-light); }
+  .tab-btn.active {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold);
+    background: rgba(201,146,26,0.06);
+  }
+  .mission-btn.active { border-bottom-color: var(--red); color: #d46060; }
+  .mission-btn:hover { color: #d46060; }
+
+  /* ── CONTENT ── */
+  .tab-content {
+    display: none;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── TYPOGRAPHY ── */
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(18px, 3vw, 26px);
+    color: var(--gold-light);
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 40px 0 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #3a2a10;
+    text-shadow: 0 0 20px rgba(201,146,26,0.25);
+  }
+  h2:first-child { margin-top: 0; }
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(14px, 2vw, 18px);
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    margin: 28px 0 10px;
+  }
+  h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--brown-light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 20px 0 8px;
+  }
+  p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #c8b890;
+    margin-bottom: 14px;
+  }
+  ul { margin: 10px 0 16px 24px; }
+  li {
+    font-size: 16px;
+    line-height: 1.75;
+    color: #c8b890;
+    margin-bottom: 8px;
+  }
+  li strong { color: var(--gold-light); }
+  strong { color: #e8c870; }
+  em { color: #b09060; font-style: italic; }
+
+  /* ── QUOTE BLOCK ── */
+  .quote-block {
+    background: rgba(10,7,2,0.6);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+    padding: 18px 24px;
+    margin: 20px 0;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.85;
+    color: #d4b870;
+    position: relative;
+  }
+  .quote-block::before {
+    content: '"';
+    position: absolute;
+    top: -8px; left: 16px;
+    font-size: 48px;
+    color: var(--gold);
+    opacity: 0.3;
+    font-family: Georgia, serif;
+    line-height: 1;
+  }
+  .quote-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--brown-light);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+    font-style: normal;
+  }
+
+  /* ── NPC CARD ── */
+  .npc-card {
+    background: linear-gradient(135deg, #1e1408 0%, #160f06 100%);
+    border: 1px solid #3a2a14;
+    border-top: 3px solid var(--brown-light);
+    border-radius: 4px;
+    margin: 16px 0;
+    overflow: hidden;
+  }
+  .npc-header {
+    background: linear-gradient(90deg, #2a1a08, #1e1208);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #3a2510;
+  }
+  .npc-emoji { font-size: 20px; }
+  .npc-name {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--gold-light);
+    letter-spacing: 1px;
+  }
+  .npc-role {
+    font-style: italic;
+    font-size: 13px;
+    color: #7a6040;
+    margin-left: 4px;
+  }
+  .npc-body { padding: 16px 20px; }
+  .npc-body p { font-size: 16px; margin-bottom: 10px; }
+  .npc-hook {
+    background: rgba(201,146,26,0.08);
+    border: 1px solid rgba(201,146,26,0.2);
+    border-radius: 3px;
+    padding: 10px 14px;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--gold);
+    margin-top: 10px;
+  }
+  .npc-hook::before { content: '▸ Hook: '; font-style: normal; color: var(--red); font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 1px; }
+
+  /* ── ENCOUNTER BOX ── */
+  .encounter {
+    background: #0e0905;
+    border: 1px solid var(--red-deep);
+    border-top: 4px solid var(--red);
+    border-radius: 4px;
+    margin: 24px 0;
+    overflow: hidden;
+  }
+  .encounter-header {
+    background: linear-gradient(90deg, var(--red-deep), #3a0808);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .encounter-title {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #f0d090;
+    letter-spacing: 1px;
+  }
+  .encounter-cr {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: #c08060;
+    letter-spacing: 2px;
+    border: 1px solid #5a2010;
+    padding: 3px 10px;
+    border-radius: 2px;
+    background: rgba(0,0,0,0.3);
+  }
+  .encounter-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    border-top: 1px solid #1e0e06;
+  }
+  .encounter-row:nth-child(even) { background: rgba(255,255,255,0.015); }
+  .enc-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    padding: 12px 16px;
+    border-right: 1px solid #1e0e06;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 14px;
+  }
+  .enc-value {
+    padding: 12px 16px;
+    font-size: 15px;
+    color: #c0a870;
+    line-height: 1.7;
+  }
+  .enc-value strong { color: #e8c870; }
+  .mob-entry {
+    display: inline-block;
+    background: rgba(139,26,26,0.15);
+    border: 1px solid rgba(139,26,26,0.3);
+    border-radius: 3px;
+    padding: 2px 8px;
+    margin: 2px 3px;
+    font-size: 14px;
+    color: #d4a860;
+  }
+  .mob-cr { color: #a07040; font-size: 12px; }
+  .mob-page { color: #7a5030; font-size: 12px; font-style: italic; }
+
+  /* ── ITEM BOX ── */
+  .item-box {
+    background: linear-gradient(135deg, #141008 0%, #0e0c06 100%);
+    border: 1px solid var(--gold);
+    border-top: 3px solid var(--gold-light);
+    border-radius: 4px;
+    margin: 14px 0;
+    overflow: hidden;
+  }
+  .item-header {
+    background: linear-gradient(90deg, #2a200a, #1a1606);
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+    border-bottom: 1px solid #3a2a0a;
+  }
+  .item-name {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 1px;
+  }
+  .item-type {
+    font-size: 12px;
+    color: #8a7040;
+    font-style: italic;
+  }
+  .item-body {
+    padding: 14px 18px;
+    font-size: 15px;
+    color: #c0a860;
+    line-height: 1.75;
+  }
+
+  /* ── PUZZLE BOX ── */
+  .puzzle-box {
+    background: #0a0d12;
+    border: 1px solid #2a3a5a;
+    border-top: 3px solid #4a6a9a;
+    border-radius: 4px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+  .puzzle-title {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: #6a9acA;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .string-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin: 16px 0;
+  }
+  .string-item {
+    background: rgba(74,106,154,0.15);
+    border: 1px solid #2a3a5a;
+    border-radius: 3px;
+    padding: 10px 6px;
+    text-align: center;
+  }
+  .string-num {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    color: #4a7aaa;
+    font-weight: 700;
+    display: block;
+  }
+  .string-elem {
+    font-size: 13px;
+    color: #8aaaca;
+    display: block;
+    margin-top: 2px;
+  }
+  .wall-entry {
+    background: rgba(10,13,18,0.5);
+    border-left: 2px solid #3a5a8a;
+    padding: 10px 14px;
+    margin: 8px 0;
+    font-style: italic;
+    font-size: 15px;
+    color: #8aaaca;
+    line-height: 1.7;
+  }
+  .wall-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #4a6a9a;
+    font-style: normal;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .solution-box {
+    background: rgba(74,170,74,0.1);
+    border: 1px solid rgba(74,170,74,0.3);
+    border-radius: 3px;
+    padding: 12px 16px;
+    margin-top: 16px;
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #70ca70;
+    text-align: center;
+  }
+
+  /* ── DRAGON BOX ── */
+  .dragon-box {
+    background: linear-gradient(135deg, #06100e 0%, #040c0a 100%);
+    border: 1px solid #1a4a3a;
+    border-top: 4px solid #2a7a5a;
+    border-radius: 4px;
+    margin: 20px 0;
+    overflow: hidden;
+  }
+  .dragon-header {
+    background: linear-gradient(90deg, #0a2018, #061410);
+    padding: 16px 20px;
+    border-bottom: 1px solid #1a3a2a;
+    text-align: center;
+  }
+  .dragon-title {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #60d4a0;
+    letter-spacing: 3px;
+    text-shadow: 0 0 20px rgba(96,212,160,0.3);
+  }
+  .dragon-subtitle { font-size: 13px; color: #3a7a5a; margin-top: 4px; font-style: italic; }
+  .dragon-row {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    border-top: 1px solid #0e2018;
+  }
+  .dragon-row:nth-child(even) { background: rgba(255,255,255,0.02); }
+  .drag-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: #2a7a5a;
+    padding: 12px 16px;
+    border-right: 1px solid #0e2018;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 14px;
+    text-transform: uppercase;
+  }
+  .drag-value {
+    padding: 12px 16px;
+    font-size: 15px;
+    color: #80c4a0;
+    line-height: 1.7;
+  }
+  .drag-value strong { color: #60d4a0; }
+
+  /* ── POTENCIACION ── */
+  .power-box {
+    background: radial-gradient(ellipse at center, #1a1408 0%, #0a0804 100%);
+    border: 2px solid var(--gold);
+    border-radius: 6px;
+    padding: 28px;
+    margin: 24px 0;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(201,146,26,0.15), inset 0 0 40px rgba(201,146,26,0.05);
+  }
+  .power-title {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 4px;
+    text-shadow: 0 0 20px rgba(232,184,74,0.5);
+    margin-bottom: 16px;
+  }
+  .power-desc {
+    font-size: 18px;
+    color: #d4a840;
+    line-height: 1.8;
+    max-width: 600px;
+    margin: 0 auto 16px;
+  }
+  .power-cost {
+    font-style: italic;
+    font-size: 14px;
+    color: #7a6030;
+    border-top: 1px solid #3a2a10;
+    padding-top: 12px;
+    margin-top: 12px;
+  }
+
+  /* ── TABLE ── */
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin: 16px 0;
+  }
+  .ref-table thead { background: #1a1208; }
+  .ref-table th {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    padding: 12px 12px;
+    border-bottom: 2px solid var(--gold);
+    text-align: left;
+  }
+  .ref-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #1e1608;
+    color: #c0a870;
+    line-height: 1.5;
+    vertical-align: top;
+  }
+  .ref-table tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+  .ref-table tr:hover { background: rgba(201,146,26,0.05); }
+  .ref-table .mob-orig { color: #e8c870; font-weight: 600; }
+  .ref-table .mob-reskin { color: #a08050; font-style: italic; }
+  .ref-table .mob-page { color: #5a4020; }
+  .ref-table .mob-cr { text-align: center; color: var(--red); font-family: 'Cinzel', serif; font-size: 12px; }
+
+  /* ── RUMOR CARD ── */
+  .rumor-card {
+    background: #0e0a06;
+    border: 1px solid #2a1e0a;
+    border-left: 3px solid var(--brown-light);
+    border-radius: 0 4px 4px 0;
+    padding: 14px 18px;
+    margin: 10px 0;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+  }
+  .rumor-text { font-style: italic; font-size: 16px; color: #c0a870; line-height: 1.6; }
+  .rumor-arrow {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--gold);
+    border: 1px solid #3a2a10;
+    padding: 4px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+    background: rgba(201,146,26,0.08);
+    text-align: center;
+  }
+
+  /* ── ZONE CARD ── */
+  .zone-card {
+    background: #0e0a06;
+    border: 1px solid #2a1e0a;
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin: 10px 0;
+  }
+  .zone-name {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .zone-desc { font-size: 15px; color: #a89060; line-height: 1.7; }
+
+  /* ── VAULT ITEM ── */
+  .vault-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid #1e1608;
+  }
+  .vault-item:last-child { border-bottom: none; }
+  .vault-bullet { color: var(--gold); font-size: 18px; flex-shrink: 0; line-height: 1.4; }
+  .vault-text { font-size: 16px; color: #c0a870; line-height: 1.7; }
+  .vault-text strong { color: var(--gold-light); }
+
+  /* ── FINAL SECTION ── */
+  .final-box {
+    background: linear-gradient(135deg, #0e0a06, #08060300);
+    border: 1px solid #3a2a14;
+    border-top: 4px solid var(--gold);
+    border-radius: 4px;
+    padding: 24px;
+    margin: 20px 0;
+  }
+  .final-title {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 32px 0;
+    color: #3a2a10;
+    font-size: 14px;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #2a1e0a;
+  }
+  .divider span { color: var(--gold); font-size: 16px; }
+
+  /* ── TACTICAL LIST ── */
+  .tactic-list { margin: 10px 0; padding: 0; list-style: none; }
+  .tactic-list li {
+    padding: 6px 0 6px 20px;
+    position: relative;
+    border-bottom: 1px solid #1e1608;
+    font-size: 15px;
+  }
+  .tactic-list li:last-child { border-bottom: none; }
+  .tactic-list li::before { content: '▸'; position: absolute; left: 0; color: var(--red); }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #0e0a06; }
+  ::-webkit-scrollbar-thumb { background: #3a2a10; border-radius: 3px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .encounter-row { grid-template-columns: 90px 1fr; }
+    .dragon-row { grid-template-columns: 120px 1fr; }
+    .string-grid { grid-template-columns: repeat(3, 1fr); }
+    .rumor-card { grid-template-columns: 1fr; }
+    .site-header { padding: 20px 16px; }
+    .tab-content { padding: 24px 14px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>⛩ KAGEMUSHA NO YORU ⛩</h1>
+  <p>La Noche del Guerrero Sombra</p>
+  <div class="header-meta">
+    <span>D&D 5e</span>
+    <span>4 Jugadores · Nivel 8</span>
+    <span>Medieval Japonés</span>
+    <span>4–5 Horas</span>
+  </div>
+</header>
+
+<nav class="tabs-nav">
+  <button class="tab-btn active" onclick="showTab('intro')">I. Introducción</button>
+  <button class="tab-btn" onclick="showTab('hub')">II. El Castillo</button>
+  <button class="tab-btn" onclick="showTab('npcs')">III. NPCs</button>
+  <button class="tab-btn mission-btn" onclick="showTab('m1')">Misión 1 · Rehenes</button>
+  <button class="tab-btn mission-btn" onclick="showTab('m2')">Misión 2 · Acero</button>
+  <button class="tab-btn mission-btn" onclick="showTab('m3')">Misión 3 · Bóveda</button>
+  <button class="tab-btn mission-btn" onclick="showTab('m4')">Misión 4 · Cuervos</button>
+  <button class="tab-btn" onclick="showTab('climax')">VII. Clímax y Final</button>
+  <button class="tab-btn" onclick="showTab('ref')">VIII. Referencia</button>
+</nav>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB 1: INTRODUCCIÓN -->
+<!-- ══════════════════════════════════════ -->
+<div id="intro" class="tab-content active">
+
+  <h2>I. La Convocatoria</h2>
+
+  <h4>Leer en voz alta al inicio</h4>
+  <div class="quote-block">
+    El llamado llegó con un sello de laca roja: el ojo del dragón, símbolo de la Casa Uchida. No era una invitación. Era una convocatoria.
+  </div>
+
+  <p>Los aventureros son conducidos al Castillo Shirogane en la cima de una colina neblinosa. El camino está flanqueado por estandartes quemados en los bordes —testigos de la guerra reciente. Al cruzar el puente levadizo, el olor a pino quemado y metal caliente los recibe. Los soldados que montan guardia tienen heridas frescas. Los patios interiores albergan refugiados: familias que perdieron sus hogares, soldados que perdieron a sus compañeros.</p>
+
+  <h4>Descripción evocativa</h4>
+  <div class="quote-block">
+    El castillo Shirogane se alza sobre la colina como un fantasma de madera blanca y tejas grises. Los estandartes del Rey Kensho ondean junto a otros más gastados, de provincias que ya no existen. En el patio, un herrero golpea metal con furia sorda. Una mujer llora sentada junto a una linterna apagada. Dos guardias discuten en voz baja señalando un mapa. Hay tensión aquí, pero también algo más: la voluntad de seguir.
+  </div>
+
+  <h2>Recepción — Consejero Daichi Mori</h2>
+
+  <p>Los guardias los conducen a la <strong>Sala del Crisantemo</strong>, una habitación austera con un mapa de la región desplegado sobre una mesa baja. El Consejero Daichi Mori los espera de pie, las manos juntas detrás de la espalda. Sus manos tiemblan levemente cuando las separa para señalar el mapa.</p>
+
+  <div class="quote-block">
+    <span class="quote-label">Daichi Mori dice:</span>
+    Gracias por responder al sello. No tenemos tiempo para cortesías. El reino fue invadido hace tres meses por fuerzas del Continente del Hierro —un poder que no conocíamos, con armas que no habíamos visto y una magia que aún no comprendemos del todo. El Rey Kensho lideró la contraofensiva. Recuperamos el territorio. Pero la guerra no terminó.
+  </div>
+
+  <p>Daichi señala el norte del mapa, donde los marcadores rojos se acumulan más allá de las montañas.</p>
+
+  <div class="quote-block">
+    <span class="quote-label">Daichi Mori continúa:</span>
+    El rey parte al frente norte en cuestión de horas. Lo que viene del norte es diferente a los invasores que ya vencimos. Es más antiguo. Más frío. El rey cree que puede enfrentarlo —pero necesita que el reino esté estable cuando lo haga. Necesita que esta región esté ordenada.
+  </div>
+
+  <p>Mori hace una pausa. Baja la voz.</p>
+
+  <div class="quote-block">
+    <span class="quote-label">Daichi Mori, en voz baja:</span>
+    El Rey Kensho no es solo un guerrero. Es un Archimago. Puede ver los hilos de magia que atraviesan el mundo y puede —con suficiente costo personal— transferir poder a sus aliados. Si demuestran ser dignos antes de su partida, el rey los potenciará para la batalla que viene. El poder sin costo es ilusión. Él lo sabe mejor que nadie.
+  </div>
+
+  <div class="quote-block">
+    Hay cuatro asuntos urgentes en la Región de Kurokawa. No tienen tiempo para todos. Elijan con sabiduría —lo que dejen sin resolver tendrá consecuencias cuando el rey regrese.
+  </div>
+
+  <p>El consejero extiende el mapa. <strong>Cuatro zonas marcadas en rojo:</strong> la posada al suroeste, el almacén al sur, las ruinas del templo al sureste, y las colinas al noroeste.</p>
+
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB 2: EL CASTILLO -->
+<!-- ══════════════════════════════════════ -->
+<div id="hub" class="tab-content">
+
+  <h2>II. La Fogata del Patio</h2>
+
+  <p>Antes de elegir misiones, los jugadores pueden recorrer el castillo libremente. El centro de gravedad social es la fogata del patio interior, donde soldados y refugiados se reúnen por las noches. El fuego cruje. Alguien toca un laúd de manera distraída. Las conversaciones son bajas, cargadas.</p>
+
+  <div class="quote-block">
+    La fogata del patio central es más grande de lo que debería ser para un castillo en alerta. Como si la gente necesitara el calor tanto como la luz. Un soldado con el brazo vendado le explica algo a un niño con paciencia infinita. Una mujer de cabello oscuro revuelve un cuenco sin comer. Dos veteranos discuten en voz baja, señalando con la cabeza hacia los muros del norte. El humo sube derecho —no hay viento. Como si el castillo contuviera el aliento.
+  </div>
+
+  <h2>Los Rumores — Cómo llegan a las misiones</h2>
+
+  <p>Con una tirada de <strong>Perspicacia DC 10</strong> o simplemente prestando atención, los jugadores escuchan conversaciones que los llevan a los NPCs:</p>
+
+  <div class="rumor-card">
+    <div class="rumor-text">"Vi sombras moviéndose solas en el barrio comercial. No eran hombres." — Un guardia lo dice mirando al sur. Hana Sato está sentada sola cerca, escuchando. Cuando los jugadores se acercan, los mira con ojos agotados.</div>
+    <div class="rumor-arrow">→ Misión 1<br>Hana Sato</div>
+  </div>
+
+  <div class="rumor-card">
+    <div class="rumor-text">"El herrero perdió su mejor yunque en el robo. Sin él no puede forjar los sellos mágicos." — Un refugiado lo dice con frustración. Tanaka Ryu está al fondo del patio, golpeando metal con rabia contenida.</div>
+    <div class="rumor-arrow">→ Misión 2<br>Tanaka Ryu</div>
+  </div>
+
+  <div class="rumor-card">
+    <div class="rumor-text">"El viejo y loco bardo dice que sabe cómo abrir la bóveda del templo." — Dos guardias se ríen. El curandero Jirou interviene: "No está tan loco. Fue custodio del templo veinte años."</div>
+    <div class="rumor-arrow">→ Misión 3<br>Sensei Kira</div>
+  </div>
+
+  <div class="rumor-card">
+    <div class="rumor-text">"El sargento Hayashi lleva tres días sin dormir. Dice que los traidores tienen a alguien infiltrado aquí adentro." — Un soldado joven lo dice en voz baja. La Torre de Vigilancia está iluminada.</div>
+    <div class="rumor-arrow">→ Misión 4<br>Sgt. Hayashi</div>
+  </div>
+
+  <h2>Zonas del Castillo</h2>
+
+  <div class="zone-card">
+    <div class="zone-name">⚒ La Herrería de Tanaka</div>
+    <div class="zone-desc">Zona caliente, ruidosa. Tanaka trabaja en silencio furioso con materiales de segunda calidad. Si los jugadores recuperan el <strong>Acero Estelar</strong> (Misión 2), puede forjar objetos mágicos. Si completan la Misión 3 y traen la <strong>Gema de Memoria</strong>, entrega la <strong>Katana de Fuego</strong>.</div>
+  </div>
+
+  <div class="zone-card">
+    <div class="zone-name">🏥 La Enfermería</div>
+    <div class="zone-desc">El curandero Jirou atiende heridos y puede tratar sus heridas. Información: <em>"Los invasores usan veneno en sus armas. Un veneno sin antídoto conocido en este reino."</em></div>
+  </div>
+
+  <div class="zone-card">
+    <div class="zone-name">🔒 Los Calabozos del Este</div>
+    <div class="zone-desc">Sensei Kira, erudito anciano y ex-custodio del Templo de Izanagi. Lúcido en intervalos. Entrega la Misión 3 y puede dar pistas sobre el puzzle musical.</div>
+  </div>
+
+  <div class="zone-card">
+    <div class="zone-name">🗼 La Torre de Vigilancia</div>
+    <div class="zone-desc">Sargento Hayashi. Desde aquí se ve humo en tres direcciones distintas. Entrega la Misión 4.</div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB 3: NPCs -->
+<!-- ══════════════════════════════════════ -->
+<div id="npcs" class="tab-content">
+
+  <h2>III. NPCs Principales</h2>
+
+  <div class="npc-card">
+    <div class="npc-header">
+      <span class="npc-emoji">👤</span>
+      <span class="npc-name">Daichi Mori</span>
+      <span class="npc-role">— Consejero del Rey</span>
+    </div>
+    <div class="npc-body">
+      <p>Hombre de mediana edad, calma forzada. Pragmático: prefiere pocas misiones bien resueltas que todas a medias. Sus manos tiemblan levemente —lleva semanas sin dormir bien. Conoce el costo político de cada decisión.</p>
+      <div class="npc-hook">¿Cuál de estos problemas les parece más urgente? Eso me dice mucho sobre quiénes son.</div>
+    </div>
+  </div>
+
+  <div class="npc-card">
+    <div class="npc-header">
+      <span class="npc-emoji">👤</span>
+      <span class="npc-name">Hana Sato</span>
+      <span class="npc-role">— Ciudadana · Misión 1</span>
+    </div>
+    <div class="npc-body">
+      <p>Mujer de 40 años, campesina. Su hijo adolescente y su vecino anciano fueron capturados por una patrulla invasora que se resistió a retirarse. Directa, sin recursos, desesperada pero no histérica. Lleva un pañuelo de seda con el nombre de su hijo bordado.</p>
+      <div class="npc-hook">No les pido que sean héroes. Solo que traigan a mi hijo a casa.</div>
+    </div>
+  </div>
+
+  <div class="npc-card">
+    <div class="npc-header">
+      <span class="npc-emoji">👤</span>
+      <span class="npc-name">Tanaka Ryu</span>
+      <span class="npc-role">— Herrero del Castillo · Misión 2</span>
+    </div>
+    <div class="npc-body">
+      <p>Fornido, quemaduras en los brazos, pocas palabras. Los materiales robados incluyen <strong>Acero Estelar</strong> —mineral de meteorito que retiene encantamientos arcanos superiores. Sin él, no puede forjar los sellos del rey ni la Katana de Fuego.</p>
+      <div class="npc-hook">Si recuperan ese acero, les debo una deuda. Y yo siempre pago mis deudas.</div>
+    </div>
+  </div>
+
+  <div class="npc-card">
+    <div class="npc-header">
+      <span class="npc-emoji">👤</span>
+      <span class="npc-name">Sensei Kira</span>
+      <span class="npc-role">— Erudito Anciano · Misión 3</span>
+    </div>
+    <div class="npc-body">
+      <p>Viejecito con túnica rota. Lúcido en intervalos, divaga en los otros. Fue custodio del Templo de Izanagi durante veinte años. Conoce la historia de la creación grabada en sus paredes y los peligros que protegen la bóveda. Habla en metáforas, pero sus instrucciones son precisas.</p>
+      <div class="npc-hook">La bóveda no se abre con fuerza. Se abre con memoria. ¿Recuerdan el sonido del primer amanecer?</div>
+    </div>
+  </div>
+
+  <div class="npc-card">
+    <div class="npc-header">
+      <span class="npc-emoji">👤</span>
+      <span class="npc-name">Sargento Hayashi</span>
+      <span class="npc-role">— Soldado Veterano · Misión 4</span>
+    </div>
+    <div class="npc-body">
+      <p>Cicatriz diagonal en la mejilla izquierda, postura rígida incluso en reposo. Tres días sin dormir. Sospecha que uno de sus hombres filtró información al campamento traidor. No sabe quién. Lleva una lista mental de sospechosos y los observa a todos con igual desconfianza.</p>
+      <div class="npc-hook">Necesito a alguien que pueda entrar allí sin que los vean venir. Mis hombres son soldados, no sombras.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB 4: MISIÓN 1 -->
+<!-- ══════════════════════════════════════ -->
+<div id="m1" class="tab-content">
+
+  <h2>Misión 1 — El Silencio de los Rehenes</h2>
+
+  <div class="npc-card" style="margin-bottom:24px;">
+    <div class="npc-header"><span class="npc-emoji">👤</span><span class="npc-name">Hana Sato</span><span class="npc-role">— otorga esta misión</span></div>
+    <div class="npc-body"><p>Mujer de 40 años, campesina. Directa, sin recursos, desesperada pero no histérica. Lleva un pañuelo de seda con el nombre de su hijo bordado.</p><div class="npc-hook">No les pido que sean héroes. Solo que traigan a mi hijo a casa.</div></div>
+  </div>
+
+  <h3>Introducción narrativa</h3>
+  <p>Hana Sato habla sin levantar la vista de sus manos. Su hijo tenía quince años cuando la patrulla invasora lo tomó junto al vecino anciano. Eso fue hace cuatro días. La posada donde están atrincherados —<strong>La Posada del Ciprés</strong>— está a una hora a pie al suroeste. Nadie del ejército fue a buscarlos: no había órdenes, y los invasores amenazaron con matar a los rehenes si se acercaban soldados uniformados.</p>
+  <p>Se puede ir en silencio por los campos de arroz quemados. La posada de madera aparece al doblar un camino entre bambús. Las ventanas del primer piso están bloqueadas con muebles. En el techo, una figura oscura vigila con arco en mano. En el interior se escuchan voces en idioma extranjero —duras, militares— y entre ellas, el llanto contenido de un niño.</p>
+  <p>No hay tiempo para un asedio. El capitán de la patrulla tiene <strong>órdenes selladas</strong> que no parecen ser las mismas que las del invasor principal —algo está fuera de lugar.</p>
+
+  <h3>Objetivo</h3>
+  <p>Rescatar a los <strong>7 rehenes</strong> con vida. Si capturan al Capitán con vida, las órdenes selladas revelan al traidor infiltrado en el castillo.</p>
+
+  <div class="divider"><span>⚔</span></div>
+
+  <h3>Encuentro 1 — La Planta Baja</h3>
+
+  <h4>Descripción para el DM</h4>
+  <p>El interior huele a aceite de cocina y miedo. Las mesas volcadas forman barricadas improvisadas entre la entrada y la escalera. Cuatro soldados en formación, entrenados —no están asustados, están esperando. Un suboficial dirige desde la mitad de la sala. Las antorchas proyectan sombras largas. El espacio es estrecho: 5 pies entre mesas. Una viga del techo cruje —podría usarse con Thunderwave del Druida para desestabilizar la estructura parcialmente.</p>
+
+  <div class="encounter">
+    <div class="encounter-header">
+      <span class="encounter-title">⚔ Patrulla de Entrada</span>
+      <span class="encounter-cr">CR ~7 · ~2,100 XP ajust.</span>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Escenario</span>
+      <div class="enc-value">Planta baja de la posada. Pasillos de 5ft entre mesas volcadas. Luz de antorcha, visión a 30ft. El Druida puede usar Thunderwave para crear caos. Riesgo de incendio si caen antorchas.</div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Enemigos</span>
+      <div class="enc-value">
+        <span class="mob-entry">5× Hobgoblin Warrior <span class="mob-cr">CR 1/2</span> <span class="mob-page">p.174</span></span>
+        <span class="mob-entry">1× Guard Captain <span class="mob-cr">CR 2</span> <span class="mob-page">p.165</span></span>
+        <span class="mob-entry">1× Hobgoblin Captain <span class="mob-cr">CR 3</span> <span class="mob-page">p.174</span></span>
+      </div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Tácticas</span>
+      <div class="enc-value">Los Ashigaru forman escudo en la entrada (Pack Tactics activo si son 3+ contra el mismo objetivo). El Hobgoblin Captain usa <strong>Rallying Cry</strong> para dar ventaja a 3 aliados. El Guard Captain flanquea al Bárbaro buscando la espalda. Si el Druida lanza Entangle: los Ashigaru quedan atrapados, el Captain intenta romper concentración. Si pierden 3+ aliados, se retiran al piso superior.</div>
+    </div>
+  </div>
+
+  <div class="divider"><span>⚔</span></div>
+
+  <h3>Encuentro 2 — El Tejado</h3>
+
+  <h4>Descripción para el DM</h4>
+  <p>El tejado de tejas grises se extiende unos 40 por 30 pies. Los bordes no tienen barandas —una caída implica <strong>3d6 daño contundente</strong> (Destreza DC 14 para agarrarse). El capitán no lleva el uniforme estándar del invasor. A su lado, dos figuras en forma parcialmente animal. Y en el costado norte, una criatura alada con cola de espinas.</p>
+  <p>El Capitán abre desde la invisibilidad. Los mercenarios-tigre van a los flancos. La criatura alada puede clavar dardos en cualquier punto del tejado desde el aire.</p>
+
+  <div class="encounter">
+    <div class="encounter-header">
+      <span class="encounter-title">⚔ El Capitán de la Partida</span>
+      <span class="encounter-cr">CR ~11 · ~5,800 XP ajust.</span>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Escenario</span>
+      <div class="enc-value">Tejado de la posada. 40×30ft, sin barandas. Caída: 3d6 (Dest. DC14). El Druida en Wild Shape aéreo tiene movilidad pero la Manticore lo contrarresta.</div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Enemigos</span>
+      <div class="enc-value">
+        <span class="mob-entry">1× Assassin <span class="mob-cr">CR 8</span> <span class="mob-page">p.308</span></span>
+        <span class="mob-entry">2× Weretiger <span class="mob-cr">CR 4</span> <span class="mob-page">p.329</span></span>
+        <span class="mob-entry">1× Manticore <span class="mob-cr">CR 3</span> <span class="mob-page">p.205</span></span>
+      </div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Tácticas</span>
+      <div class="enc-value">El Shinobi abre invisible (Bonus Action Invisibility). Los Luchadores-Tigre flanquean: uno melee contra el Bárbaro, otro hostiga al Druida en vuelo con Longbow. La Manticore lanza Tail Spikes contra el Paladín (3 ataques, 2d6+2 c/u). Ronda 2: el Shinobi envenena al Pícaro. Si el Shinobi baja a <strong>30 PG</strong>, pide rendición —tiene las órdenes selladas y negocia su inmunidad.</div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Recompensa</span>
+      <div class="enc-value">Órdenes selladas del Capitán (revelan al traidor infiltrado). 80 po. Vial de antídoto. <strong>Piedra de Gratitud</strong> (de Hana Sato).</div>
+    </div>
+  </div>
+
+  <h3>Resolución</h3>
+  <ul>
+    <li><strong>Éxito completo:</strong> Los 7 rehenes vivos, órdenes selladas obtenidas. Hana Sato entrega la Piedra de Gratitud. El traidor queda identificado.</li>
+  </ul>
+
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB 5: MISIÓN 2 -->
+<!-- ══════════════════════════════════════ -->
+<div id="m2" class="tab-content">
+
+  <h2>Misión 2 — El Acero que Canta</h2>
+
+  <div class="npc-card" style="margin-bottom:24px;">
+    <div class="npc-header"><span class="npc-emoji">👤</span><span class="npc-name">Tanaka Ryu</span><span class="npc-role">— otorga esta misión</span></div>
+    <div class="npc-body"><p>Fornido, quemaduras en los brazos, pocas palabras.</p><div class="npc-hook">Si recuperan ese acero, les debo una deuda. Y yo siempre pago mis deudas.</div></div>
+  </div>
+
+  <h3>Introducción narrativa</h3>
+  <p>Tanaka Ryu no hace preguntas. Saca un trozo de metal corriente del yunque, lo muestra —es opaco, pesado, sin vida. Luego abre un cajón vacío que huele a mineral quemado y hierro frío. <em>"Acero Estelar"</em>, dice. <em>"Caído del cielo hace cuarenta años. No hay más en este reino. Sin él, los sellos mágicos del castillo no pueden reforzarse. Y la Katana —"</em> se detiene. <em>"Primero tráiganme el acero."</em></p>
+  <p>El rastro empieza en el mercado negro al sur: una carreta con ruedas anchas, herrajes pintados de negro, huellas de bueyes pesados. El Pícaro puede seguir el rastro por callejones. El Druida en forma animal puede rastrear por olfato (el Acero Estelar tiene un aroma metálico dulce, único). El cargamento terminó en un almacén de madera al borde de la ciudad, con guardias que no parecen mercenarios comunes.</p>
+
+  <h3>Objetivo</h3>
+  <p>Rastrear el cargamento de <strong>Acero Estelar</strong> y recuperarlo intacto. Si los cofres son dañados, Tanaka no puede trabajar con él o puede forjar menos objetos.</p>
+
+  <div class="divider"><span>⚔</span></div>
+
+  <h3>Encuentro 1 — Exterior del Almacén</h3>
+
+  <h4>Descripción para el DM</h4>
+  <p>La noche es densa, sin luna. Las antorchas crean islas de luz con zonas de sombra —exactamente lo que un Pícaro necesita. Tres guardias patrullan en parejas con rotaciones irregulares. El Capitán está sentado en una caja, jugando solo a los dados. <strong>Percepción pasiva 14</strong> —está alerta aunque parece que no. Dos masas oscuras y peladas están atadas a postes: los perros de guerra. No son perros normales —respiran fuego cuando se excitan.</p>
+
+  <div class="encounter">
+    <div class="encounter-header">
+      <span class="encounter-title">⚔ Guardia del Almacén</span>
+      <span class="encounter-cr">CR ~5 · ~1,500 XP ajust.</span>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Escenario</span>
+      <div class="enc-value">Exterior nocturno. Antorchas cada 20ft con zonas de sombra (ventaja en Sigilo para el Pícaro). Los Hell Hounds están atados pero reaccionan a ruido o llama.</div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Enemigos</span>
+      <div class="enc-value">
+        <span class="mob-entry">3× Guard <span class="mob-cr">CR 1/8</span> <span class="mob-page">p.165</span></span>
+        <span class="mob-entry">1× Guard Captain <span class="mob-cr">CR 2</span> <span class="mob-page">p.165</span></span>
+        <span class="mob-entry">2× Hell Hound <span class="mob-cr">CR 3</span> <span class="mob-page">p.172</span></span>
+      </div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Tácticas</span>
+      <div class="enc-value">Los Hell Hounds son el peligro principal: <strong>Fire Breath</strong> en cono de 15ft afecta a varios en línea. El Guard Captain grita para alertar el interior si detecta al grupo (Percepción pasiva 14). El Druida en Wild Shape puede intentar calmar a los Hell Hounds (Persuasión DC 10 —no atacan a quien perciben como 'igual').</div>
+    </div>
+  </div>
+
+  <div class="divider"><span>⚔</span></div>
+
+  <h3>Encuentro 2 — Interior del Almacén</h3>
+
+  <h4>Descripción para el DM</h4>
+  <p>El interior huele a polvo y metal. Filas de cajones crean un laberinto de pasillos estrechos. Una <strong>trampa de red</strong> está tendida en el centro (Percepción DC 14 para detectarla). Una ventana alta en el techo deja entrar un rayo de luz de luna. El intermediario está de espaldas, examinando los lingotes de Acero Estelar. En algún punto de la sala hay algo que no se ve. Algo que respira sin hacer ruido.</p>
+  <p>El <strong>Invisible Stalker</strong> es el guardián personal del intermediario. No habla. No negocia. Solo ataca cuando su amo lo ordena —o cuando alguien saca un arma.</p>
+
+  <div class="encounter">
+    <div class="encounter-header">
+      <span class="encounter-title">⚔ El Intermediario y sus Guardias</span>
+      <span class="encounter-cr">CR ~10 · ~6,200 XP ajust.</span>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Escenario</span>
+      <div class="enc-value">Interior del almacén. Laberinto de cajones (cobertura 1/2). Trampa de red central (Percep. DC14). Rayo de luna desde ventana alta. El Invisible Stalker es invisible permanentemente —<strong>Faerie Fire del Druida</strong> es la respuesta clave.</div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Enemigos</span>
+      <div class="enc-value">
+        <span class="mob-entry">1× Hobgoblin Warlord <span class="mob-cr">CR 6</span> <span class="mob-page">p.174</span></span>
+        <span class="mob-entry">2× Wight <span class="mob-cr">CR 3</span> <span class="mob-page">p.335</span></span>
+        <span class="mob-entry">1× Invisible Stalker <span class="mob-cr">CR 6</span> <span class="mob-page">p.183</span></span>
+      </div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Tácticas</span>
+      <div class="enc-value">Primera ronda: el Intermediario negocia. Si se niegan: el Invisible Stalker golpea al Paladín desde flanqueo invisible (Advantage garantizada). Los Wights priorizan al Druida con <strong>Life Drain</strong> —reducir su HP máximo limita la curación del grupo. El Warlord usa Bonus Action para mover aliados. Si queda solo: rendición condicional.</div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Recompensa</span>
+      <div class="enc-value">Acero Estelar (6 lingotes). Libro de cuentas (red criminal). 120 po.</div>
+    </div>
+  </div>
+
+  <div class="divider"><span>✦</span></div>
+
+  <h2>Recompensa Especial — La Forja de Tanaka</h2>
+  <p>Si el Acero Estelar llega intacto, Tanaka forja <strong>uno</strong> de estos objetos (eligen colectivamente):</p>
+
+  <div class="item-box">
+    <div class="item-header"><span class="item-name">✦ Sello del Trueno</span><span class="item-type">Arma (filo), Raro, Sintonización</span></div>
+    <div class="item-body">+1 a ataques y daño. 1/descanso largo como Bonus Action: el próximo golpe exitoso causa <strong>2d6 daño de trueno</strong> adicional. El objetivo supera Salvación Fuerza DC 14 o queda derribado.</div>
+  </div>
+
+  <div class="item-box">
+    <div class="item-header"><span class="item-name">✦ Armadura de Mizu-Hagane</span><span class="item-type">Armadura, Raro, Sintonización</span></div>
+    <div class="item-body">+1 CA. Resistencia a daño por veneno. Como reacción al ser golpeado: reduce daño en <strong>1d6</strong> (1/descanso corto).</div>
+  </div>
+
+  <div class="item-box">
+    <div class="item-header"><span class="item-name">✦ Kunai del Susurro</span><span class="item-type">Daga, Infrecuente, Sintonización (Pícaro/Ranger)</span></div>
+    <div class="item-body">+2 a ataques y daño. Al impactar: sin sonido audible. Ventaja en ataques contra criaturas que no te vieron en este turno (stackea con Ataque Furtivo).</div>
+  </div>
+
+  <p style="margin-top:16px;">Además: si los jugadores traen la <strong>Gema de Memoria</strong> de la Misión 3, Tanaka entrega la <strong>Katana de Fuego</strong>.</p>
+
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB 6: MISIÓN 3 -->
+<!-- ══════════════════════════════════════ -->
+<div id="m3" class="tab-content">
+
+  <h2>Misión 3 — La Bóveda de Izanagi</h2>
+
+  <div class="npc-card" style="margin-bottom:24px;">
+    <div class="npc-header"><span class="npc-emoji">👤</span><span class="npc-name">Sensei Kira</span><span class="npc-role">— otorga esta misión</span></div>
+    <div class="npc-body"><p>Viejecito con túnica rota. Lúcido en intervalos. Fue custodio del Templo de Izanagi durante veinte años.</p><div class="npc-hook">La bóveda no se abre con fuerza. Se abre con memoria. ¿Recuerdan el sonido del primer amanecer?</div></div>
+  </div>
+
+  <h3>Introducción narrativa</h3>
+  <p>Sensei Kira tiene los ojos de alguien que ha visto demasiado y que espera ver menos. En sus momentos lúcidos, describe el templo con la precisión de quien lo construyó: es una cueva que no parece a nada, pero si uno se equivoca, parecerá un horno. Tiene un altar de piedra volcánica al centro. Y debajo del altar, la bóveda.</p>
+  <p><em>"Los invasores intentaron abrirla tres veces"</em>, dice. <em>"La tercera vez perdieron a seis hombres frente a lo que protege la sala. Nunca tocaron la puerta."</em> Sonríe apenas. <em>"Porque no saben escuchar."</em></p>
+  <p>El templo está a treinta minutos a pie hacia el sureste, en un bosque de bambú que empezó a crecer sobre las ruinas. El templo huele a incienso quemado hace semanas, a piedra húmeda, y a algo más.</p>
+
+  <h3>Objetivo</h3>
+  <p>Llegar al Koto sagrado, resolver el puzzle de las paredes, abrir la bóveda y recuperar su contenido. Si el templo es dañado gravemente, <strong>la bóveda se bloquea permanentemente</strong>.</p>
+
+  <div class="divider"><span>♪</span></div>
+
+  <h3>El Puzzle Musical — Las Paredes Hablan</h3>
+
+  <div class="puzzle-box">
+    <div class="puzzle-title">🎵 Koto de Jade — 5 Cuerdas</div>
+    <p style="color:#7aaaca;font-size:15px;margin-bottom:12px;">Cada cuerda tiene un símbolo grabado en el mástil:</p>
+    <div class="string-grid">
+      <div class="string-item"><span class="string-num">1</span><span class="string-elem">🔥 Fuego</span></div>
+      <div class="string-item"><span class="string-num">2</span><span class="string-elem">⛰ Tierra</span></div>
+      <div class="string-item"><span class="string-num">3</span><span class="string-elem">⚡ Rayo</span></div>
+      <div class="string-item"><span class="string-num">4</span><span class="string-elem">💨 Viento</span></div>
+      <div class="string-item"><span class="string-num">5</span><span class="string-elem">💧 Agua</span></div>
+    </div>
+
+    <p style="color:#7aaaca;font-size:15px;margin:16px 0 8px;">Las inscripciones en las paredes dicen:</p>
+
+    <div class="wall-entry"><span class="wall-label">Pared Oeste</span>"Soy el primero. Antes del fuego, antes del sonido, antes de todo — yo rasgué el silencio." → El Rayo llega primero. <strong style="color:#60d4ff;">(Cuerda 3)</strong></div>
+    <div class="wall-entry"><span class="wall-label">Pared Norte</span>"Nací del Rayo. Sin él no existo. Soy el segundo hijo del caos." → El Fuego es segundo. <strong style="color:#60d4ff;">(Cuerda 1)</strong></div>
+    <div class="wall-entry"><span class="wall-label">Pared Este</span>"Apago lo que me precede. Soy el tercero, la calma después de la llama." → El Agua es tercera. <strong style="color:#60d4ff;">(Cuerda 5)</strong></div>
+    <div class="wall-entry"><span class="wall-label">Pared Sur</span>"La tomo y me quedo quieta. Cuarta, porque la paciencia espera." → La Tierra es cuarta. <strong style="color:#60d4ff;">(Cuerda 2)</strong></div>
+    <div class="wall-entry"><span class="wall-label">Techo</span>"Soy el último aliento. Cuando todo termina, solo yo persisto." → El Viento es quinto. <strong style="color:#60d4ff;">(Cuerda 4)</strong></div>
+
+    <div class="solution-box">✓ SOLUCIÓN: Cuerda 3 → 1 → 5 → 2 → 4 &nbsp;|&nbsp; Rayo → Fuego → Agua → Tierra → Viento</div>
+  </div>
+
+  <p><strong>Si se equivocan:</strong> el templo se llena de lava por cada error. Un guardián espectral aparece y permanece aunque lo intenten de nuevo.</p>
+  <p><em>Pista de Sensei Kira:</em> "Siempre hay un rayo antes del fuego."</p>
+
+  <div class="divider"><span>⚔</span></div>
+
+  <h3>Encuentro — Los Guardianes del Templo</h3>
+
+  <div class="encounter">
+    <div class="encounter-header">
+      <span class="encounter-title">⚔ Guardianes del Templo</span>
+      <span class="encounter-cr">CR ~9 · ~4,800 XP ajust.</span>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Escenario</span>
+      <div class="enc-value">Nave del templo. Columnas de cedro con glifos activables (<strong>Arcana DC12: 2d6 radiante, 15ft área, 1 uso/glifo, 4 columnas</strong>). El Paladín con Divine Sense detecta la presencia de no-muertos.</div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Enemigos</span>
+      <div class="enc-value">
+        <span class="mob-entry">2× Wraith <span class="mob-cr">CR 5</span> <span class="mob-page">p.339</span></span>
+        <span class="mob-entry">2× Wight <span class="mob-cr">CR 3</span> <span class="mob-page">p.335</span></span>
+        <span class="mob-entry">2× Specter <span class="mob-cr">CR 1</span> <span class="mob-page">p.293</span></span>
+      </div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Tácticas</span>
+      <div class="enc-value">Los Wraith vuelan entre columnas, atacando desde arriba con <strong>Life Drain</strong> (4d8+3 necrótico, reduce HP máximo). Los Wights rodean al Pícaro y Bárbaro con Life Drain. Los Specters interrumpen la concentración del Druida. El Aura del Paladín es crucial. <strong>Moonbeam</strong> del Druida (daño radiante) es la herramienta más efectiva.</div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Recompensa</span>
+      <div class="enc-value">Bóveda desbloqueada.</div>
+    </div>
+  </div>
+
+  <div class="divider"><span>✦</span></div>
+
+  <h3>Contenido de la Bóveda</h3>
+
+  <div style="background:#0e0a06;border:1px solid #2a1e0a;border-radius:4px;padding:20px;">
+    <div class="vault-item">
+      <span class="vault-bullet">📜</span>
+      <div class="vault-text"><strong>El Sello de Yamashiro:</strong> Pergamino con el linaje y derechos legítimos de la Casa Uchida. El rey lo necesita para el discurso final ante el ejército del norte.</div>
+    </div>
+    <div class="vault-item">
+      <span class="vault-bullet">🔮</span>
+      <div class="vault-text"><strong>Gema de Memoria:</strong> Perla negra con el recuerdo de un gran maestro espadachín. Un guerrero que medita con ella (1 hora) obtiene proficiencia temporal en katana por 24h.</div>
+    </div>
+    <div class="vault-item">
+      <span class="vault-bullet">🗺</span>
+      <div class="vault-text"><strong>Mapa de Túneles:</strong> Pasajes secretos bajo la ciudad, útiles para llegar al campamento de la Misión 4 sin ser detectados.</div>
+    </div>
+    <div class="vault-item">
+      <span class="vault-bullet">⚗</span>
+      <div class="vault-text"><strong>2 frascos de aceite sagrado:</strong> Inmunidad a daño de arma no-mágica por 1 minuto (1 uso c/u). 50 po en monedas antiguas.</div>
+    </div>
+  </div>
+
+  <div class="item-box" style="margin-top:20px;border-color:#d45020;border-top-color:#ff8040;">
+    <div class="item-header" style="background:linear-gradient(90deg,#2a1008,#1a0806);">
+      <span class="item-name" style="color:#ff9050;">⚔ Katana de Fuego</span>
+      <span class="item-type">Espada larga, Raro, Sintonización</span>
+    </div>
+    <div class="item-body" style="color:#d4a070;">
+      Tanaka Ryu la forja cuando los jugadores le traen la Gema de Memoria. La katana tiene un filo de acero estelar con filamentos que brillan en naranja cuando se activa.<br><br>
+      <strong style="color:#ff9050;">Daño:</strong> 1d8 cortante. Como <strong style="color:#ff9050;">Bonus Action</strong>, el portador puede prender la katana en llamas por 1 minuto (concentración). Mientras arde: <strong style="color:#ff9050;">+2d6 daño de fuego</strong> adicional por golpe. 1 vez por descanso largo.
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB 7: MISIÓN 4 -->
+<!-- ══════════════════════════════════════ -->
+<div id="m4" class="tab-content">
+
+  <h2>Misión 4 — El Nido de Cuervos</h2>
+
+  <div class="npc-card" style="margin-bottom:24px;">
+    <div class="npc-header"><span class="npc-emoji">👤</span><span class="npc-name">Sargento Hayashi</span><span class="npc-role">— otorga esta misión</span></div>
+    <div class="npc-body"><p>Cicatriz diagonal en la mejilla izquierda, postura rígida. Tres días sin dormir.</p><div class="npc-hook">Necesito a alguien que pueda entrar allí sin que los vean venir. Mis hombres son soldados, no sombras.</div></div>
+  </div>
+
+  <h3>Introducción narrativa</h3>
+  <p>El sargento Hayashi despliega un mapa sobre la mesa de la torre. Marca un punto en las colinas al noroeste. <em>"Campamento de traidores. Ronins —ex-soldados— del reino que cambiaron de bando cuando llegó el invasor. No por miedo —por dinero. Llevan semanas coordinando saqueos y cortes de suministros al castillo. Y tienen información interna."</em> Pausa. <em>"Alguien del castillo les habla. No sé quién."</em></p>
+  <p>El camino atraviesa campos quemados y un bosque de pinos con el suelo cubierto de ceniza. <strong>Si el grupo tiene el Mapa de Túneles (Misión 3)</strong>, puede llegar por los pasajes subterráneos y emerger directamente dentro del perímetro —sorpresa garantizada.</p>
+  <p>El centro del campamento tiene diez tiendas alrededor de una fogata grande. Y entre los guardias, una cara conocida: el Sargento Hayashi. Pero Hayashi está aquí, en la torre. Algo no cierra.</p>
+
+  <h3>Objetivo</h3>
+  <p>Neutralizar el campamento. <strong>Opción extra:</strong> capturar al Líder con vida (0 PG con daño no letal) para extraer la identidad del traidor infiltrado si no se obtuvo en la Misión 1.</p>
+
+  <div class="divider"><span>⚔</span></div>
+
+  <h3>Encuentro 1 — Las Sentinelas</h3>
+
+  <h4>Descripción para el DM</h4>
+  <p>El perímetro está en un claro de pinos. Árboles como cobertura (3/4) para los arqueros en una torre de vigilancia improvisada. Cuatro ex-guardas patrullan en pares con antorchas —hombres que conocen las tácticas del ejército real porque las usaron. Dos bestias de fuego flanquean el este y el oeste. Un <strong>cuerno</strong> cuelga de la torre —si suena, el segundo encuentro comienza con los enemigos preparados.</p>
+
+  <div class="encounter">
+    <div class="encounter-header">
+      <span class="encounter-title">⚔ Las Sentinelas del Campamento</span>
+      <span class="encounter-cr">CR ~8 · ~3,200 XP ajust.</span>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Escenario</span>
+      <div class="enc-value">Perímetro boscoso. Árboles dan cobertura 3/4 a arqueros en torre. Los Hell Hounds flanquean este y oeste. Cuerno en la torre: Pícaro puede descolgar en sigilo (Sigilo DC14) o destruirlo desde lejos. <strong>Con Mapa de Túneles: entrada subterránea, sorpresa garantizada.</strong></div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Enemigos</span>
+      <div class="enc-value">
+        <span class="mob-entry">4× Guard Captain <span class="mob-cr">CR 2</span> <span class="mob-page">p.165</span></span>
+        <span class="mob-entry">2× Veteran <span class="mob-cr">CR 3</span> <span class="mob-page">p.165</span></span>
+        <span class="mob-entry">2× Hell Hound <span class="mob-cr">CR 3</span> <span class="mob-page">p.172</span></span>
+      </div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Tácticas</span>
+      <div class="enc-value">Arqueros Veteranos en torre (cobertura 3/4, CA efectiva +5). Ex-Guardas patrullan en pares, 30ft entre pares. Hell Hounds flanquean —Fire Breath puede alcanzar a varios en línea. Con túneles: Hell Hounds no detectan al grupo (Percepción Pasiva 10 desde abajo).</div>
+    </div>
+  </div>
+
+  <div class="divider"><span>⚔</span></div>
+
+  <h3>Encuentro 2 — El Nido</h3>
+
+  <h4>Descripción para el DM</h4>
+  <p>El centro es un campo de 40×40 pies con diez tiendas como obstáculos (cobertura 1/2). La fogata central tiene 5 pies —caer en ella causa 1d6 fuego. Tiendas incendiadas: humo crea área de visión oscurecida 10 pies (Concentración DC 10 o Envenenado 1 turno).</p>
+  <p>Y entre los guardias, el rostro del Sargento Hayashi mira al grupo con expresión de confusión: <em>"¿Qué hacen aquí? ¡Están confundidos! ¡Los traidores son ellos!"</em> <strong>Insight DC 15</strong> para notar que algo en su expresión no cuadra.</p>
+  <p>El <strong>Oni Hannya-Bushi</strong> es el líder real. Transformado en figura humana imponente, abre con Darkness para crear caos. Los Kuro-Tora flanquean mientras sus formas oscilan. El <strong>Kage-Hito</strong> —el Doppelganger con cara de Hayashi— ataca en la confusión con Read Thoughts activo.</p>
+
+  <div class="encounter">
+    <div class="encounter-header">
+      <span class="encounter-title">⚔ El Nido: Líder y Élite</span>
+      <span class="encounter-cr">CR ~12 · ~8,500 XP ajust.</span>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Escenario</span>
+      <div class="enc-value">Centro del campamento. 10+ tiendas (cobertura 1/2). Fogata central (1d6 fuego). Humo de tiendas incendiadas (Conc. DC10 o Envenenado). El Doppelganger aparece como Hayashi —momento de confusión narrativa clave.</div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Enemigos</span>
+      <div class="enc-value">
+        <span class="mob-entry">1× Oni <span class="mob-cr">CR 7</span> <span class="mob-page">p.237</span></span>
+        <span class="mob-entry">2× Weretiger <span class="mob-cr">CR 4</span> <span class="mob-page">p.329</span></span>
+        <span class="mob-entry">1× Doppelganger <span class="mob-cr">CR 3</span> <span class="mob-page">p.103</span></span>
+        <span class="mob-entry">3× Hobgoblin Warrior <span class="mob-cr">CR 1/2</span> <span class="mob-page">p.174</span></span>
+      </div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Tácticas</span>
+      <div class="enc-value">El Kage-Hito abre con apariencia de Hayashi acusando al grupo (<strong>Insight DC15</strong> para detectar). El Oni usa Darkness (Advantage garantizada con Darkvision). Los Kuro-Tora flanquean al Druida y Paladín. Los Ashigaru usan Ayuda para dar Advantage al Oni. El Kage-Hito ataca en la confusión con Read Thoughts activo. Si capturado no-letalmente: <strong>revela la identidad del traidor</strong>.</div>
+    </div>
+    <div class="encounter-row">
+      <span class="enc-label">Recompensa</span>
+      <div class="enc-value">Diario del traidor (identidad del infiltrado). Sello de identificación invasor. 200 po.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB 8: CLÍMAX Y FINAL -->
+<!-- ══════════════════════════════════════ -->
+<div id="climax" class="tab-content">
+
+  <h2>VI. El Regreso del Rey</h2>
+
+  <h4>Leer en voz alta</h4>
+  <div class="quote-block">
+    El sonido de tambores llega primero. Luego los estandartes —el dragón de Yamashiro sobre fondo negro, manchas de combate en las telas. El Rey Kensho Uchida desmonta antes de que el caballo se detenga completamente. Es un hombre mayor de lo que sus retratos sugieren, con el cabello gris recogido en un nudo de guerra. Sus ojos no son los ojos de un hombre que ha dormido bien en meses. Son los ojos de alguien que ha calculado el costo de cada decisión y los ha pagado todos. Te mira directamente. Espera.
+  </div>
+
+  <div class="final-box">
+    <div class="final-title">Final — Estabilidad</div>
+    <p>El rey estudia el informe del consejero en silencio. Señala el mapa. <em>"Kurokawa puede respirar. Ustedes lo hicieron posible."</em> Se gira hacia el grupo. <em>"El frente norte necesita gente que tome decisiones sin esperar órdenes. Los quiero adelante."</em> Pausa breve. <em>"Hay un precio. Lo que viene del norte no es un ejército. Es algo más antiguo. Si vienen, no les prometo que regresen."</em> Espera su respuesta.</p>
+  </div>
+
+  <h2>La Partida al Norte</h2>
+
+  <h4>Leer en voz alta</h4>
+  <div class="quote-block">
+    El ejército se forma en el patio. Tres mil hombres, en silencio. El rey sube a la muralla. No hace un discurso largo. Solo dice: "Lo que espera al norte es lo más viejo que hemos visto. No luchen por el reino. Luchen por el hombre que tienen al lado." Baja los brazos, empieza a brillar sus manos, y el patio se convierte en un ritual —la luz se hace enceguecedora. Cuando baja el brillo, el ejército de Yamashiro está en el norte, con ustedes en la vanguardia. CAOS TOTAL. El rey les señala una cueva y monta hacia sus tropas, que ya avanzan.
+  </div>
+
+  <div class="divider"><span>✦</span></div>
+
+  <h2>VII. La Hazaña Final — El Señor del Frío</h2>
+
+  <h3>La Potenciación del Rey</h3>
+  <p>En un desfiladero entre montañas de hielo, el rey detiene la marcha. Se vuelve hacia el grupo. Sus ojos brillan levemente —no es fuego, es algo más frío y más preciso. La magia del archimago en estado puro.</p>
+
+  <h4>Leer en voz alta</h4>
+  <div class="quote-block">
+    Kensho extiende las manos, una hacia cada uno de ustedes. No los toca. No hace falta. La magia que emerge de él es invisible pero la sienten en el pecho —como una cuerda que se tensa entre su voluntad y la de ustedes. "El poder sin costo es ilusión", dice. "Este poder tiene un costo. Yo lo pago." Sus sienes blanquean unos centímetros más. Sus ojos pierden un grado de luz. Y en ustedes, algo despierta.
+  </div>
+
+  <div class="power-box">
+    <div class="power-title">✦ POTENCIACIÓN REAL ✦</div>
+    <div class="power-desc">Como <strong>Bonus Action</strong>, cada jugador puede lanzar cualquier cantrip que conozca o que esté en la lista de su clase, además de su acción normal de turno. Esta habilidad dura hasta el final del combate final.</div>
+    <div class="power-cost">Costo del rey: El Rey Kensho queda exhausto (Nivel 2 de Agotamiento) durante 24 horas. No puede participar en el combate.</div>
+  </div>
+
+  <div class="divider"><span>🐉</span></div>
+
+  <h2>El Combate Final — Ryūhyō, Dragón del Frío Norte</h2>
+
+  <p>La criatura que espera en el desfiladero no es un general ni un comandante. Es algo que el reino del norte invocó como arma. Un <strong>Dragón Blanco Joven</strong>, con escamas de hielo opaco y ojos sin pupils, como ventanas a un cielo ártico.</p>
+
+  <div class="dragon-box">
+    <div class="dragon-header">
+      <div class="dragon-title">🐉 RYŪHYŌ — DRAGÓN DEL FRÍO NORTE</div>
+      <div class="dragon-subtitle">Young White Dragon · Monster Manual 2024</div>
+    </div>
+    <div class="dragon-row">
+      <span class="drag-label">Página MM</span>
+      <div class="drag-value"><strong>p. 331</strong></div>
+    </div>
+    <div class="dragon-row">
+      <span class="drag-label">CR</span>
+      <div class="drag-value">CR 6 — con la Potenciación Real, balanceado para 4 PJs nivel 8 con items acumulados</div>
+    </div>
+    <div class="dragon-row">
+      <span class="drag-label">HP / CA</span>
+      <div class="drag-value"><strong>123 HP</strong> (13d10+52) · <strong>CA 17</strong> · Vel. 40ft, Vuelo 80ft, Nado 40ft</div>
+    </div>
+    <div class="dragon-row">
+      <span class="drag-label">Inmunidades</span>
+      <div class="drag-value">Inmune a frío. <strong>NO tiene resistencia ni inmunidad al fuego</strong> — la Katana de Fuego y el Sello del Trueno son efectivos al máximo.</div>
+    </div>
+    <div class="dragon-row">
+      <span class="drag-label">Habilidad clave</span>
+      <div class="drag-value"><strong>Cold Breath</strong> (Recarga 5-6): Cono de 45ft, Salvación Constitución DC 15, 10d8 frío (mitad si pasa).<br><strong>Multiattaque:</strong> 3 ataques Rend (+7 para impactar, 2d6+4 cortante + 1d4 frío c/u).</div>
+    </div>
+  </div>
+
+  <h4>Descripción de apertura — leer en voz alta</h4>
+  <div class="quote-block">
+    El desfiladero se abre en una caverna de hielo azul. El techo tiene treinta metros de altura. El suelo está cubierto de estalactitas de hielo invertidas —terreno difícil en los bordes. Al fondo, algo se mueve entre las sombras. Cuando el dragón extiende las alas, el sonido resuena entre las paredes como un trueno. Su aliento sale como vapor. Sus ojos los encuentran con la frialdad de algo que no tiene miedo porque nunca lo tuvo.
+  </div>
+
+  <h3>Tácticas del DM</h3>
+  <ul class="tactic-list">
+    <li>El dragón abre con <strong>Cold Breath</strong> en el primer turno si el grupo está agrupado. Comunicar el peligro antes de que se posicionen.</li>
+    <li>El suelo de hielo es <strong>terreno difícil en los bordes</strong> (últimos 10ft). El dragón lo ignora por Ice Walk.</li>
+    <li>El Bárbaro es el <em>anchor</em> —que el dragón lo priorice en melee. El Pícaro y la Katana de Fuego son el daño de ráfaga.</li>
+    <li>El Druida controla con <strong>Moonbeam</strong> (radiante). El Paladín cierra con Smite.</li>
+    <li>La Potenciación Real permite usar cantrips como Bonus Action —Fire Bolt del Warlock, Shillelagh del Druida— multiplicando el daño sostenido.</li>
+    <li>Al <strong>25% de HP</strong>: el dragón intenta huir hacia el techo. Puede improvisar un ataque de cola antes de escapar o morir.</li>
+  </ul>
+
+  <div class="divider"><span>⛩</span></div>
+
+  <h2>Epílogo</h2>
+
+  <h4>Si el dragón cae — leer en voz alta</h4>
+  <div class="quote-block">
+    El silencio que sigue al rugido final del dragón es absoluto. El hielo cruje al asentarse. Alguien del ejército, al fondo del desfiladero, empieza a golpear el escudo con la espada. Uno. Dos. Veinte. Trescientos. El sonido llena la caverna como una marea. El rey Kensho los mira desde el borde del campo de batalla, con los ojos más claros que en días. Asiente. Solo eso. Pero de él, es suficiente.
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════ -->
+<!-- TAB 9: REFERENCIA -->
+<!-- ══════════════════════════════════════ -->
+<div id="ref" class="tab-content">
+
+  <h2>VIII. Tabla de Criaturas — MM2024</h2>
+  <p>Todos los mobs usan estadísticas originales del Monster Manual 2024. Solo cambia nombre y apariencia (reskin visual en D&D Beyond).</p>
+
+  <div style="overflow-x:auto;">
+  <table class="ref-table">
+    <thead>
+      <tr>
+        <th>Nombre MM2024</th>
+        <th>Pág.</th>
+        <th>Reskin Temático</th>
+        <th>CR</th>
+        <th>Rol en combate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="mob-orig">Hobgoblin Warrior</td><td class="mob-page">174</td><td class="mob-reskin">Ashigaru del Hierro</td><td class="mob-cr">1/2</td><td>Soldado de línea, Pack Tactics</td></tr>
+      <tr><td class="mob-orig">Hobgoblin Captain</td><td class="mob-page">174</td><td class="mob-reskin">Capitán Ashigaru</td><td class="mob-cr">3</td><td>Rallying Cry, táctico de campo</td></tr>
+      <tr><td class="mob-orig">Hobgoblin Warlord</td><td class="mob-page">174</td><td class="mob-reskin">Señor del Mercado Negro</td><td class="mob-cr">6</td><td>Comandante, control de aliados</td></tr>
+      <tr><td class="mob-orig">Guard</td><td class="mob-page">165</td><td class="mob-reskin">Guardia Ronin</td><td class="mob-cr">1/8</td><td>Guardia básico de patrulla</td></tr>
+      <tr><td class="mob-orig">Guard Captain</td><td class="mob-page">165</td><td class="mob-reskin">Ex-Guardia Caído / Capitán Ronin</td><td class="mob-cr">2</td><td>Traidor con tácticas del ejército real</td></tr>
+      <tr><td class="mob-orig">Veteran</td><td class="mob-page">165</td><td class="mob-reskin">Arquero Veterano</td><td class="mob-cr">3</td><td>Francotirador en posición elevada</td></tr>
+      <tr><td class="mob-orig">Assassin</td><td class="mob-page">308</td><td class="mob-reskin">Shinobi del Hierro</td><td class="mob-cr">8</td><td>Invisibilidad táctica, veneno, evasión</td></tr>
+      <tr><td class="mob-orig">Weretiger</td><td class="mob-page">329</td><td class="mob-reskin">Kuro-Tora / Luchador-Tigre</td><td class="mob-cr">4</td><td>Transformación, resist. armas no-mágicas</td></tr>
+      <tr><td class="mob-orig">Wight</td><td class="mob-page">335</td><td class="mob-reskin">Guerrero Maldito / Iki-ryō</td><td class="mob-cr">3</td><td>Life Drain, reduce HP máximo</td></tr>
+      <tr><td class="mob-orig">Wraith</td><td class="mob-page">339</td><td class="mob-reskin">Onryō del Templo</td><td class="mob-cr">5</td><td>Vuelo 60ft, inmunidades, Life Drain masivo</td></tr>
+      <tr><td class="mob-orig">Specter</td><td class="mob-page">293</td><td class="mob-reskin">Eco del Templo</td><td class="mob-cr">1</td><td>Hostiga concentración, Life Drain menor</td></tr>
+      <tr><td class="mob-orig">Oni</td><td class="mob-page">237</td><td class="mob-reskin">Hannya-Bushi</td><td class="mob-cr">7</td><td>Regeneración, cambio de forma, Darkness</td></tr>
+      <tr><td class="mob-orig">Manticore</td><td class="mob-page">205</td><td class="mob-reskin">Fenix del Hierro</td><td class="mob-cr">3</td><td>Amenaza aérea, Tail Spikes a rango</td></tr>
+      <tr><td class="mob-orig">Hell Hound</td><td class="mob-page">172</td><td class="mob-reskin">Perro de Guerra del Hierro</td><td class="mob-cr">3</td><td>Fire Breath en cono, amenaza grupal</td></tr>
+      <tr><td class="mob-orig">Invisible Stalker</td><td class="mob-page">183</td><td class="mob-reskin">Guardián Elemental</td><td class="mob-cr">6</td><td>Invisible permanente, Advantage garantizada</td></tr>
+      <tr><td class="mob-orig">Doppelganger</td><td class="mob-page">103</td><td class="mob-reskin">Kage-Hito / El Infiltrado</td><td class="mob-cr">3</td><td>Read Thoughts, engaño narrativo, disfraz</td></tr>
+      <tr style="border-top:2px solid #2a7a5a;"><td class="mob-orig" style="color:#60d4a0;">Young White Dragon</td><td class="mob-page">331</td><td class="mob-reskin" style="color:#3a8a60;">Ryūhyō — Dragón del Frío Norte</td><td class="mob-cr" style="color:#60d4a0;">6</td><td style="color:#80b490;">Jefe final: Cold Breath, vuelo, sin resist. al fuego</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="divider"><span>✦</span></div>
+
+  <h2>Objetos Mágicos — Referencia</h2>
+
+  <div class="item-box">
+    <div class="item-header"><span class="item-name">✦ Sello del Trueno</span><span class="item-type">Arma (filo), Raro, Sintonización</span></div>
+    <div class="item-body">+1 a ataques y daño. 1/descanso largo, como Bonus Action: el próximo golpe exitoso causa <strong>2d6 daño de trueno</strong> adicional. El objetivo supera Salvación Fuerza DC 14 o queda derribado.</div>
+  </div>
+
+  <div class="item-box">
+    <div class="item-header"><span class="item-name">✦ Armadura de Mizu-Hagane</span><span class="item-type">Armadura, Raro, Sintonización</span></div>
+    <div class="item-body">+1 CA. Resistencia a daño por veneno. Como reacción al ser golpeado: reduce daño en <strong>1d6</strong> (1/descanso corto).</div>
+  </div>
+
+  <div class="item-box">
+    <div class="item-header"><span class="item-name">✦ Kunai del Susurro</span><span class="item-type">Daga, Infrecuente, Sintonización (Pícaro/Ranger)</span></div>
+    <div class="item-body">+2 a ataques y daño. Al impactar: sin sonido audible. Ventaja en ataques contra criaturas que no te vieron en este turno (stackea con Ataque Furtivo).</div>
+  </div>
+
+  <div class="item-box">
+    <div class="item-header"><span class="item-name">✦ Piedra de Gratitud</span><span class="item-type">Objeto maravilloso, Infrecuente</span></div>
+    <div class="item-body">1/descanso largo, como reacción antes de una salvación: <strong>ventaja</strong> en esa tirada. Se recarga en 24 horas.</div>
+  </div>
+
+  <div class="item-box">
+    <div class="item-header"><span class="item-name">✦ Gema de Memoria</span><span class="item-type">Objeto maravilloso, Infrecuente, Sintonización</span></div>
+    <div class="item-body">1 hora de meditación: proficiencia con katana (espada larga) por 24h. El portador sueña con el maestro esa noche y puede recibir lore del mundo del DM.</div>
+  </div>
+
+  <div class="item-box" style="border-color:#d45020;border-top-color:#ff8040;">
+    <div class="item-header" style="background:linear-gradient(90deg,#2a1008,#1a0806);">
+      <span class="item-name" style="color:#ff9050;">⚔ Katana de Fuego</span>
+      <span class="item-type">Espada larga, Raro, Sintonización</span>
+    </div>
+    <div class="item-body" style="color:#d4a070;">1d8 cortante. Como Bonus Action: arde en llamas por 1 minuto (concentración). Mientras arde: <strong style="color:#ff9050;">+2d6 daño de fuego</strong> por golpe. 1 vez por descanso largo.</div>
+  </div>
+
+  <div style="text-align:center;margin-top:60px;padding-top:24px;border-top:1px solid #2a1e0a;">
+    <p style="font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:#4a3820;">⛩ &nbsp; Que los dados sean favorables y el acero, firme. &nbsp; ⛩</p>
+  </div>
+
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
