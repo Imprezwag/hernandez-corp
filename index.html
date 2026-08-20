@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#15181A">
+<title>Hernandez Corp · Registro de herramientas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#DFE1DC;
+  --paper-2:#EFF0EC;
+  --ink:#15181A;
+  --ink-mid:#5D625F;
+  --rule:#B6BAB3;
+  --hazard:#C8431C;
+  --seal:#1C4A44;
+  --f-head:'Archivo',system-ui,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:var(--paper)}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--f-head);
+  line-height:1.4;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.sheet{max-width:640px;margin:0 auto;background:var(--paper-2);min-height:100vh}
+
+/* ---- banda de riesgo ---- */
+.hazard{
+  height:9px;
+  background:repeating-linear-gradient(
+    -45deg,
+    var(--hazard) 0 9px,
+    var(--ink) 9px 18px
+  );
+}
+
+/* ---- encabezado tipo etiqueta ---- */
+.masthead{padding:18px 20px 14px;border-bottom:2px solid var(--ink)}
+.masthead h1{
+  font-size:clamp(26px,8vw,38px);font-weight:800;
+  letter-spacing:-.02em;line-height:.95;text-transform:uppercase;
+}
+.masthead h1 span{display:block;color:var(--hazard)}
+.masthead p{
+  font-family:var(--f-mono);font-size:11px;color:var(--ink-mid);
+  margin-top:9px;letter-spacing:.02em;
+}
+
+.registry{
+  display:flex;justify-content:space-between;gap:10px;
+  padding:7px 20px;border-bottom:1px solid var(--rule);
+  font-family:var(--f-mono);font-size:10px;color:var(--ink-mid);
+  text-transform:uppercase;letter-spacing:.06em;
+}
+
+/* ---- bloques de expediente ---- */
+.dossier{padding:22px 20px 6px;border-bottom:1px solid var(--rule)}
+.dossier:last-of-type{border-bottom:none}
+
+.head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.code{
+  font-family:var(--f-mono);font-size:10px;font-weight:500;
+  color:var(--hazard);letter-spacing:.1em;
+}
+.stamp{
+  flex:0 0 auto;font-family:var(--f-mono);font-size:9px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;
+  border:1.5px solid var(--seal);color:var(--seal);
+  padding:3px 7px;transform:rotate(-3deg);opacity:.75;
+}
+.stamp.live{border-color:var(--hazard);color:var(--hazard)}
+
+.dossier h2{
+  font-size:22px;font-weight:800;text-transform:uppercase;
+  letter-spacing:-.01em;line-height:1.05;margin-top:4px;
+}
+.dossier .desc{
+  font-size:14px;color:var(--ink-mid);margin-top:5px;max-width:46ch;
+}
+
+/* ---- filas de herramienta ---- */
+.tools{margin-top:14px;border-top:1px solid var(--rule)}
+.tool{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 2px;min-height:52px;
+  border-bottom:1px solid var(--rule);
+  text-decoration:none;color:var(--ink);
+}
+.tool:last-child{border-bottom:none}
+.tool .n{
+  font-family:var(--f-mono);font-size:10px;color:var(--ink-mid);
+  flex:0 0 22px;letter-spacing:.04em;
+}
+.tool .label{flex:1}
+.tool .label b{display:block;font-size:16px;font-weight:600}
+.tool .label small{
+  display:block;font-family:var(--f-mono);font-size:10px;
+  color:var(--ink-mid);margin-top:2px;
+}
+.tool .go{
+  flex:0 0 auto;font-size:17px;color:var(--hazard);
+  font-weight:600;line-height:1;
+}
+.tool:hover .label b,.tool:focus-visible .label b{color:var(--hazard)}
+.tool:focus-visible{outline:2px solid var(--hazard);outline-offset:-2px}
+.tool:active{background:var(--paper)}
+
+/* ---- pie ---- */
+footer{
+  padding:18px 20px 26px;border-top:2px solid var(--ink);
+  font-family:var(--f-mono);font-size:10px;color:var(--ink-mid);
+  line-height:1.6;
+}
+footer b{color:var(--ink);font-weight:500}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="hazard"></div>
+
+  <header class="masthead">
+    <h1>Hernandez<span>Corp</span></h1>
+    <p>División de Operaciones Recreativas · Registro interno de herramientas</p>
+  </header>
+
+  <div class="registry">
+    <span>Doc. 07</span>
+    <span>Expedientes 03</span>
+    <span>Uso en mesa</span>
+  </div>
+
+  <!-- ============ D2 ============ -->
+  <section class="dossier">
+    <div class="head">
+      <div class="code">EXP · D2</div>
+      <div class="stamp">Archivado</div>
+    </div>
+    <h2>Circuito Ancestro</h2>
+    <p class="desc">Gladiadores, oleadas de creeps y Roshan. Cinco jugadores, nivel 6.</p>
+    <nav class="tools">
+      <a class="tool" href="D2/Dota2.html">
+        <span class="n">01</span>
+        <span class="label"><b>Tienda de objetos</b><small>D2/Dota2.html</small></span>
+        <span class="go">→</span>
+      </a>
+      <a class="tool" href="D2/scoreboard.html">
+        <span class="n">02</span>
+        <span class="label"><b>Scoreboard</b><small>D2/scoreboard.html</small></span>
+        <span class="go">→</span>
+      </a>
+      <a class="tool" href="D2/dm-cheatsheet.html">
+        <span class="n">03</span>
+        <span class="label"><b>Cheat sheet del DM</b><small>D2/dm-cheatsheet.html</small></span>
+        <span class="go">→</span>
+      </a>
+      <a class="tool" href="D2/contrato-jugador.html">
+        <span class="n">04</span>
+        <span class="label"><b>Contrato de jugador</b><small>D2/contrato-jugador.html</small></span>
+        <span class="go">→</span>
+      </a>
+    </nav>
+  </section>
+
+  <!-- ============ PALANCA ============ -->
+  <section class="dossier">
+    <div class="head">
+      <div class="code">EXP · PLNC</div>
+      <div class="stamp">Archivado</div>
+    </div>
+    <h2>La Palanca</h2>
+    <p class="desc">Casino corporativo. Encuentros aleatorios y tabla de botín d100.</p>
+    <nav class="tools">
+      <a class="tool" href="Palanca/hernandez-corp-palanca.html">
+        <span class="n">05</span>
+        <span class="label"><b>Tragamonedas</b><small>Palanca/hernandez-corp-palanca.html</small></span>
+        <span class="go">→</span>
+      </a>
+      <a class="tool" href="Palanca/hernandez-corp-cheatsheet.html">
+        <span class="n">06</span>
+        <span class="label"><b>Cheat sheet</b><small>Palanca/hernandez-corp-cheatsheet.html</small></span>
+        <span class="go">→</span>
+      </a>
+    </nav>
+  </section>
+
+  <!-- ============ PERSONAJES ============ -->
+  <section class="dossier">
+    <div class="head">
+      <div class="code">PJ · NGRA</div>
+      <div class="stamp live">Activo</div>
+    </div>
+    <h2>Fichas de personaje</h2>
+    <p class="desc">Hojas de referencia para jugar en mesa desde el celular.</p>
+    <nav class="tools">
+      <a class="tool" href="nigroamante/">
+        <span class="n">07</span>
+        <span class="label"><b>NigroAmante</b><small>Druida de Esporas 6 · CA 18 · CD 16</small></span>
+        <span class="go">→</span>
+      </a>
+    </nav>
+  </section>
+
+  <footer>
+    <b>Hernandez Corp</b> — universo compartido de one-shots.<br>
+    Cada expediente es independiente; no hace falta haber jugado los anteriores.
+  </footer>
+
+  <div class="hazard"></div>
+</div>
+</body>
+</html>
