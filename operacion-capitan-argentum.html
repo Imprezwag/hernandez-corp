@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operación Capitán Argentum — DM Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Share+Tech+Mono&display=swap');
+
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #1a1a1a;
+    --border: #2a2a2a;
+    --border-accent: #3d3020;
+    --text: #d4cfc7;
+    --text-dim: #7a7570;
+    --text-bright: #ede8df;
+    --gold: #c9a84c;
+    --gold-dim: #7a6030;
+    --red: #8b2020;
+    --red-bright: #c0392b;
+    --green: #1a4a2a;
+    --green-bright: #2ecc71;
+    --blue-dim: #1a2a3a;
+    --mono: 'Share Tech Mono', monospace;
+    --serif: 'EB Garamond', Georgia, serif;
+    --display: 'Cinzel', Georgia, serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  /* ── NAV ─────────────────────────────────────── */
+  #nav {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--bg2);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    z-index: 100;
+    padding: 20px 0 40px;
+  }
+
+  #nav-title {
+    font-family: var(--display);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    padding: 0 20px 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+
+  #nav ul { list-style: none; }
+
+  #nav ul li a {
+    display: block;
+    padding: 5px 20px;
+    color: var(--text-dim);
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  #nav ul li a:hover {
+    color: var(--gold);
+    background: rgba(201,168,76,0.05);
+  }
+
+  #nav ul li.nav-section > a {
+    color: var(--text-bright);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+
+  #nav ul li.nav-sub > a {
+    padding-left: 32px;
+    font-size: 10px;
+  }
+
+  #nav ul li.nav-ref > a {
+    color: var(--gold-dim);
+  }
+
+  #nav ul li a.active {
+    color: var(--gold);
+    background: rgba(201,168,76,0.08);
+    border-left: 2px solid var(--gold);
+    padding-left: 18px;
+  }
+
+  #nav ul li.nav-sub > a.active {
+    padding-left: 30px;
+  }
+
+  /* ── MAIN ────────────────────────────────────── */
+  #main {
+    margin-left: 240px;
+    padding: 60px 80px 120px;
+    max-width: 960px;
+  }
+
+  /* ── COVER ───────────────────────────────────── */
+  #cover {
+    text-align: center;
+    padding: 80px 0 100px;
+    border-bottom: 1px solid var(--border-accent);
+    margin-bottom: 80px;
+  }
+
+  #cover .stamp {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 5px;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  #cover h1 {
+    font-family: var(--display);
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: var(--text-bright);
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  #cover .subtitle {
+    font-family: var(--display);
+    font-size: 14px;
+    letter-spacing: 6px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  #cover .meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 2;
+  }
+
+  #cover .divider {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 32px auto;
+  }
+
+  /* ── HEADINGS ────────────────────────────────── */
+  .act-header {
+    margin: 80px 0 40px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-accent);
+  }
+
+  .act-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .act-title {
+    font-family: var(--display);
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-bright);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .scene-header {
+    margin: 52px 0 24px;
+  }
+
+  .scene-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--red-bright);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .scene-title {
+    font-family: var(--display);
+    font-size: 20px;
+    color: var(--text-bright);
+    letter-spacing: 1px;
+  }
+
+  .scene-location {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gold-dim);
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+
+  h3 {
+    font-family: var(--display);
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 28px 0 12px;
+  }
+
+  h4 {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin: 20px 0 8px;
+  }
+
+  p { margin-bottom: 14px; }
+
+  /* ── CALLOUT BOXES ───────────────────────────── */
+  .read-aloud {
+    background: var(--bg3);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 4px 4px 0;
+    padding: 20px 24px;
+    margin: 20px 0;
+    font-style: italic;
+    color: var(--text-bright);
+    font-size: 16.5px;
+    line-height: 1.85;
+    position: relative;
+  }
+
+  .read-aloud::before {
+    content: '▶ VOZ ALTA';
+    position: absolute;
+    top: -11px; left: 20px;
+    background: var(--bg);
+    padding: 0 8px;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-style: normal;
+    letter-spacing: 3px;
+    color: var(--gold);
+  }
+
+  .read-aloud p { margin-bottom: 10px; }
+  .read-aloud p:last-child { margin-bottom: 0; }
+
+  .dm-note {
+    background: #0d1a0d;
+    border-left: 3px solid #2a5a2a;
+    border-radius: 0 4px 4px 0;
+    padding: 18px 22px;
+    margin: 20px 0;
+    font-size: 15px;
+    color: #a0c4a0;
+    position: relative;
+  }
+
+  .dm-note::before {
+    content: '⚙ SOLO DM';
+    position: absolute;
+    top: -11px; left: 20px;
+    background: var(--bg);
+    padding: 0 8px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: #2ecc71;
+  }
+
+  .dm-note p { margin-bottom: 8px; }
+  .dm-note p:last-child { margin-bottom: 0; }
+
+  .warning {
+    background: #1a0a0a;
+    border-left: 3px solid var(--red-bright);
+    border-radius: 0 4px 4px 0;
+    padding: 18px 22px;
+    margin: 20px 0;
+    font-size: 15px;
+    color: #d4a0a0;
+    position: relative;
+  }
+
+  .warning::before {
+    content: '⚠ ALERTA';
+    position: absolute;
+    top: -11px; left: 20px;
+    background: var(--bg);
+    padding: 0 8px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--red-bright);
+  }
+
+  /* ── ENCOUNTER LINK ─────────────────────────── */
+  .encounter-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(139,32,32,0.15);
+    border: 1px solid var(--red);
+    border-radius: 4px;
+    padding: 6px 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #d4a0a0;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s;
+    margin: 8px 0;
+  }
+
+  .encounter-trigger:hover {
+    background: rgba(139,32,32,0.3);
+    border-color: var(--red-bright);
+    color: #ffcccc;
+  }
+
+  .encounter-trigger::before { content: '⚔'; }
+
+  .mechanic-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(26,42,58,0.4);
+    border: 1px solid #2a4a6a;
+    border-radius: 4px;
+    padding: 6px 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #90b4d4;
+    text-decoration: none;
+    transition: background 0.2s;
+    margin: 8px 0;
+  }
+
+  .mechanic-link:hover {
+    background: rgba(26,42,58,0.7);
+    color: #c0d8f0;
+  }
+
+  .mechanic-link::before { content: '🎲'; }
+
+  /* ── TABLES ──────────────────────────────────── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+
+  th {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  td {
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+  /* ── OPTIONS BLOCK ───────────────────────────── */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+
+  .option-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 18px;
+  }
+
+  .option-card .option-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 8px;
+  }
+
+  .option-card .option-title {
+    font-family: var(--display);
+    font-size: 13px;
+    color: var(--text-bright);
+    margin-bottom: 10px;
+  }
+
+  .option-card p {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    margin-bottom: 0;
+  }
+
+  /* ── STAT BLOCK REFERENCE ────────────────────── */
+  .mob-card {
+    background: var(--bg3);
+    border: 1px solid var(--border-accent);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 16px 0;
+  }
+
+  .mob-card .mob-name {
+    font-family: var(--display);
+    font-size: 16px;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .mob-card .mob-meta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+
+  .mob-card .mob-reskin {
+    font-size: 14px;
+    color: var(--text);
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+    margin-top: 12px;
+  }
+
+  /* ── NPC CARD ────────────────────────────────── */
+  .npc-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 22px;
+    margin: 16px 0;
+  }
+
+  .npc-name {
+    font-family: var(--display);
+    font-size: 18px;
+    color: var(--text-bright);
+    margin-bottom: 4px;
+  }
+
+  .npc-role {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .npc-desc { font-size: 15px; margin-bottom: 10px; }
+
+  /* ── ITEM CARD ───────────────────────────────── */
+  .item-card {
+    background: var(--bg3);
+    border: 1px solid var(--gold-dim);
+    border-radius: 4px;
+    padding: 22px;
+    margin: 16px 0;
+  }
+
+  .item-name {
+    font-family: var(--display);
+    font-size: 16px;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .item-type {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+  }
+
+  /* ── BUFF CARD ───────────────────────────────── */
+  .buff-card {
+    background: #0d1a0d;
+    border: 1px solid #2a5a2a;
+    border-radius: 4px;
+    padding: 18px 22px;
+    margin: 12px 0;
+  }
+
+  .buff-name {
+    font-family: var(--display);
+    font-size: 14px;
+    color: var(--green-bright);
+    margin-bottom: 6px;
+  }
+
+  .buff-trigger {
+    font-style: italic;
+    font-size: 14px;
+    color: #a0c4a0;
+    margin-bottom: 8px;
+  }
+
+  .buff-effect {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    background: rgba(0,0,0,0.3);
+    padding: 8px 12px;
+    border-radius: 3px;
+  }
+
+  /* ── PATROL MECHANIC ─────────────────────────── */
+  .mechanic-box {
+    background: var(--blue-dim);
+    border: 1px solid #2a4a6a;
+    border-radius: 4px;
+    padding: 22px;
+    margin: 16px 0;
+  }
+
+  .mechanic-title {
+    font-family: var(--display);
+    font-size: 14px;
+    color: #90b4d4;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── LISTS ───────────────────────────────────── */
+  ul, ol {
+    padding-left: 24px;
+    margin-bottom: 14px;
+  }
+
+  li { margin-bottom: 6px; }
+
+  /* ── SECTION DIVIDER ─────────────────────────── */
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border-accent);
+    margin: 60px 0;
+  }
+
+  /* ── REFERENCE TABLE ─────────────────────────── */
+  .ref-table td:first-child {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--gold);
+  }
+
+  /* ── SCROLLBAR ───────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg2); }
+  ::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 3px; }
+
+  @media (max-width: 900px) {
+    #nav { display: none; }
+    #main { margin-left: 0; padding: 30px 20px 80px; }
+    .options-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ NAV -->
+<nav id="nav">
+  <div id="nav-title">Capitán Argentum</div>
+  <ul>
+    <li><a href="#cover">Portada</a></li>
+    <li class="nav-sub"><a href="#apertura">Texto de Apertura</a></li>
+
+    <li class="nav-section"><a href="#mecanicas">Mecánicas Globales</a></li>
+    <li class="nav-sub"><a href="#mec-patrullas">Sistema de Patrullas</a></li>
+    <li class="nav-sub"><a href="#mec-stealth">Reglas de Sigilo</a></li>
+
+    <li class="nav-section"><a href="#acto1">Acto 1 — El Gancho</a></li>
+    <li class="nav-sub"><a href="#escena1">E1 — La Invitación</a></li>
+
+    <li class="nav-section"><a href="#acto2">Acto 2 — La Misión</a></li>
+    <li class="nav-sub"><a href="#escena2">E2 — La Parroquia</a></li>
+    <li class="nav-sub"><a href="#escena3">E3 — La Abuela</a></li>
+
+    <li class="nav-section"><a href="#acto3">Acto 3 — La Infiltración</a></li>
+    <li class="nav-sub"><a href="#escena4">E4 — Camino a la Base</a></li>
+    <li class="nav-sub"><a href="#escena5">E5 — Entrada a la Base</a></li>
+
+    <li class="nav-section"><a href="#acto4">Acto 4 — Stella Maris</a></li>
+    <li class="nav-sub"><a href="#escena6">E6 — Exterior</a></li>
+    <li class="nav-sub"><a href="#escena7">E7 — Puzzle Trinidad</a></li>
+    <li class="nav-sub"><a href="#escena8">E8 — Las Criptas</a></li>
+
+    <li class="nav-section"><a href="#acto5">Acto 5 — La Retirada</a></li>
+    <li class="nav-sub"><a href="#escena9">E9 — La Llamada</a></li>
+    <li class="nav-sub"><a href="#escena10">E10 — Escape</a></li>
+    <li class="nav-sub"><a href="#escena11">E11 — Humberto 155</a></li>
+
+    <li class="nav-section"><a href="#epilogo">Epílogo</a></li>
+
+    <li class="nav-section"><a href="#encuentros">Encuentros</a></li>
+    <li class="nav-sub"><a href="#enc1">E1 — Patrulla Interna</a></li>
+    <li class="nav-sub"><a href="#enc2">E2 — Emboscada Salida</a></li>
+    <li class="nav-sub"><a href="#enc3">E3 — Calles (Narrativo)</a></li>
+    <li class="nav-sub"><a href="#enc4">E4 — Combate Final</a></li>
+
+    <li class="nav-section"><a href="#npcs">NPCs</a></li>
+    <li class="nav-section"><a href="#items">Ítems y Buffs</a></li>
+    <li class="nav-section"><a href="#referencias">Referencias de Mobs</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ MAIN -->
+<main id="main">
+
+<!-- ── COVER ──────────────────────────────────────────────── -->
+<section id="cover">
+  <div class="stamp">Hernández Corp — Documento Clasificado</div>
+  <h1>Operación<br>Capitán Argentum</h1>
+  <div class="subtitle">Guía de Dungeon Master</div>
+  <div class="divider"></div>
+  <div class="meta">
+    One-Shot · D&D 5e · Punta Alta, Argentina<br>
+    5 jugadores · Nivel 5 · 4–6 horas<br>
+    Thriller histórico-político · Infiltración y sigilo
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="dm-note" style="text-align:left; margin-top:32px;">
+    <p><strong>Nota inicial para el DM:</strong> Esta campaña toca hechos reales del terrorismo de Estado en Argentina (1976–1983). Antes de empezar, mencioná brevemente el contexto a tu mesa. Alcanza con decir: <em>"Esta historia está ambientada en un lugar real y toca hechos que pasaron de verdad. Vamos a tratarlo con el respeto que merece."</em></p>
+    <p>El tono en mesa debe ser sobrio. Los momentos de humor que surjan orgánicamente son bienvenidos, pero nunca los alimentes en escenas graves. Esto no es un dungeon de terror divertido — es una historia de memoria.</p>
+  </div>
+
+  <div id="apertura" style="margin-top:48px; border-top: 1px solid var(--border-accent); padding-top:40px;">
+    <div class="act-label" style="margin-bottom:16px;">Texto de Apertura — Leer en voz alta antes de empezar</div>
+    <div class="read-aloud">
+      <p>"Antes de empezar, paren un segundo."</p>
+      <p>"Los personajes que tienen en esa hoja tienen habilidades, stats, nombres. Pero esta noche quiero que recuerden algo."</p>
+      <p>"Son ustedes. Los que están sentados acá. En algún punto de esta historia, alguien que se parece mucho a ustedes tuvo un sueño. En ese sueño, recibieron una carta. Y en esa carta, alguien les pedía algo."</p>
+      <p>"No les van a pedir que sean héroes. No les van a pedir que salven el mundo."</p>
+      <p>"Les van a pedir lo más humano que alguien le puede pedir a otra persona."</p>
+      <p>"Les van a pedir justicia."</p>
+      <p>"Bienvenidos a Punta Alta."</p>
+    </div>
+    <div class="dm-note" style="margin-top:16px;"><p>Después de leer esto, dejá un momento de silencio. No apurés. Cuando sientas que la mesa está lista, arrancá el Acto 1.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ MECÁNICAS GLOBALES -->
+<hr class="section-divider">
+<section id="mecanicas">
+  <div class="act-header">
+    <div class="act-label">Referencia Global</div>
+    <div class="act-title">Mecánicas Globales</div>
+  </div>
+
+  <!-- PATRULLAS -->
+  <div id="mec-patrullas" class="scene-header">
+    <div class="scene-label">Sistema Central</div>
+    <div class="scene-title">Sistema de Patrullas</div>
+  </div>
+
+  <div class="mechanic-box">
+    <div class="mechanic-title">Regla del 1d6 — Patrullas Internas</div>
+    <p>Desde el momento en que el grupo entra a la Base Naval, el DM tira <strong>1d6 en secreto</strong> cada vez que el grupo:</p>
+    <ul>
+      <li>Se mueve de una zona a otra.</li>
+      <li>Tarda más de lo esperado en resolver una acción.</li>
+      <li>Hace ruido (fallo de Stealth, pieza del puzzle, etc.).</li>
+    </ul>
+    <p><strong>Con resultado 1 o 2:</strong> Una patrulla de dos guardias aparece en el área. El grupo tiene 1 round para reaccionar — Stealth CD 14 para ocultarse antes de ser detectados.</p>
+    <p><strong>En alerta elevada</strong> (después de la llamada de Mario, Escena 9): el dado pasa a <strong>1d4</strong>. La base está activa.</p>
+    <p><strong>Si entraron por fuerza (Opción C):</strong> Alerta general desde el inicio — 1d4 todo el tiempo, puertas de la iglesia cerradas con llave.</p>
+  </div>
+
+  <div class="mechanic-box" style="margin-top:16px;">
+    <div class="mechanic-title">Ciclo de Patrulla Exterior — Iglesia Stella Maris</div>
+    <p>Dos guardias hacen un circuito alrededor del edificio. El ciclo completo dura aproximadamente <strong>4 minutos</strong>. El DM lleva un contador simple:</p>
+    <ul>
+      <li>Cada acción significativa afuera (forzar cerradura, trepar, buscar entrada) = <strong>+1 paso</strong> en el ciclo.</li>
+      <li>Al llegar al <strong>4to paso</strong>, los guardias están de vuelta en ese sector.</li>
+    </ul>
+  </div>
+
+  <!-- SIGILO -->
+  <div id="mec-stealth" class="scene-header" style="margin-top:40px;">
+    <div class="scene-label">Sistema Central</div>
+    <div class="scene-title">Reglas de Sigilo y Bajada Silenciosa</div>
+  </div>
+
+  <div class="mechanic-box">
+    <div class="mechanic-title">Stealth Grupal</div>
+    <p>Cuando el grupo necesita moverse sin ser detectado, el DM pide una tirada de Stealth grupal. <strong>El resultado más bajo del grupo es el que cuenta.</strong></p>
+  </div>
+
+  <div class="mechanic-box" style="margin-top:16px;">
+    <div class="mechanic-title">Bajada Silenciosa de Guardia Aislado</div>
+    <p>Si hay un guardia solo, <strong>fuera de la línea de visión de otros guardias</strong>, el grupo puede reducirlo sin tiradas formales si tiene <strong>mayoría numérica clara</strong> (2 o más contra 1).</p>
+    <p>El DM lo describe como una acción coordinada, rápida, sin daño permanente. <strong>No activa alerta si nadie lo ve.</strong></p>
+    <p>Si el guardia hace una tirada de CON antes de caer (por el rasgo de Guardia de Perímetro), puede gritar. El DM decide en el momento si da esa oportunidad.</p>
+  </div>
+
+  <div class="mechanic-box" style="margin-top:16px;">
+    <div class="mechanic-title">Explosión de Falcon — Combate Final</div>
+    <p>Si un Falcon verde recibe <strong>20 o más puntos de daño en un solo ataque</strong>:</p>
+    <ul>
+      <li>El auto explota al inicio del siguiente round.</li>
+      <li>Todas las criaturas en un radio de <strong>10 ft.</strong> hacen tirada de salvación <strong>DEX CD 14</strong>.</li>
+      <li>Fallo: <strong>3d6 de daño de fuego.</strong> Éxito: la mitad.</li>
+      <li>El Falcon queda eliminado como cobertura.</li>
+    </ul>
+    <p>Los jugadores pueden usar esta mecánica intencionalmente si lo describen creativamente.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ ACTO 1 -->
+<hr class="section-divider">
+<section id="acto1">
+  <div class="act-header">
+    <div class="act-label">Acto 1</div>
+    <div class="act-title">El Gancho</div>
+  </div>
+
+  <div id="escena1" class="scene-header">
+    <div class="scene-label">Escena 1</div>
+    <div class="scene-title">La Invitación</div>
+    <div class="scene-location">📍 Local Titán Altos — Esquina 25 de Mayo e Irigoyen, Punta Alta</div>
+  </div>
+
+  <div class="dm-note">
+    <p>Esta escena sucede en el pasado reciente, por separado para cada jugador. Podés jugar esto como un breve flashback individual: <em>"Hace tres días, a vos te llegó..."</em> Si el tiempo lo permite, preguntale a cada jugador cómo reaccionó al recibirla. Eso ancla sus personajes en la historia antes de que se conozcan.</p>
+    <p>La invitación es una tarjeta de cartón grueso, blanco, sin membrete. Caligrafía manual, en tinta negra. Solo dice una dirección, una fecha, una hora, y la frase: <em>"Lo que ustedes saben hacer, nadie más puede hacerlo aquí. Hay trabajo. Hay paga. Hay razones."</em> Sin firma.</p>
+    <p>Mostrá Google Maps en este momento. Buscá la esquina de Titán en Punta Alta y mostrá el barrio. Esta es la primera vez que el mapa entra en juego.</p>
+  </div>
+
+  <div class="read-aloud">
+    <p>Es de noche. La esquina de Titán es una de esas esquinas que todo el mundo en Punta Alta conoce: abajo, la sastrería de siempre, con los trajes en la vidriera y los zapatos alineados bajo la luz fría de un tubo fluorescente. Una esquina de toda la vida, de las que parecen no cambiar nunca.</p>
+    <p>Pero esta noche no entraron por la sastrería.</p>
+    <p>Sobre la calle 25, hay una puerta angosta, entreabierta. Una ranura de oscuridad con una escalera adentro. Alguien la dejó así a propósito.</p>
+    <p>Suben. Los escalones crujen bajo sus pies. Y cuando llegan arriba, el primer piso se abre y por las ventanas aparece el centro de Punta Alta desde lo más alto que pueden estar en este barrio: las luces bajas de la ciudad, las calles rectas perdiéndose en la oscuridad, el silencio de una noche de semana.</p>
+    <p>En el medio de la habitación hay una mesa y cuatro sillas. Y un hombre de pie.</p>
+    <p>Tiene las manos cruzadas adelante y no hace ningún gesto de bienvenida — simplemente los mira llegar, uno por uno, como si los estuviera contando.</p>
+    <p>"Los elegí a ustedes. No a otros. Hay razones para eso que no vienen al caso ahora. Lo que sí viene al caso es lo siguiente."</p>
+    <p>Hace una pausa. Saca un sobre del bolsillo interior del saco y lo deja sobre la mesa, sin abrirlo.</p>
+    <p>"Son recompensados con lo acordado. Si el trabajo sale como todos esperamos, con bastante más que eso. No les pido que confíen en mí ahora. Les pido que vayan a donde les indico y escuchen lo que les van a decir."</p>
+    <p>Da vuelta el sobre. En el frente, escrito a mano: <em>Parroquia María Auxiliadora. Rivadavia 562.</em></p>
+    <p>"Los esperan. No lleguen tarde."</p>
+    <p>Se pone los guantes. Baja la escalera. No se presentó.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ ACTO 2 -->
+<hr class="section-divider">
+<section id="acto2">
+  <div class="act-header">
+    <div class="act-label">Acto 2</div>
+    <div class="act-title">La Misión</div>
+  </div>
+
+  <div id="escena2" class="scene-header">
+    <div class="scene-label">Escena 2</div>
+    <div class="scene-title">La Parroquia</div>
+    <div class="scene-location">📍 Parroquia María Auxiliadora — Rivadavia 562, Punta Alta</div>
+  </div>
+
+  <div class="dm-note">
+    <p>Mostrá Google Maps. La parroquia está sobre Rivadavia, frente a la plaza principal de Punta Alta. De noche, la fachada está iluminada desde abajo, los vitrales apagados, la puerta principal entornada. No hay misa. No hay gente. Solo una luz adentro.</p>
+    <p>El Monaguillo ya estaba ahí. Hernández Corp lo contactó antes, por separado. Él sabe más de lo que va a decir esta noche — eso queda a criterio del jugador que lo interpreta.</p>
+  </div>
+
+  <div class="read-aloud">
+    <p>La plaza está tranquila. Un par de bancos vacíos, el quiosco cerrado, la luz amarilla de los faroles. La parroquia María Auxiliadora los mira desde la vereda de enfrente: fachada blanca, torres altas, la puerta de madera apenas entreabierta con una franja de luz caliente filtrándose hacia afuera.</p>
+    <p>Antes de que lleguen a los escalones, la puerta se abre del todo.</p>
+    <p>En el umbral está el Monaguillo. Los mira, asiente una sola vez, y se corre para dejarlos pasar. Claramente los estaba esperando.</p>
+    <p>"El Padre Michael los espera en la curia. Síganme."</p>
+  </div>
+
+  <div class="read-aloud">
+    <p>La oficina huele a madera vieja y a tabaco apagado. Hay una biblioteca hasta el techo, un crucifijo en la pared, y una escupidera de latón en el rincón, lustrada como si fuera un objeto de orgullo.</p>
+    <p>El Padre Michael está sentado detrás del escritorio. Es calvo, de hombros anchos, con una papada que el hábito no logra disimular del todo. La voz, cuando habla, es de las que llenan una habitación sin esfuerzo.</p>
+    <p>Los mira llegar sin levantarse. Junta las manos sobre el escritorio.</p>
+    <p>"Siéntensen. Lo que tengo para decirles no es corto, y prefiero que estén cómodos cuando lo escuchen."</p>
+    <p>Hace una pausa. Toma un vaso de agua. Lo deja. Y entonces, con la precisión de alguien que lleva décadas practicando el gesto, gira levemente en la silla, inclina la cabeza, y escupe en la escupidera de latón con una exactitud impecable. El sonido metálico resuena en el silencio de la oficina.</p>
+    <p>Vuelve a mirarlos como si nada.</p>
+    <p>"Bien. Escúchenme."</p>
+  </div>
+
+  <h3>El Briefing</h3>
+
+  <div class="read-aloud">
+    <p>"Necesito que entren a la Base Naval Puerto Belgrano. Adentro, en la Zona Común, hay una iglesia. La parroquia Stella Maris. Gótico inglés, torre esbelta, vitrales. Inaugurada en 1937 con el presidente Justo en primera fila. Muy bonita."</p>
+    <p>Una pausa. Algo cambia en su cara — no mucho, pero lo suficiente.</p>
+    <p>"Durante la dictadura, esa iglesia no fue solo un lugar de misa. Los capellanes de la Armada sabían lo que pasaba dentro de la base. Algunos estuvieron presentes en los interrogatorios. No apretaron el botón de la picana — pero estuvieron ahí. Eso tiene un nombre, aunque durante muchos años nadie se animó a decirlo en voz alta."</p>
+    <p>Se levanta. Va hasta la biblioteca. Saca una carpeta fina y la deja sobre el escritorio sin abrirla.</p>
+    <p>"Debajo de esa iglesia hay una cripta. En esa cripta hay documentos. Fotos. Registros. Lo que le hicieron a la gente que pasó por esa base y por los centros que dependían de ella — La Escuelita, el buque ARA 9 de Julio, la Base Baterías acá en Punta Alta misma. Todo documentado, guardado, y enterrado hace cincuenta años por gente que pensó que el tiempo lo iba a cubrir."</p>
+    <p>Vuelve a sentarse.</p>
+    <p>"También hay algo más. Un proyecto. No voy a decirles el nombre todavía porque prefiero que lo lean ustedes con sus propios ojos. Lo que puedo decirles es que lo que le hicieron a algunas personas no fue solo tortura. Fue experimentación. Buscaban algo. Y lo encontraron."</p>
+    <p>Silencio.</p>
+    <p>"El Monaguillo los acompaña. Es mi mejor aprendiz. En él confío más que en nadie en esta ciudad."</p>
+    <p>Los mira uno por uno.</p>
+    <p>"Traigan esos documentos. Hay familias que llevan décadas sin saber qué pasó con los suyos. Esos papeles tienen respuestas."</p>
+    <p>Una pausa larga.</p>
+    <p>"Yo debería haberlos sacado hace cuarenta años. No lo hice."</p>
+    <p>No agrega nada más.</p>
+  </div>
+
+  <div class="dm-note">
+    <p><strong>Michael y su culpa:</strong> Era capellán auxiliar en la base durante la dictadura. Tenía veintitantos años, recién ordenado. Sabía lo que pasaba — no todo, pero suficiente. Calló. Siguió dando misa. Siguió bendiciendo uniformes.</p>
+    <p><strong>Insight CD 13:</strong> La culpa es genuina y vieja, no performance. <strong>CD 18:</strong> Nota que Michael sabe exactamente qué hay en esa cripta porque él mismo ayudó a guardar parte de esos documentos. Nunca lo va a admitir.</p>
+    <p><strong>Si los jugadores lo presionan directamente:</strong> Michael dice: <em>"Yo era muy joven y tomé decisiones que no volvería a tomar. Esta noche es parte de no volver a tomarlas."</em> Punto final. No continúa ese hilo.</p>
+  </div>
+
+  <!-- ESCENA 3 -->
+  <div id="escena3" class="scene-header">
+    <div class="scene-label">Escena 3</div>
+    <div class="scene-title">La Abuela</div>
+    <div class="scene-location">📍 Vereda de la Parroquia María Auxiliadora</div>
+  </div>
+
+  <div class="dm-note">
+    <p>Esta escena sucede al salir. No la anunciés. Los jugadores van a estar procesando el briefing. La abuela aparece como algo que simplemente está ahí.</p>
+    <p>Podés pedir Percepción o Insight CD 11 para que alguien la note antes de que actúe. Si nadie la supera, ella se levanta igual cuando el grupo pasa.</p>
+  </div>
+
+  <div class="read-aloud">
+    <p>Al salir, la plaza sigue igual. Los mismos faroles, el mismo silencio.</p>
+    <p>En un banco, cerca de los escalones, hay una señora mayor. Ropa oscura, cartera sobre la falda, la cabeza levemente inclinada. Rezaba, o parecía rezar. No estaba cuando llegaron — o sí estaba, y ninguno la notó.</p>
+    <p>Cuando el grupo pasa, ella levanta la vista. Se pone de pie con la lentitud tranquila de alguien que tiene todo el tiempo del mundo, o ninguno.</p>
+    <p>"Buenas noches."</p>
+    <p>Los mira. No con miedo, no con urgencia. Con algo más difícil de nombrar.</p>
+    <p>"Se llama Ale. Necesito saber. Ale siempre los espera."</p>
+    <p>Se le forma una lágrima. No la seca.</p>
+    <p>"Por favor. Vuelvan."</p>
+    <p>Abre la cartera. Saca pañuelos blancos, doblados, uno para cada uno, y los entrega con las dos manos — como se entrega algo sagrado, o algo que costó demasiado.</p>
+    <p>Se llama Estela.</p>
+    <p>No dice nada más.</p>
+  </div>
+
+  <div class="dm-note">
+    <p>Estela no explica quién es Ale. Si los jugadores preguntan, dice: <em>"Hay cosas que una madre sabe."</em> Nada más.</p>
+    <p>El pañuelo blanco es una referencia directa a las <strong>Madres de Plaza de Mayo</strong>, que usaban pañuelos blancos como símbolo de búsqueda de sus hijos desaparecidos.</p>
+    <p>El nombre "Ale" queda sin resolver. Aparecerá en la lista de la cripta, con una cruz a lápiz al lado. El DM decide cuándo atar ese hilo — o si lo deja sin resolver.</p>
+    <p>Ver <a href="#panuela-estela" style="color: var(--gold)">Ítem: Pañuelo de Estela</a> para el efecto mecánico.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ ACTO 3 -->
+<hr class="section-divider">
+<section id="acto3">
+  <div class="act-header">
+    <div class="act-label">Acto 3</div>
+    <div class="act-title">La Infiltración</div>
+  </div>
+
+  <div id="escena4" class="scene-header">
+    <div class="scene-label">Escena 4</div>
+    <div class="scene-title">Camino a la Base</div>
+    <div class="scene-location">📍 Desde Rivadavia 562 hasta la Base Naval Puerto Belgrano</div>
+  </div>
+
+  <div class="dm-note">
+    <p>Momento central del uso de Google Maps. Mostrá el recorrido desde la parroquia hasta el perímetro de la base. Dejá que los jugadores elijan la ruta — esa decisión tiene consecuencias.</p>
+    <p><strong>Ruta por Avenida Rivadavia:</strong> Más expuesta, más iluminada. La patrulla policial puede aparecer acá. <a class="encounter-trigger" href="#enc1">Ver Encuentro 1 — Patrulla</a></p>
+    <p><strong>Ruta por calles laterales:</strong> Más oscuro, sin incidentes directos. El DM puede describir tensión ambiental: un perro que ladra, un auto con alguien adentro que no se mueve.</p>
+  </div>
+
+  <div class="read-aloud">
+    <p>La ciudad de noche es otra cosa. Las mismas calles de siempre, pero con menos gente, menos ruido, menos excusas para estar en la calle a esta hora. El centro queda atrás rápido. Las veredas se vuelven más angostas, los frentes más bajos, los espacios entre faroles más largos.</p>
+    <p>Punta Alta es una ciudad que creció alrededor de la base. Eso se nota cuando caminan hacia el sur: en algún punto, sin que haya un cartel que lo diga, el barrio cambia de tono. Las familias de acá saben dónde termina la ciudad y dónde empieza otra cosa.</p>
+    <p>Ustedes ya están llegando a ese límite.</p>
+  </div>
+
+  <div class="read-aloud">
+    <p>El alambrado aparece antes de que lo esperen. Alto, con espirales de alambre de púa arriba, postes de hormigón cada diez metros. Más allá, la base: luces distantes, siluetas de edificios bajos, el sonido apagado de un generador en algún lugar.</p>
+    <p>No hay nada romántico en esto. Es un muro. Del otro lado están los documentos, y están los guardias, y está todo lo que el Padre Michael no les terminó de contar.</p>
+    <p>Se quedan un momento en silencio mirando el alambrado.</p>
+    <p>Tienen que entrar.</p>
+  </div>
+
+  <!-- ESCENA 5 -->
+  <div id="escena5" class="scene-header">
+    <div class="scene-label">Escena 5</div>
+    <div class="scene-title">Entrada a la Base</div>
+  </div>
+
+  <div class="dm-note">
+    <p>El grupo elige cómo entrar. Las tres opciones son igualmente válidas — cada una define el tono del resto de la sesión.</p>
+    <a class="mechanic-link" href="#mec-patrullas">Sistema de Patrullas — activo desde este momento</a>
+  </div>
+
+  <div class="options-grid">
+    <div class="option-card">
+      <div class="option-label">Opción A</div>
+      <div class="option-title">Stealth por el Alambrado</div>
+      <p>1) Investigación/Percepción CD 11 — encontrar el punto débil.<br>
+      2) Sleight of Hand/Athletics CD 13 — abrir sin ruido.<br>
+      3) Stealth CD 14 — cruzar sin ser visto.<br><br>
+      Riesgo moderado. El último que cruza puede ver las luces de Punta Alta a través del tejido metálico.</p>
+    </div>
+    <div class="option-card">
+      <div class="option-label">Opción B</div>
+      <div class="option-title">Puesto de Guardia</div>
+      <p>Historia sólida → Persuasión CD 14.<br>
+      Historia débil → Persuasión CD 17.<br>
+      Intimidación → CD 16, pero genera patrullas adicionales.<br><br>
+      Si entran por garita, quedan registrados. El DM puede usarlo en el epílogo.</p>
+    </div>
+    <div class="option-card">
+      <div class="option-label">Opción C</div>
+      <div class="option-title">Entrada por Fuerza</div>
+      <p>Alerta general inmediata. El sistema de patrullas pasa a 1d4. Las puertas de la iglesia quedan cerradas con llave.<br><br>
+      Esta opción existe — respetala si el grupo la elige.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ ACTO 4 -->
+<hr class="section-divider">
+<section id="acto4">
+  <div class="act-header">
+    <div class="act-label">Acto 4</div>
+    <div class="act-title">La Iglesia Stella Maris</div>
+  </div>
+
+  <div id="escena6" class="scene-header">
+    <div class="scene-label">Escena 6</div>
+    <div class="scene-title">Exterior de la Iglesia</div>
+    <div class="scene-location">📍 Parroquia Stella Maris — Zona Común, Base Naval Puerto Belgrano</div>
+  </div>
+
+  <div class="dm-note">
+    <p>La iglesia Stella Maris es real. Estilo gótico inglés, torre esbelta, vitrales. Inaugurada en 1937. Está en la Zona Común de la base, rodeada de arboleda.</p>
+    <p><strong>Sistema de patrulla exterior:</strong> usar el Ciclo de 4 pasos. <a class="mechanic-link" href="#mec-patrullas">Ver mecánica de ciclo exterior</a></p>
+    <p><strong>Puerta principal:</strong> Thieves' Tools CD 13. Cada round en la escalinata avanza el ciclo.<br>
+    <strong>Entrada lateral:</strong> Thieves' Tools CD 11, pero requiere Stealth grupal CD 12 para llegar.<br>
+    <strong>Si los detectan afuera:</strong> gritan "¡Alto!" — un round para resolverlo antes de alerta general.</p>
+    <p>En algún momento del camino a la iglesia, puede activarse el primer encuentro de combate de la sesión: <a class="encounter-trigger" href="#enc1">Ver Encuentro 1 — Patrulla Interna</a></p>
+  </div>
+
+  <div class="read-aloud">
+    <p>La ven desde lejos, entre los árboles.</p>
+    <p>La torre es lo primero — esbelta, oscura contra el cielo, con una cruz en la punta que atrapa la luz de los faroles de la base. Después aparece la fachada: piedra clara, arcos góticos, una escalinata de varios escalones que sube hasta la puerta principal. Para ser una iglesia dentro de una base militar, es sorprendentemente bella. O quizás no es sorprendente en absoluto — quizás así es exactamente como tenía que verse.</p>
+    <p>Hay dos guardias. Hacen el circuito despacio, uno por cada lado del edificio, con los fusiles cruzados al pecho y el paso de quien lleva horas caminando el mismo recorrido. En este momento están en el lado opuesto.</p>
+    <p>La puerta principal está en lo alto de la escalinata, iluminada desde abajo. Hay una entrada lateral, más discreta, a nivel del suelo, parcialmente tapada por un árbol.</p>
+    <p>Tienen una ventana corta. Decidan.</p>
+  </div>
+
+  <!-- ESCENA 7 -->
+  <div id="escena7" class="scene-header">
+    <div class="scene-label">Escena 7</div>
+    <div class="scene-title">Interior y el Puzzle de la Trinidad</div>
+  </div>
+
+  <div class="dm-note">
+    <p>El interior está a oscuras salvo por velas votivas y luz filtrada de los vitrales. El Monaguillo percibe la ranura del altar casi de inmediato — ese es su momento de brillo.</p>
+    <p><strong>Puzzle físico en mesa:</strong> Preparar cuatro piezas de madera o cartón que juntas forman una pirámide. Los jugadores las arman con las manos. Si no hay piezas físicas, un dibujo en papel que orienten también funciona.</p>
+    <p><strong>Penalización por error:</strong> Cada intento fallido activa una alarma silenciosa — una luz roja parpadea bajo el sagrario. Con tres errores, tirá el dado de patrulla con desventaja inmediatamente.</p>
+  </div>
+
+  <div class="read-aloud">
+    <p>Adentro huele a cera y a piedra fría. Las bancas de madera se alinean en dos filas hacia el altar, oscuras y silenciosas. Los vitrales no dejan pasar color a esta hora — solo siluetas, formas, la sugerencia de imágenes sagradas que durante el día serían brillantes.</p>
+    <p>El altar está al fondo, elevado tres escalones. Sobre él, una talla de la Virgen Stella Maris — la patrona, la estrella del mar, la que guía a los navegantes. Detrás, un vitral con un barco en alta mar bajo una figura femenina con los brazos abiertos.</p>
+    <p>El Monaguillo levanta la linterna hacia el altar y se queda quieto un momento.</p>
+    <p>"Ahí."</p>
+    <p>Señala la base del sagrario. En la piedra, apenas visible, hay una ranura. La forma es exacta: una pirámide de tres lados.</p>
+    <p>"Esto no es parte del diseño original. Alguien lo puso después."</p>
+  </div>
+
+  <h3>La Pista</h3>
+  <div class="read-aloud">
+    <p>Cerca del ambón hay una placa de madera oscura fijada a la pared. Parece decorativa. Pero cuando la linterna la ilumina de cerca, leen una inscripción en latín:</p>
+    <p><em>"Tres son uno. Uno se divide en tres. Lo que fue separado debe reunirse para que la puerta se abra."</em></p>
+    <p>Debajo, tallado en la madera, hay un triángulo vacío — el contorno exacto de una pirámide. Y en su interior, encajada, la primera pieza.</p>
+  </div>
+
+  <h3>Las Cuatro Piezas</h3>
+
+  <h4>Pieza 1 — La Pista (Ambón)</h4>
+  <div class="read-aloud">
+    <p>Está encajada directamente en el triángulo tallado debajo de la inscripción. Se desprende con facilidad — estaba esperando que alguien la encontrara.</p>
+  </div>
+
+  <h4>Pieza 2 — El Padre (Nave Derecha)</h4>
+  <div class="read-aloud">
+    <p>En la nave derecha hay una representación del Padre: el símbolo del ojo que todo lo ve, encerrado en un triángulo radiante, tallado en relieve sobre un panel de piedra lateral. Al acercarse con la linterna, notan que el triángulo tiene una cavidad en su base. Dentro, envuelta en un paño de lino amarillento, está la segunda pieza.</p>
+  </div>
+  <div class="dm-note"><p>Percepción CD 12. Si nadie la supera, el Monaguillo la encuentra.</p></div>
+
+  <h4>Pieza 3 — El Hijo (Crucifijo Central)</h4>
+  <div class="read-aloud">
+    <p>El Cristo está en el crucifijo central, suspendido sobre el altar. Una talla expresiva — el cuerpo en tensión, la cabeza inclinada, la corona de espinas con un detalle de orfebrería inusual para una iglesia de base militar.</p>
+    <p>Uno de los clavos no es un clavo. Es un pasador de madera del mismo color, del mismo grosor. Si se gira un cuarto de vuelta en sentido antihorario, se suelta. La tercera pieza cae en la palma de quien lo sostenga.</p>
+  </div>
+  <div class="dm-note"><p>Investigación CD 14. Si un jugador dice explícitamente "reviso el crucifijo de cerca", dásela sin tirada.</p></div>
+
+  <h4>Pieza 4 — El Espíritu Santo (Vitral Izquierdo)</h4>
+  <div class="read-aloud">
+    <p>En la nave izquierda, una vidriera representa la Paloma del Espíritu Santo descendiendo sobre lenguas de fuego. Es el vitral más antiguo de la iglesia. Pero uno de los paneles no es vidrio — es resina endurecida, levemente más opaca, con la cuarta pieza encajada detrás. Visible solo si la linterna la ilumina desde abajo y hacia arriba, como si rezaras.</p>
+  </div>
+  <div class="dm-note"><p>Percepción CD 15, o acción creativa sin tirada. Para sacar la pieza: objeto fino, sonido seco — tirá el dado de patrulla.</p></div>
+
+  <h3>Resolución del Puzzle</h3>
+  <div class="read-aloud">
+    <p>Las cuatro piezas encajan. No hace falta fuerza — se acomodan solas en el orden correcto, como si hubieran estado esperando esto. La encajan en la ranura del sagrario.</p>
+    <p>Por un momento, nada.</p>
+    <p>Después, un sonido: piedra moviéndose sobre piedra, lento y profundo, como algo que lleva décadas sin abrirse. Tres escalones del altar se desplazan hacia adentro, dejando una abertura negra en el suelo. Una escalera de piedra desciende hacia abajo.</p>
+    <p>El aire que sube es frío y huele a décadas.</p>
+  </div>
+
+  <!-- ESCENA 8 -->
+  <div id="escena8" class="scene-header">
+    <div class="scene-label">Escena 8</div>
+    <div class="scene-title">Las Criptas Secretas</div>
+  </div>
+
+  <div class="dm-note">
+    <p>Esta es la escena más quieta de la campaña. No hay combate, no hay tiradas. Solo lectura y silencio. Bajá el tono de voz. Si hay música de ambiente, que se apague. Leé el texto principal completo. El texto expandido es opcional.</p>
+  </div>
+
+  <div class="read-aloud">
+    <p>El aire es húmedo y huele a papel viejo y humedad de décadas. A la luz de sus linternas, las cajas se apilan hasta el techo: carpetas amarillentas, fotos en blanco y negro, hojas mecanografiadas con el sello de la Armada Argentina. Entre los documentos aparecen nombres, fechas, lugares. El Garage Olimpo. La ESMA. El Vesubio. Centros de detención clandestina donde personas fueron arrancadas de sus casas, de sus trabajos, de sus vidas.</p>
+    <p>Y más cerca. La Escuelita de Bahía Blanca. El buque ARA 9 de Julio, amarrado en este puerto, usado como centro de detención flotante. La Base Baterías, en Punta Alta misma, con su Séptima Batería de Infantería de Marina.</p>
+    <p>En otra carpeta, más gruesa, marcada con tinta roja, leen las palabras: PROYECTO CAPITÁN ARGENTUM.</p>
+    <p>Debajo, una foto de un hombre. Alto, mandíbula cuadrada, ojos vacíos.</p>
+    <p>Lo que le hicieron para llegar hasta ahí está documentado página por página.</p>
+    <p>Ustedes leen en silencio. No hay palabras.</p>
+  </div>
+
+  <h4>Texto Expandido — Opcional</h4>
+  <div class="read-aloud">
+    <p>Entre las carpetas hay una lista. Nombres, números de legajo, fechas de ingreso. Sin fechas de egreso. Treinta y siete nombres en esa hoja sola. Alguno tiene una cruz a lápiz al lado. Otros tienen una anotación: <em>"trasladado"</em>. Los que conocen la historia saben lo que eso significa.</p>
+    <p>Hay fotos de personas vendadas, de pie contra una pared. Las fotos están numeradas. Son documentación — la misma frialdad de un archivo de inventario.</p>
+    <p>Hay un informe firmado por un médico naval. Habla de "tolerancia al estímulo", de "respuesta fisiológica bajo condiciones extremas", de "sujeto número 7 presenta resultados anómalos que justifican continuar el protocolo". El lenguaje es clínico. Eso lo hace peor.</p>
+  </div>
+
+  <div class="dm-note">
+    <p>Dejá que los jugadores pregunten, lean, reaccionen. No apurés esta escena.</p>
+    <p><strong>Si alguien busca el nombre Ale en las listas:</strong> está. Tiene una cruz a lápiz al lado. No decís nada más. Dejás que eso aterrice.</p>
+    <p>El Monaguillo toma decisiones rápidas sobre qué llevarse: la carpeta roja primero, después las listas, después los informes médicos. Tiene una mochila preparada. Sabía para qué venía.</p>
+    <p><strong>En este momento, el celular suena.</strong></p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ ACTO 5 -->
+<hr class="section-divider">
+<section id="acto5">
+  <div class="act-header">
+    <div class="act-label">Acto 5</div>
+    <div class="act-title">La Retirada y el Clímax</div>
+  </div>
+
+  <div id="escena9" class="scene-header">
+    <div class="scene-label">Escena 9</div>
+    <div class="scene-title">La Llamada de Mario</div>
+    <div class="scene-location">📍 Criptas de la Iglesia Stella Maris</div>
+  </div>
+
+  <div class="dm-note">
+    <p>Mario es el padre de uno de los jugadores — definilo con ese jugador antes de la sesión. Si ninguno quiere ese rol, Mario puede ser un contacto cercano del grupo.</p>
+    <p>El celular suena en el silencio de las criptas. No lo anunciés — simplemente describí que suena.</p>
+  </div>
+
+  <div class="read-aloud">
+    <p>El celular vibra y suena en el silencio de las criptas. El sonido rebota en las paredes de piedra.</p>
+    <p>Es Mario. Su voz cuando atienden no tiene el tono de una llamada de rutina. Está hablando en voz baja, rápido, con el control forzado de alguien que está tratando de no gritar.</p>
+    <p>"Escuchame. Se enteraron. No sé cómo, pero se enteraron. Hay movimiento en la base y afuera también. Estoy en Humberto 155 — vengan para acá, vengan ahora. Rápido."</p>
+    <p>La llamada corta.</p>
+    <p>Arriba, a través del piso de piedra de la iglesia, escuchan pasos.</p>
+  </div>
+
+  <!-- ESCENA 10 -->
+  <div id="escena10" class="scene-header">
+    <div class="scene-label">Escena 10</div>
+    <div class="scene-title">Escape de la Base</div>
+  </div>
+
+  <div class="dm-note">
+    <p>No hay iniciativa formal. Tensión continua, decisiones rápidas. El sistema de patrullas pasa a 1d4. Distancia desde la iglesia al perímetro: 3 a 4 cuadras.</p>
+    <a class="encounter-trigger" href="#enc2">Ver Encuentro 2 — Emboscada en la Salida</a>
+  </div>
+
+  <h4>Momento 1 — Salir del sector de la iglesia</h4>
+  <div class="dm-note"><p>Stealth grupal CD 14. Fallo: el guardia gira — bajada silenciosa o distracción con Thieves' Tools CD 11 para crear ruido en dirección contraria.</p></div>
+
+  <h4>Momento 2 — Cruzar la Zona Común</h4>
+  <div class="dm-note"><p>Un jeep militar hace ronda por la avenida interna. Opciones: esperan (tirá el dado de patrulla), se ocultan en la arboleda (Stealth CD 12), o cruzan antes del jeep (Athletics CD 13 — fallo: los ilumina con los faros).</p></div>
+
+  <h4>Momento 3 — El perímetro y el sacrificio de Mati</h4>
+  <div class="dm-note">
+    <p>El punto del alambrado sigue ahí pero con una patrulla reforzada cortándoles el camino. No hay forma de rodearlos sin tiempo, y el tiempo se acabó. Este es el momento de Mati.</p>
+    <p>No anunciés que viene una escena importante. Simplemente describí la situación y esperá. Si Mati (el jugador) no lo propone solo, preguntá en voz baja: <em>"¿Qué hace Mati?"</em> Si duda, describí que los faros de un jeep están barriendo hacia ellos y que tienen diez segundos.</p>
+  </div>
+
+  <div class="read-aloud">
+    <p>La base está despierta. Las luces del perímetro pasan de blanco a rojo. Escuchan pasos, radios, órdenes cortadas. No tienen la bendición del Padre Michael encima — eso se fue hace rato. Ahora son solo cinco personas con documentos robados, rodeadas de hombres con armas.</p>
+    <p>Llegan al último punto antes del alambrado. Y ahí están: dos guardias bloqueando el paso, uno de frente y otro diez metros a la derecha. No los vieron todavía. Pero el jeep que hace ronda dobla la esquina en este momento, con los faros bajos barriéndolo todo.</p>
+    <p>No hay tiempo para rodear. No hay tiempo para esperar.</p>
+  </div>
+
+  <div class="read-aloud">
+    <p>Mati los mira. Mira los documentos bajo el brazo del Monaguillo. Mira el alambrado a treinta metros.</p>
+    <p>"Vayan," dice. No lo dice como pregunta.</p>
+  </div>
+
+  <div class="dm-note">
+    <p>Si alguien protesta — y van a protestar — Mati habla una vez más, despacio:</p>
+    <p><em>"Los documentos llegan o todo esto no sirvió para nada. Vayan. Yo los alcanzo."</em></p>
+    <p>No dejes que la escena se extienda. Mati ya decidió. Si algún jugador insiste en quedarse, Mati los empuja físicamente hacia el alambrado. Esto no se vota.</p>
+    <p><strong>Tirada de Stealth final, CD 13, para cruzar el alambrado mientras Mati los cubre.</strong> Si fallan, tienen desventaja en la primera tirada de la ciudad.</p>
+  </div>
+
+  <div class="read-aloud">
+    <p>La party cruza. Mati sale al descubierto, hacia la patrulla, hacia el otro lado. Lo escuchan hacer ruido — una lata pateada, un grito en dirección contraria. Los faros del jeep lo siguen a él.</p>
+    <p>Cruzan el alambrado. El último del grupo se pone de pie del otro lado.</p>
+    <p>No deberían mirar. Saben que no deberían mirar.</p>
+  </div>
+
+  <div class="dm-note"><p>Mirá a un jugador específico — no preguntés quién mira. Decidí vos cuál es el que no pudo no hacerlo. Decile solo a ese jugador, en voz baja si podés:</p></div>
+
+  <div class="read-aloud">
+    <p>A doscientos metros, entre las luces del perímetro, ven a Mati. Está corriendo, todavía. Hay tres hombres detrás de él.</p>
+    <p>Después hay un disparo.</p>
+    <p>Después hay silencio.</p>
+  </div>
+
+  <div class="dm-note">
+    <p>No describas más. No digas que murió. No digas que cayó. El disparo y el silencio son suficientes. Dejá que la mesa procese. Unos segundos reales de silencio antes de continuar.</p>
+    <p>Si alguien quiere volver: los documentos. Mati lo sabía cuando eligió.</p>
+  </div>
+
+  <div class="read-aloud">
+    <p>Siguen corriendo.</p>
+  </div>
+
+  <h4>Momento 4 — Ciudad, camino a Humberto 155</h4>
+
+  <div class="dm-note">
+    <p>Mostrá Google Maps. La ruta desde el perímetro de la base hasta Humberto 155, por las calles reales de Punta Alta.</p>
+    <p><strong>Tirada de Stealth grupal, CD 12.</strong> Con la tensión de lo que acaban de ver, podés dar Desventaja al jugador que miró atrás — manos que tiemblan, pasos que no terminan de callar.</p>
+    <p>Si fallan: una patrulla policial los intercepta. Persuasión CD 13 o Stealth extremo CD 15. No es combate todavía.</p>
+  </div>
+
+  <div class="read-aloud">
+    <p>Las calles de Punta Alta de noche. Asfalto mojado, perros que ladran a lo lejos, algún Falcon verde que pasa despacio por una esquina y no frena. Ustedes se pegan a las paredes, cortan por los patios, evitan las luces.</p>
+    <p>El celular vibra una sola vez. Un mensaje de Mario: <em>"Humberto 155. Ya."</em></p>
+  </div>
+
+  <!-- ESCENA 11 -->
+  <div id="escena11" class="scene-header">
+    <div class="scene-label">Escena 11</div>
+    <div class="scene-title">Humberto 155</div>
+    <div class="scene-location">📍 Humberto 155, Punta Alta</div>
+  </div>
+
+  <div class="dm-note">
+    <p>La casa está a oscuras. Mario abre, cuenta, hace pasar, cierra con llave.</p>
+    <a class="encounter-trigger" href="#enc3">Ver Encuentro 3 — Guardias en las Calles (Narrativo)</a>
+  </div>
+
+  <div class="read-aloud">
+    <p>La casa de Mario está a oscuras cuando llegan. El grupo golpea la puerta.</p>
+    <p>Mario abre. Los cuenta. Uno, dos, tres, cuatro — y el Monaguillo. Los hace pasar. Cierra con llave.</p>
+    <p>Falta Mati. Mario no lo dice. Solo asiente, una vez, y se para frente a todos con las manos grandes quietas a los costados.</p>
+  </div>
+
+  <h3>El Discurso de Mario — Primera Parte</h3>
+  <div class="read-aloud">
+    <p>"Sé lo que encontraron ahí adentro. Sé lo que dice esa carpeta roja. Y sé que en este momento lo único que quieren es salir de acá."</p>
+    <p>Se sienta en el borde de la mesa. Junta las manos.</p>
+    <p>"Yo perdí gente. Todos en esta ciudad perdimos gente, aunque muchos todavía finjan que no. Perdimos vecinos, compañeros de trabajo, pibes que iban a la misma escuela que nuestros hijos. Y durante cuarenta años nadie pudo decir sus nombres en voz alta sin que le temblara la voz."</p>
+  </div>
+
+  <div class="dm-note">
+    <p>Mario se detiene. <strong>Golpean la puerta — fuerte, tres veces.</strong></p>
+    <p>Ese es el pie para Mati. Si el jugador no reacciona de inmediato, decí: <em>"Escuchan a Mati — '¡Abran, boludos!'"</em></p>
+    <p>Abrís la puerta. Lo que pasa a partir de acá lo maneja el jugador. No lo guiones. Escuchá.</p>
+    <p>Cuando Mati termine, Mario se levanta, cruza la habitación en silencio y le da una poción sin decir nada. <strong>La poción restaura 7d8 HP. Tirá en abierto.</strong></p>
+    <p>Después continúa el discurso.</p>
+  </div>
+
+  <h3>El Discurso de Mario — Segunda Parte</h3>
+  <div class="read-aloud">
+    <p>Afuera, una puerta de auto se cierra. Después otra.</p>
+    <p>"Ustedes esta noche hicieron algo que yo no pude hacer. Que mucha gente no pudo hacer. No porque no quisieran — sino porque el miedo es una cosa real y la muerte es una cosa real y durante mucho tiempo las dos juntas fueron más grandes que cualquier otra cosa."</p>
+    <p>Se pone de pie.</p>
+    <p>"Pero el miedo no gana esta noche. Esta noche ganamos nosotros. Y lo vamos a hacer juntos, como se hacen estas cosas — juntos o no se hacen."</p>
+    <p>Los mira. A todos. Ahora son seis.</p>
+    <p>"¿Listos?"</p>
+  </div>
+
+  <div class="dm-note">
+    <p>Después del discurso, otorgá los tres buffs uno por uno, con pausa entre cada uno. Ver <a href="#buffs-mario" style="color: var(--gold)">Buffs de Mario</a> para el detalle mecánico.</p>
+  </div>
+
+  <h3>El Megáfono</h3>
+  <div class="read-aloud">
+    <p>El silencio dura exactamente lo que tarda en encenderse el megáfono.</p>
+    <p>Una voz. Mecánica, amplificada, sin apuro:</p>
+    <p><em>"Atención. La casa está rodeada. Salgan con las manos visibles. No opongan resistencia. Tienen treinta segundos."</em></p>
+    <p>Nadie se mueve adentro.</p>
+    <p><em>"Veinte segundos."</em></p>
+    <p>Mario los mira. Asiente una sola vez. No hace falta que diga nada.</p>
+    <p>Salen.</p>
+  </div>
+
+  <h3>La Calle — Inicio del Combate Final</h3>
+  <div class="read-aloud">
+    <p>La calle está irreconocible.</p>
+    <p>Cuatro Falcon verdes cortaron las dos esquinas del block, estacionados en diagonal, con los faros altos encendidos apuntando hacia la puerta de la casa. La luz es blanca y dura y aplana todo lo que ilumina. Alrededor de los autos, figuras de pie — uniformados, armados, quietos con la quietud de quien recibió una orden y está esperando la siguiente.</p>
+  </div>
+  <div class="dm-note"><p>Acá arranca la iniciativa formal. Seguir con la narrativa del Encuentro 4 — oleada 1, oleada 2, Néstor.</p>
+    <a class="encounter-trigger" href="#enc4">Ver Encuentro 4 — Combate Final (Capitán Argentum)</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ EPÍLOGO -->
+<hr class="section-divider">
+<section id="epilogo">
+  <div class="act-header">
+    <div class="act-label">Cierre</div>
+    <div class="act-title">Epílogo</div>
+  </div>
+
+  <div class="read-aloud">
+    <p>La calle vuelve al silencio de a poco. Primero se apagan los faros de los Falcon — uno, dos, tres, cuatro. Después solo queda la lamparita de Humberto 155 iluminando el umbral, y Mario parado en la puerta con los brazos cruzados y la cara de alguien que acaba de ver algo que no va a olvidar.</p>
+    <p>El Monaguillo se sienta en el cordón de la vereda con la mochila sobre las rodillas. La abre. Los documentos siguen ahí — la carpeta roja arriba de todo, con el nombre PROYECTO CAPITÁN ARGENTUM mirando hacia arriba.</p>
+    <p>Los mira a ustedes.</p>
+    <p>"Me los llevo esta noche. A donde tienen que ir."</p>
+  </div>
+
+  <div class="read-aloud">
+    <p>Mario entra a la casa y vuelve con cinco sobres. Gruesos, de papel madera, con el nombre de cada uno escrito a mano en el frente.</p>
+    <p>"Me los dejaron para ustedes. No sé quién los trajo ni cuándo — un día estaban en la mesa."</p>
+    <p>Los reparte. Adentro de cada sobre: la paga acordada, y una hoja doblada en dos. Una sola hoja, sin membrete, con texto escrito a máquina.</p>
+  </div>
+
+  <h3>La Carta de Hernández Corp</h3>
+
+  <div class="read-aloud">
+    <p><em>"El dinero paga el trabajo. La historia paga la deuda. Nadie que haya mirado hacia otro lado merece llamarse inocente, y nadie que haya actuado merece ser olvidado.</em></p>
+    <p><em>Esta noche existió. Lo que encontraron existió. Las personas cuyos nombres leyeron existieron.</em></p>
+    <p><em>Eso ahora no lo puede borrar nadie."</em></p>
+    <p>— Hernández Corp.</p>
+  </div>
+
+  <div class="dm-note">
+    <p>Leé la carta vos, en voz alta, despacio. No la delegues a un jugador. Es el único momento en que Hernández Corp habla directamente a la mesa.</p>
+  </div>
+
+  <h3>El Pañuelo</h3>
+
+  <div class="read-aloud">
+    <p>Antes de que se dispersen, uno de ustedes mira el pañuelo blanco que Estela les dio frente a la parroquia.</p>
+    <p>Sigue ahí. Sigue limpio.</p>
+    <p>A pocas cuadras, en un banco de plaza, una señora mayor todavía espera.</p>
+    <p>Pueden ir. O pueden no ir. Esa decisión es de ustedes.</p>
+  </div>
+
+  <div class="dm-note">
+    <p>Si el grupo va a ver a Estela: no preparés una escena elaborada. Ella pregunta una sola cosa: <em>"¿Encontraron su nombre?"</em></p>
+    <p>Si dicen que sí: asiente, se lleva el pañuelo a la boca, dice muy bajo "Gracias." Nada más.<br>
+    Si dicen que no: el DM sabe que sí estaba. Esa mentira piadosa también dice algo sobre el personaje.<br>
+    Si el grupo no va: la plaza queda sin resolver. Como quedan muchas cosas.</p>
+  </div>
+
+  <div class="warning" style="margin-top:32px;">
+    <p><strong>Cierre fuera de personaje:</strong> Cuando la última escena termine, cerrá el libro o la carpeta. Dejá el silencio un momento. Después decí algo simple: <em>"Lo que jugaron esta noche está basado en hechos reales. Los centros que nombramos existieron. Las personas que estuvieron adentro existieron. Muchas familias todavía buscan respuestas."</em></p>
+    <p>No hace falta más que eso. La campaña ya lo dijo todo.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ ENCUENTROS -->
+<hr class="section-divider">
+<section id="encuentros">
+  <div class="act-header">
+    <div class="act-label">Referencia de Combate</div>
+    <div class="act-title">Encuentros</div>
+  </div>
+
+  <table style="margin-bottom:32px;">
+    <tr>
+      <th>#</th><th>Encuentro</th><th>Ubicación</th><th>Tipo</th><th>Dificultad</th>
+    </tr>
+    <tr><td>1</td><td>Patrulla Interna</td><td>Camino a Stella Maris</td><td>Combate menor</td><td>Trivial</td></tr>
+    <tr><td>2</td><td>Emboscada en la Salida</td><td>Perímetro base</td><td>Combate menor</td><td>Baja</td></tr>
+    <tr><td>3</td><td>Guardias en las Calles</td><td>Calles Punta Alta</td><td>Narrativo</td><td>Sin combate</td></tr>
+    <tr><td>4</td><td>Combate Final</td><td>Humberto 155</td><td>Combate mayor</td><td>Mortal</td></tr>
+  </table>
+
+  <!-- ENC 1 -->
+  <div id="enc1" class="scene-header">
+    <div class="scene-label">Encuentro 1</div>
+    <div class="scene-title">Patrulla Interna</div>
+    <div class="scene-location">Camino a la Iglesia Stella Maris — zona arbolada</div>
+  </div>
+
+  <div class="dm-note">
+    <p><strong>Cuándo aparece:</strong> Después de cruzar el alambrado, en el camino hacia la iglesia. El dado de patrulla (1d6) puede activarlo, o el DM lo coloca en el camino si el grupo va por Rivadavia.</p>
+    <p><strong>Objetivo narrativo:</strong> Que el grupo practique eliminación silenciosa antes del momento de mayor tensión. Sirve de calibración de recursos.</p>
+    <p><strong>Opciones para el grupo:</strong><br>
+    — Stealth CD 13 grupal para dejar que pasen sin ser vistos.<br>
+    — Emboscada: si actúan antes de ser detectados, tienen 1 round de sorpresa. Dos contra uno = bajada silenciosa sin tiradas formales.<br>
+    — Si los detectan: los guardias gritan. Tirá el dado de patrulla con desventaja.</p>
+  </div>
+
+  <div class="mob-card">
+    <div class="mob-name">Guard × 2</div>
+    <div class="mob-meta">Monster Manual pág. 347 · CR 1/8 · 25 XP cada uno</div>
+    <p><strong>Stats clave:</strong> CA 16 · HP 11 (2d8+2) · Spear +3, 1d6+1</p>
+    <div class="mob-reskin">
+      <strong>Reskin:</strong> <em>Soldado de Patrulla Naval.</em> Spear → Fusil reglamentario (mismo daño). Shield → Chaleco táctico (CA ya incluida). Uniforme verde oliva, casco, fusil al hombro. Hacen la ronda rutinaria, hablando en voz baja, uno con una linterna.
+    </div>
+  </div>
+
+  <!-- ENC 2 -->
+  <div id="enc2" class="scene-header">
+    <div class="scene-label">Encuentro 2</div>
+    <div class="scene-title">Emboscada en la Salida</div>
+    <div class="scene-location">Sector oeste del perímetro — punto del alambrado</div>
+  </div>
+
+  <div class="read-aloud">
+    <p>El alambrado está ahí, exactamente como lo dejaron. El poste inclinado, la holgura en la base del tejido metálico.</p>
+    <p>Pero hay un guardia que no estaba antes. Está de espaldas, mirando hacia adentro de la base. Y hay otro, diez metros a la derecha, apoyado contra un poste con un cigarrillo encendido. La punta roja brilla en la oscuridad cada vez que inhala.</p>
+    <p>No los vieron todavía.</p>
+  </div>
+
+  <div class="dm-note">
+    <p>El del cigarrillo tiene línea de visión amplia. El grupo tiene una ventana corta antes de que uno de los dos gire.</p>
+    <p><strong>Si coordinan simultáneamente sobre ambos guardias:</strong> bajada silenciosa sin tiradas.<br>
+    <strong>Si atacan solo uno:</strong> el otro tiene tiempo de reaccionar.<br>
+    <strong>Si el segundo guardia grita o dispara:</strong> el DM agrega un guardia extra al combate final como consecuencia narrativa.</p>
+  </div>
+
+  <div class="mob-card">
+    <div class="mob-name">Thug × 2</div>
+    <div class="mob-meta">Monster Manual pág. 350 · CR 1/2 · 100 XP cada uno</div>
+    <p><strong>Stats clave:</strong> CA 11 · HP 32 (5d8+10) · Multiataque 2 mazas · Pack Tactics</p>
+    <div class="mob-reskin">
+      <strong>Reskin:</strong> <em>Agente de Seguridad Naval.</em> Mace → Cachiporra táctica. Heavy Crossbow → Pistola reglamentaria. Hombre de civil, campera oscura, pistola al cinto. Pack Tactics ya viene en el stat block — perfecto para los dos coordinados.
+    </div>
+  </div>
+
+  <!-- ENC 3 -->
+  <div id="enc3" class="scene-header">
+    <div class="scene-label">Encuentro 3</div>
+    <div class="scene-title">Guardias en las Calles — Narrativo</div>
+    <div class="scene-location">Calles de Punta Alta entre la base y Humberto 155</div>
+  </div>
+
+  <div class="dm-note">
+    <p>No es un encuentro de combate. Es tensión de calle.</p>
+    <p><strong>Si el grupo va directo:</strong> llegan sin incidentes. La tensión se construye solo con descripción ambiental — un auto que dobla despacio, una figura parada en una esquina.</p>
+    <p><strong>Si el grupo para o se demora:</strong> aparece un hombre de paisano que los mira fijo desde la vereda de enfrente. No actúa — solo observa. Eso es suficiente.</p>
+    <p>No hay tiradas necesarias. El DM describe, el grupo decide. Esa decisión es el encuentro.</p>
+  </div>
+
+  <!-- ENC 4 -->
+  <div id="enc4" class="scene-header">
+    <div class="scene-label">Encuentro 4</div>
+    <div class="scene-title">Combate Final — Capitán Argentum</div>
+    <div class="scene-location">Frente a Humberto 155</div>
+  </div>
+
+  <div class="dm-note">
+    <p><strong>Setup del campo de batalla:</strong></p>
+    <ul>
+      <li>Cuatro Falcon verdes cortaron las dos esquinas del block, en diagonal, faros altos encendidos.</li>
+      <li>La puerta de Humberto 155 = posición inicial del grupo (cobertura de tres cuartos).</li>
+      <li>Los minions emergen de los autos por oleadas. Néstor no aparece hasta la Oleada 2.</li>
+    </ul>
+    <p><strong>Falcon como cobertura:</strong> Cualquier criatura adyacente a un Falcon tiene cobertura de tres cuartos (+5 CA y Tiradas de Salvación DEX) contra ataques desde el otro lado.</p>
+    <p><strong>Explosión de Falcon:</strong> Si un Falcon recibe 20+ puntos de daño en un ataque, explota al inicio del siguiente round. Tirada DEX CD 14 en radio 10 ft. — fallo: 3d6 fuego, éxito: la mitad. <a class="mechanic-link" href="#mec-stealth">Ver mecánica completa</a></p>
+  </div>
+
+  <h3>Oleada 1 — Los primeros Falcon</h3>
+  <div class="read-aloud">
+    <p>Las puertas del primer Falcon se abren. Hombres de civil. Armas en mano. Avanzan sin apuro, como si el tiempo fuera de ellos.</p>
+  </div>
+  <div class="mob-card">
+    <div class="mob-name">Thug × 4</div>
+    <div class="mob-meta">Monster Manual pág. 350 · CR 1/2 · 100 XP c/u · <strong>Nombre en sesión: Agente de Civil</strong></div>
+    <p><strong>Stats clave:</strong> CA 11 · HP 32 (5d8+10) · Multiataque 2 ataques (maza) · Pack Tactics</p>
+    <div class="mob-reskin">
+      <strong>Reskin:</strong> Hombres de civil, campera oscura, pistola al cinto, cachiporra táctica. Salen de los dos Falcon del frente: dos de cada uno. Pack Tactics ya viene en el stat block — coordinan naturalmente.
+    </div>
+  </div>
+
+  <h3>Oleada 2 — Más autos. Después, Néstor.</h3>
+  <div class="dm-note"><p>Al inicio del round 3 (o cuando la Oleada 1 esté a la mitad de bajas), describí que se escuchan más frenadas. Dos Falcon más doblan la esquina. De esos salen los Veteran. Después, algo diferente — no un auto, sino un sonido. Dejá que la mesa lo escuche antes de describirlo.</p></div>
+  <div class="read-aloud">
+    <p>Más frenadas. Dos autos más doblan la esquina. Las puertas se abren.</p>
+    <p>Y después de eso — silencio un momento.</p>
+    <p>Después, una pisada. Pesada. Otra. El asfalto suena diferente bajo ese peso. No es el trote de un hombre — es algo más, algo que avanza a paso acelerado desde el fondo de la calle, entre las sombras que los faros no alcanzan.</p>
+    <p>Lo primero que ven es el Falcon más cercano moverse. No sacudirse — moverse. Un golpe lateral, seco, y el auto se desplaza medio metro sobre el asfalto. El agente que estaba apoyado contra él sale despedido y no se levanta.</p>
+    <p>Néstor camina entre los autos como si no estuvieran. Uniforme de la Armada sin insignias. Alto. Mandíbula cuadrada. Ojos que no parpadean. Se detiene en el centro de la calle y los mira.</p>
+    <p>En la placa metálica sobre el bolsillo izquierdo, grabado en letras simples: <strong>NÉSTOR.</strong></p>
+    <p>No dice nada.</p>
+  </div>
+  <div class="dm-note">
+    <p>La entrada de Néstor mata o incapacita <strong>1d2 Thugs</strong> que estén cerca de los Falcons — tiralo en secreto y retiralos del mapa sin explicación. Esto sirve de válvula de presión si la Oleada 1 desgastó demasiado al grupo.</p>
+    <p>No es generosidad narrativa — es consistencia: Néstor no distingue entre aliados y obstáculos.</p>
+  </div>
+
+  <div class="mob-card">
+    <div class="mob-name">Veteran × 2</div>
+    <div class="mob-meta">Monster Manual pág. 350 · CR 3 · 700 XP c/u · <strong>Nombre en sesión: Suboficial de la Armada</strong></div>
+    <p><strong>Stats clave:</strong> CA 17 · HP 58 (9d8+18) · Multiataque 2 ataques (espada larga) · Segunda acción de ataque si HP > 50%</p>
+    <div class="mob-reskin">
+      <strong>Reskin:</strong> Uniforme militar parcial, boina, pistola reglamentaria y bastón de mando. Espada larga → Golpe de culata de fusil. Son más disciplinados que los Agentes — avanzan en formación, cubren a Néstor.
+    </div>
+  </div>
+
+  <div class="mob-card" style="border-color: var(--red-bright);">
+    <div class="mob-name" style="color: var(--red-bright);">Gladiator — NÉSTOR / CAPITÁN ARGENTUM</div>
+    <div class="mob-meta">Monster Manual pág. 346 · CR 5 · 1.800 XP · <strong>HP ajustado a 130</strong> · <strong>Nombre en sesión: Néstor</strong></div>
+    <p><strong>Stats clave:</strong> CA 16 · HP 130 (ajustado desde 112) · Multiataque 3 ataques · Shield Bash +7 (STR CD 15, prone) · Parry (reacción) +3 CA · Brave (ventaja en tiradas de salvación contra miedo)</p>
+    <div class="mob-reskin">
+      <strong>Reskin:</strong> Spear → Golpes de combate a mano vacía. Shield → Armadura táctica reforzada (CA ya incluida). Shield Bash → Golpe de impacto (mismo efecto: prone/stun). Parry se mantiene — lo hace sentir inapresable.<br><br>
+      <strong>Único ajuste:</strong> Subir HP a 130 manualmente en D&D Beyond (base son 112). Así aguanta un round más con 5 PJs nivel 5.<br><br>
+      <strong>Trigger narrativo:</strong> Si alguien menciona a Estela o dice el nombre "Ale", Néstor se queda completamente quieto por un segundo. Solo un segundo. Después sigue.
+    </div>
+  </div>
+
+  <h3>Balance del Encuentro Final</h3>
+  <table>
+    <tr><th>Criatura</th><th>MM</th><th>Nombre sesión</th><th>Cantidad</th><th>XP unit.</th><th>XP total</th></tr>
+    <tr><td>Thug</td><td>pág. 350</td><td>Agente de Civil</td><td>4</td><td>100</td><td>400</td></tr>
+    <tr><td>Veteran</td><td>pág. 350</td><td>Suboficial</td><td>2</td><td>700</td><td>1.400</td></tr>
+    <tr><td>Gladiator</td><td>pág. 346</td><td>Néstor / Capitán Argentum</td><td>1</td><td>1.800</td><td>1.800</td></tr>
+    <tr><td><strong>Total bruto</strong></td><td></td><td></td><td></td><td></td><td><strong>3.600 XP</strong></td></tr>
+    <tr><td><strong>Ajustado ×2 (7 criaturas)</strong></td><td></td><td></td><td></td><td></td><td><strong>~7.200 XP</strong></td></tr>
+  </table>
+  <div class="dm-note">
+    <p>Umbral Deadly para 5 PJs nivel 5: 4.500 XP. El encuentro lo supera con las oleadas — pero los buffs de Mario, el terreno conocido (cobertura de la puerta, Falcons explotables) y la ventaja de la iniciativa compensan. Si el grupo está muy desgastado, podés reducir los Thugs de Oleada 1 a 3 en vez de 4.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ NPCs -->
+<hr class="section-divider">
+<section id="npcs">
+  <div class="act-header">
+    <div class="act-label">Referencia</div>
+    <div class="act-title">NPCs</div>
+  </div>
+
+  <div class="npc-card">
+    <div class="npc-name">El Representante de Hernández Corp</div>
+    <div class="npc-role">Gancho — Escena 1</div>
+    <p class="npc-desc">Elegante de una manera que no encaja en el barrio. Traje oscuro, corbata bordó, cabello hacia atrás. La cara es lisa, difícil de calcularle la edad. No se presenta. No da su nombre. Habla poco y con precisión. Se retira por la puerta trasera.</p>
+    <p class="npc-desc">Si alguien intenta seguirlo: sale a la calle, desaparece. Hay un Falcon verde estacionado afuera, vacío.</p>
+    <p class="npc-desc"><strong>Insight CD 14:</strong> Está tenso debajo de la calma. Lleva tiempo preparando esto y sabe que hay mucho que puede salir mal.</p>
+  </div>
+
+  <div class="npc-card">
+    <div class="npc-name">El Monaguillo</div>
+    <div class="npc-role">Personaje Jugador 5 — Soporte/Curación</div>
+    <p class="npc-desc">Contactado por Hernández Corp antes que el grupo, por separado. Ya estaba en la parroquia cuando los otros llegan. Sabe más de lo que dice esta noche — eso queda a criterio del jugador.</p>
+    <p class="npc-desc">Su momento de brillo es en la iglesia: detecta la ranura del altar casi de inmediato. Tiene conocimiento religioso profundo y lee los espacios sagrados de una manera que los demás no pueden.</p>
+    <p class="npc-desc">Al final, se lleva los documentos. Sabe a dónde van.</p>
+  </div>
+
+  <div class="npc-card">
+    <div class="npc-name">Padre Michael</div>
+    <div class="npc-role">Misionante — Escena 2</div>
+    <p class="npc-desc">Calvo, de hombros anchos, papada que el hábito no disimula. Voz grave que llena habitaciones. Hábito oscuro. Orgulloso de una habilidad peculiar: escupe en la escupidera de latón con precisión impecable y notable satisfacción.</p>
+    <p class="npc-desc">Era capellán auxiliar en la base durante la dictadura. Sabía lo que pasaba y calló. Décadas después, dejó de creerse sus propias justificaciones. Esta misión es parte de esa deuda, aunque nunca lo va a decir en esos términos.</p>
+    <p class="npc-desc"><strong>Insight CD 13:</strong> La culpa es genuina y vieja.<br>
+    <strong>Insight CD 18:</strong> Ayudó a guardar parte de esos documentos. Nunca lo admitirá.</p>
+  </div>
+
+  <div class="npc-card">
+    <div class="npc-name">Estela</div>
+    <div class="npc-role">Madre — Escena 3 y Epílogo</div>
+    <p class="npc-desc">Señora mayor, ropa oscura, cartera sobre la falda. Estaba en el banco frente a la parroquia cuando el grupo llega — o no estaba, y apareció. Rezaba, o lo parecía.</p>
+    <p class="npc-desc">Entrega un pañuelo blanco a cada uno con las dos manos, como se entrega algo sagrado. Dice que "Ale siempre los espera." Se le forma una lágrima que no seca.</p>
+    <p class="npc-desc">No explica quién es Ale. Si le preguntan: <em>"Hay cosas que una madre sabe."</em></p>
+    <p class="npc-desc">En el epílogo, si el grupo vuelve a verla, pregunta una sola cosa: <em>"¿Encontraron su nombre?"</em> El nombre Ale aparece en la lista de la cripta con una cruz a lápiz al lado.</p>
+  </div>
+
+  <div class="npc-card">
+    <div class="npc-name">Mario</div>
+    <div class="npc-role">Aliado — Escena 9, 10, 11</div>
+    <p class="npc-desc">Entre cincuenta y sesenta años. Pelo canoso, manos grandes. Mirada de alguien que esperó toda la noche con el oído pegado a la ventana. Padre de uno de los jugadores — definirlo con ese jugador antes de la sesión.</p>
+    <p class="npc-desc">Perdió gente durante la dictadura. Vive en Humberto 155 sin llamar la atención. Es quien recibe al grupo cuando el operativo se complica, quien da el discurso antes del combate final, y quien entrega los sobres de Hernández Corp.</p>
+  </div>
+
+  <div class="npc-card">
+    <div class="npc-name">Néstor / Capitán Argentum</div>
+    <div class="npc-role">Boss — Encuentro 4 · Oleada 2</div>
+    <p class="npc-desc">Alto, mandíbula cuadrada, ojos que miran sin parpadear con la calma de quien hace mucho dejó de sentir lo que debería sentir. Uniforme de la Armada Argentina sin insignias. Placa metálica en el pecho: NÉSTOR.</p>
+    <p class="npc-desc">Era una persona antes del Proyecto. El Proyecto Capitán Argentum lo transformó — no metafóricamente. Lo que le hicieron está documentado en las carpetas que el grupo acaba de leer. Él lo sabe. No lo niega. Simplemente dejó de considerarlo una pérdida.</p>
+    <p class="npc-desc">Llega después de la primera oleada, del último Falcon, solo. Camina desde el centro de la calle despacio, como si el tiempo fuera un recurso del que tiene de sobra. No tiene monólogo. No da órdenes en voz alta. Solo se detiene y espera.</p>
+    <p class="npc-desc"><strong>Si alguien menciona a Estela o dice el nombre Ale:</strong> Néstor se queda completamente quieto por un segundo. Solo un segundo. Después sigue.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ ÍTEMS Y BUFFS -->
+<hr class="section-divider">
+<section id="items">
+  <div class="act-header">
+    <div class="act-label">Mecánicas Especiales</div>
+    <div class="act-title">Ítems Mágicos y Buffs</div>
+  </div>
+
+  <div id="panuela-estela" class="item-card">
+    <div class="item-name">Pañuelo de Estela</div>
+    <div class="item-type">Objeto Maravilloso · No requiere sintonización · 1 por jugador · Uso único</div>
+    <p>Cuando el portador recibiría daño suficiente para caer a <strong>0 HP</strong>, puede aferrarse al pañuelo. En lugar de caer, queda en <strong>1 HP</strong>.</p>
+    <p>En ese momento, el portador escucha una voz. Clara, cerca, como si estuviera justo al lado. La voz dice su nombre y después dice: <em>"Ale, volvé."</em> La voz suena como alguien que lleva mucho tiempo esperando.</p>
+    <p><strong>Una sola vez por sesión, por jugador. No se puede transferir.</strong></p>
+    <div class="dm-note" style="margin-top:14px;"><p>El nombre "Ale" conecta con Estela al salir de la parroquia (<em>"Ale siempre los espera"</em>) y con la lista de la cripta, donde el nombre aparece con una cruz a lápiz al lado. No lo expliques — dejá que aterrice solo.</p></div>
+  </div>
+
+  <hr class="section-divider" style="margin:32px 0;">
+
+  <div id="buffs-mario">
+    <h3>Buffs del Discurso de Mario</h3>
+    <p style="color: var(--text-dim); font-size:14px; margin-bottom:20px;">Otorgados al finalizar el discurso de Mario, antes del combate final. Leelos uno por uno, con pausa entre cada uno.</p>
+
+    <div class="buff-card">
+      <div class="buff-name">Memoria de los que no están</div>
+      <div class="buff-trigger">Mario dice: "Acuérdense de los nombres que leyeron en esas carpetas. Acuérdense de las fotos. Peleen por ellos."</div>
+      <div class="buff-effect">Ventaja en todas las tiradas de ataque durante el primer round de combate.</div>
+    </div>
+
+    <div class="buff-card">
+      <div class="buff-name">Pack Tactics</div>
+      <div class="buff-trigger">Mario dice: "No se separen. Dos contra uno, siempre. No les den espacio."</div>
+      <div class="buff-effect">Si dos aliados están adyacentes al mismo enemigo, el atacante tiene ventaja en la tirada de ataque contra ese enemigo.</div>
+    </div>
+
+    <div class="buff-card">
+      <div class="buff-name">Nunca Más</div>
+      <div class="buff-trigger">Mario dice: "Ninguno de ustedes cae esta noche. Me escucharon — ninguno."</div>
+      <div class="buff-effect">Una vez por combate, cuando un PJ recibiría daño suficiente para caer a 0 HP, puede ignorar ese daño y quedar en 1 HP en cambio. Uso único por personaje durante la sesión.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ REFERENCIAS -->
+<hr class="section-divider">
+<section id="referencias">
+  <div class="act-header">
+    <div class="act-label">Índice de Combate</div>
+    <div class="act-title">Referencias de Mobs</div>
+  </div>
+
+  <p style="color: var(--text-dim); font-size:14px; margin-bottom:24px;">Todos los mobs son NPCs del Appendix B del Monster Manual. Los stat blocks se manejan desde D&D Beyond. Esta tabla es referencia rápida para el DM.</p>
+
+  <table class="ref-table">
+    <tr>
+      <th>Mob MM</th>
+      <th>Página</th>
+      <th>Nombre en Sesión</th>
+      <th>CR</th>
+      <th>Encuentro</th>
+      <th>Rol</th>
+    </tr>
+    <tr>
+      <td>Guard</td>
+      <td>347</td>
+      <td>Conscripto / Soldado de Patrulla</td>
+      <td>1/8</td>
+      <td>Enc. 1 (patrulla interna)</td>
+      <td>Sentry rutinario. Cae en 1-2 golpes. Con PWT activo, casi nunca detecta al grupo.</td>
+    </tr>
+    <tr>
+      <td>Thug</td>
+      <td>350</td>
+      <td>Agente de Seguridad / Agente de Civil</td>
+      <td>1/2</td>
+      <td>Enc. 2 (salida base) · Enc. 4 Oleada 1</td>
+      <td>Pack Tactics lo hace peligroso en pareja. Multiataque 2. En el final opera en grupos desde el inicio.</td>
+    </tr>
+    <tr>
+      <td>Veteran</td>
+      <td>350</td>
+      <td>Suboficial de la Armada</td>
+      <td>3</td>
+      <td>Enc. 4 Oleada 2</td>
+      <td>Más resistente y disciplinado. Cubre a Néstor. Llega con la segunda oleada de Falcons.</td>
+    </tr>
+    <tr>
+      <td>Gladiator</td>
+      <td>346</td>
+      <td>Néstor / Capitán Argentum</td>
+      <td>5</td>
+      <td>Enc. 4 (boss)</td>
+      <td>3 ataques/turno. Shield Bash prone. Parry +3 CA. HP ajustado a 130. Llega último, solo.</td>
+    </tr>
+  </table>
+
+  <div class="dm-note" style="margin-top:24px;">
+    <p><strong>Nota sobre Pass Without Trace (Enc. 1 y patrullas de entrada):</strong> Con el spell activo, los Guard tienen Passive Perception 10 y el grupo suma +10 a Stealth — prácticamente imposible de detectar. Las patrullas generan tensión ambiental, no amenaza real. Eso cambia en la salida (Enc. 2) cuando el spell se rompió.</p>
+    <p style="margin-top:8px;"><strong>Referencia del spell:</strong> <a href="https://www.dndbeyond.com/spells/2201-pass-without-trace" style="color: var(--gold);">D&D Beyond — Pass Without Trace</a> · Nivel 2 · Concentración 1 hora · +10 Stealth a criaturas elegidas en 30 ft.</p>
+  </div>
+</section>
+
+<div style="height:80px;"></div>
+
+</main>
+
+<script>
+(function() {
+  const navLinks = document.querySelectorAll('#nav a[href^="#"]');
+  const sections = [];
+
+  navLinks.forEach(link => {
+    const id = link.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) sections.push({ id, el, link });
+  });
+
+  function onScroll() {
+    const scrollY = window.scrollY + 80;
+    let current = sections[0];
+
+    for (let i = 0; i < sections.length; i++) {
+      if (sections[i].el.getBoundingClientRect().top + window.scrollY <= scrollY) {
+        current = sections[i];
+      }
+    }
+
+    navLinks.forEach(l => l.classList.remove('active'));
+    if (current) {
+      current.link.classList.add('active');
+      // scroll nav item into view if needed
+      const navEl = current.link;
+      const nav = document.getElementById('nav');
+      if (navEl.offsetTop < nav.scrollTop || navEl.offsetTop > nav.scrollTop + nav.clientHeight - 40) {
+        nav.scrollTop = navEl.offsetTop - nav.clientHeight / 2;
+      }
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
+
+</body>
+</html>

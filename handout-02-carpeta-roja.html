@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Handout 02 — Proyecto Capitán Argentum</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    gap: 32px;
+    flex-wrap: wrap;
+    font-family: 'Special Elite', 'Courier New', monospace;
+  }
+
+  /* ── TAPA DE CARPETA ── */
+  .folder {
+    width: 185mm;
+    min-height: 240mm;
+    background: #8b1a1a;
+    position: relative;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .folder-tab {
+    position: absolute;
+    top: -18px;
+    left: 24px;
+    width: 80px;
+    height: 20px;
+    background: #7a1515;
+    border-radius: 4px 4px 0 0;
+  }
+
+  .folder-inner {
+    margin: 3px;
+    background: #961e1e;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 28px;
+    position: relative;
+  }
+
+  /* Textura de cartón */
+  .folder-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+  }
+
+  .sello-clasificado {
+    border: 3px solid #ffcc00;
+    color: #ffcc00;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 6px;
+    text-align: center;
+    padding: 6px 12px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    transform: rotate(-2deg);
+    width: fit-content;
+    align-self: center;
+  }
+
+  .escudo {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 48px;
+    opacity: 0.15;
+    filter: sepia(1);
+  }
+
+  .organismo {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(255,220,180,0.6);
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .titulo-carpeta {
+    font-family: 'Special Elite', monospace;
+    font-size: 26px;
+    color: #ffe8c0;
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
+
+  .subtitulo-carpeta {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,220,180,0.5);
+    text-align: center;
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+  }
+
+  .lineas-info {
+    border-top: 1px solid rgba(255,200,150,0.2);
+    padding-top: 20px;
+    margin-top: auto;
+  }
+
+  .linea {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,200,150,0.15);
+    padding: 8px 0;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,220,180,0.5);
+    letter-spacing: 1px;
+  }
+
+  .linea span:last-child {
+    color: rgba(255,220,180,0.8);
+  }
+
+  /* ── HOJA INTERIOR ── */
+  .hoja {
+    width: 185mm;
+    min-height: 240mm;
+    background: #f0ead8;
+    position: relative;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    padding: 28px 32px;
+  }
+
+  .hoja::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .membrete {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-bottom: 2px solid #1a1a1a;
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+
+  .membrete-texto {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    color: #1a1a1a;
+    line-height: 1.8;
+    text-transform: uppercase;
+  }
+
+  .membrete-num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    color: #1a1a1a;
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  .sello-maximo {
+    display: inline-block;
+    border: 2px solid #8b0000;
+    color: #8b0000;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 4px;
+    padding: 3px 8px;
+    text-transform: uppercase;
+    transform: rotate(3deg);
+    margin-bottom: 16px;
+  }
+
+  .foto-placeholder {
+    width: 80px;
+    height: 100px;
+    border: 1px solid #5a4a30;
+    float: right;
+    margin: 0 0 16px 16px;
+    background: #d4c8a8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+  }
+
+  .foto-placeholder::after {
+    content: 'NÉSTOR';
+    position: absolute;
+    bottom: -18px;
+    left: 0;
+    right: 0;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: #1a1a1a;
+    text-align: center;
+  }
+
+  .foto-silueta {
+    width: 36px;
+    height: 36px;
+    background: #8a7a60;
+    border-radius: 50%;
+    margin-bottom: 4px;
+  }
+
+  .foto-cuerpo {
+    width: 50px;
+    height: 40px;
+    background: #8a7a60;
+    border-radius: 4px 4px 0 0;
+  }
+
+  .campo {
+    margin-bottom: 10px;
+    clear: none;
+  }
+
+  .campo-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: #5a4a30;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .campo-valor {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    color: #1a1208;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    padding-bottom: 2px;
+    line-height: 1.4;
+  }
+
+  .campo-nota {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    color: #8b0000;
+    margin-top: 2px;
+    font-style: italic;
+  }
+
+  .separador {
+    clear: both;
+    border-top: 1px solid rgba(0,0,0,0.15);
+    margin: 16px 0;
+  }
+
+  .resumen {
+    font-family: 'Special Elite', monospace;
+    font-size: 11.5px;
+    color: #2a1e0a;
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .sello-activo {
+    display: inline-block;
+    border: 2px solid #006600;
+    color: #006600;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    padding: 4px 12px;
+    text-transform: uppercase;
+    transform: rotate(-4deg);
+    margin-top: 8px;
+  }
+
+  .firma-bloque {
+    margin-top: auto;
+    border-top: 1px solid rgba(0,0,0,0.15);
+    padding-top: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .firma-linea {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: #5a4a30;
+    letter-spacing: 1px;
+  }
+
+  @media print {
+    body {
+      background: white;
+      flex-direction: column;
+      align-items: center;
+    }
+    .folder, .hoja {
+      box-shadow: none;
+      page-break-after: always;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- TAPA DE CARPETA -->
+<div class="folder">
+  <div class="folder-tab"></div>
+  <div class="folder-inner">
+    <div class="sello-clasificado">⬛ Máximo Secreto ⬛</div>
+
+    <div class="escudo">⚓</div>
+
+    <div class="organismo">Armada Argentina</div>
+    <div class="organismo" style="margin-bottom:20px;">Comando de Operaciones Navales</div>
+
+    <div class="titulo-carpeta">PROYECTO<br>CAPITÁN<br>ARGENTUM</div>
+
+    <div class="subtitulo-carpeta">Expediente Clasificado</div>
+
+    <div class="lineas-info">
+      <div class="linea">
+        <span>Organismo</span>
+        <span>Com. Op. Navales</span>
+      </div>
+      <div class="linea">
+        <span>Período</span>
+        <span>1977 — 1982</span>
+      </div>
+      <div class="linea">
+        <span>Clasificación</span>
+        <span>Máximo Secreto</span>
+      </div>
+      <div class="linea">
+        <span>Estado</span>
+        <span>ACTIVO</span>
+      </div>
+      <div class="linea">
+        <span>Acceso autorizado</span>
+        <span>Restringido</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOJA INTERIOR -->
+<div class="hoja">
+  <div class="membrete">
+    <div class="membrete-texto">
+      Armada Argentina<br>
+      Comando de Operaciones Navales<br>
+      Base Naval Puerto Belgrano
+    </div>
+    <div class="membrete-num">
+      Expte. N° CAP-ARG-001<br>
+      Clasificación: MAX. SECRETO<br>
+      Folio 1 de 1 (visible)
+    </div>
+  </div>
+
+  <div class="sello-maximo">⬛ Máximo Secreto ⬛</div>
+
+  <div class="foto-placeholder">
+    <div class="foto-silueta"></div>
+    <div class="foto-cuerpo"></div>
+  </div>
+
+  <div class="campo">
+    <div class="campo-label">Sujeto</div>
+    <div class="campo-valor">NÉSTOR. F</div>
+  </div>
+
+  <div class="campo">
+    <div class="campo-label">Designación operativa</div>
+    <div class="campo-valor">Capitán Argentum</div>
+  </div>
+
+  <div class="campo">
+    <div class="campo-label">Clasificación de sujeto</div>
+    <div class="campo-valor">Sujeto óptimo. Proceso completado.</div>
+    <div class="campo-nota">Resultado anómalo confirmado. Protocolo extendido autorizado.</div>
+  </div>
+
+  <div class="campo">
+    <div class="campo-label">Estado actual</div>
+    <div class="campo-valor">ACTIVO</div>
+    <div class="sello-activo">✓ Activo</div>
+  </div>
+
+  <div class="separador" style="clear:both;"></div>
+
+  <div class="campo">
+    <div class="campo-label">Resumen del proyecto</div>
+  </div>
+
+  <div class="resumen">
+    El sujeto fue sometido al protocolo completo de modificación
+    fisiológica entre los períodos indicados. Los procedimientos
+    incluyeron estimulación de tolerancia extrema, condicionamiento
+    neurológico y refuerzo estructural progresivo.<br><br>
+    Los resultados superaron los parámetros esperados en todas
+    las variables medidas. El sujeto demostró capacidad de
+    recuperación y respuesta fuera de los rangos documentados
+    en la literatura médica disponible.<br><br>
+    Lo que se le hizo para llegar hasta aquí está documentado
+    página por página en los folios restantes.
+    <span style="color:#8b0000; font-size:10px;">[ACCESO RESTRINGIDO]</span>
+  </div>
+
+  <div class="firma-bloque">
+    <div class="firma-linea">
+      Médico Naval responsable<br>
+      ________________________<br>
+      Firma y sello
+    </div>
+    <div class="firma-linea" style="text-align:right;">
+      Autorizó:<br>
+      ________________________<br>
+      Comando Op. Navales
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

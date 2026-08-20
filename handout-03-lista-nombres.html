@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Handout 03 — Lista de Nombres</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    font-family: 'Special Elite', 'Courier New', monospace;
+  }
+
+  .pagina {
+    width: 185mm;
+    min-height: 260mm;
+    background: #ede7d0;
+    position: relative;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Textura papel envejecido */
+  .pagina::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 80%, rgba(180,140,80,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(160,120,60,0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* Línea izquierda de margen */
+  .pagina::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 52px;
+    width: 1px;
+    background: rgba(180,80,80,0.3);
+    pointer-events: none;
+  }
+
+  .encabezado {
+    border-bottom: 2px solid #1a1208;
+    padding-bottom: 12px;
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .enc-org {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 3px;
+    color: #5a4a30;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .enc-titulo {
+    font-size: 14px;
+    color: #1a1208;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .enc-meta {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: #7a6040;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .columnas-header {
+    display: grid;
+    grid-template-columns: 28px 1fr 80px 80px 60px;
+    gap: 0;
+    padding: 6px 0 4px 56px;
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+    margin-bottom: 2px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .col-header {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 1.5px;
+    color: #5a4a30;
+    text-transform: uppercase;
+  }
+
+  .fila {
+    display: grid;
+    grid-template-columns: 28px 1fr 80px 80px 60px;
+    gap: 0;
+    padding: 3px 0 3px 56px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 1;
+    align-items: center;
+  }
+
+  .fila:nth-child(even) {
+    background: rgba(0,0,0,0.025);
+  }
+
+  .num {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: #7a6040;
+  }
+
+  .nombre {
+    font-size: 11px;
+    color: #1a1208;
+    letter-spacing: 0.5px;
+  }
+
+  .fecha {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: #5a4a30;
+  }
+
+  .estado {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: #5a4a30;
+    font-style: italic;
+  }
+
+  .marca {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: #1a1208;
+    font-weight: bold;
+  }
+
+  /* La fila de ALE */
+  .fila-ale {
+    background: rgba(180,80,80,0.07) !important;
+  }
+
+  .fila-ale .nombre {
+    color: #1a1208;
+  }
+
+  /* Cruz a lápiz — simulada con SVG inline */
+  .cruz-lapiz {
+    color: #4a3a80;
+    font-size: 14px;
+    font-family: serif;
+    opacity: 0.7;
+    font-style: normal;
+  }
+
+  /* Nota al pie manuscrita */
+  .nota-pie {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid rgba(0,0,0,0.15);
+    position: relative;
+    z-index: 1;
+  }
+
+  .nota-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 2px;
+    color: #5a4a30;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .nota-texto {
+    font-size: 10px;
+    color: #3a2a1a;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .folio {
+    position: absolute;
+    bottom: 16px;
+    right: 28px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    color: #7a6040;
+    letter-spacing: 1px;
+  }
+
+  @media print {
+    body { background: white; }
+    .pagina { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+<div class="pagina">
+
+  <div class="encabezado">
+    <div class="enc-org">Armada Argentina — Com. Op. Navales — Base Naval Puerto Belgrano</div>
+    <div class="enc-titulo">Registro de Ingreso — Sujetos Detenidos</div>
+    <div class="enc-meta">
+      <span>Período: 1977–1979</span>
+      <span>Clasificación: Máximo Secreto</span>
+      <span>Folio 7 de [REDACTADO]</span>
+    </div>
+  </div>
+
+  <div class="columnas-header">
+    <div class="col-header">#</div>
+    <div class="col-header">Apellido, Nombre</div>
+    <div class="col-header">Ingreso</div>
+    <div class="col-header">Destino</div>
+    <div class="col-header">Obs.</div>
+  </div>
+
+  <!-- 37 entradas — nombres ficticios con fecha y estado -->
+  <div class="fila"><span class="num">01</span><span class="nombre">Acosta, Roberto D.</span><span class="fecha">14.03.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">02</span><span class="nombre">Álvarez, Carmen S.</span><span class="fecha">22.03.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">03</span><span class="nombre">Arredondo, Miguel</span><span class="fecha">05.04.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">04</span><span class="nombre">Balmaceda, Luis F.</span><span class="fecha">11.04.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">05</span><span class="nombre">Barros, Inés M.</span><span class="fecha">18.04.1977</span><span class="estado"></span><span class="marca" style="color:#8b0000;">✕</span></div>
+  <div class="fila"><span class="num">06</span><span class="nombre">Benitez, Jorge A.</span><span class="fecha">02.05.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">07</span><span class="nombre">Cabrera, Silvia N.</span><span class="fecha">09.05.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">08</span><span class="nombre">Castillo, Eduardo R.</span><span class="fecha">14.05.1977</span><span class="estado"></span><span class="marca" style="color:#8b0000;">✕</span></div>
+  <div class="fila"><span class="num">09</span><span class="nombre">Córdoba, Ana L.</span><span class="fecha">21.05.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">10</span><span class="nombre">Díaz, Hernán P.</span><span class="fecha">30.05.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">11</span><span class="nombre">Espinoza, María C.</span><span class="fecha">06.06.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">12</span><span class="nombre">Fernández, Pablo O.</span><span class="fecha">13.06.1977</span><span class="estado"></span><span class="marca" style="color:#8b0000;">✕</span></div>
+  <div class="fila"><span class="num">13</span><span class="nombre">Gómez, Ricardo J.</span><span class="fecha">20.06.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">14</span><span class="nombre">González, Laura B.</span><span class="fecha">28.06.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">15</span><span class="nombre">Herrera, Daniel M.</span><span class="fecha">04.07.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">16</span><span class="nombre">Iglesias, Norma T.</span><span class="fecha">12.07.1977</span><span class="estado"></span><span class="marca" style="color:#8b0000;">✕</span></div>
+  <div class="fila"><span class="num">17</span><span class="nombre">Jiménez, Claudio S.</span><span class="fecha">19.07.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">18</span><span class="nombre">López, Graciela A.</span><span class="fecha">25.07.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">19</span><span class="nombre">Martínez, Osvaldo R.</span><span class="fecha">01.08.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">20</span><span class="nombre">Medina, Susana P.</span><span class="fecha">08.08.1977</span><span class="estado"></span><span class="marca" style="color:#8b0000;">✕</span></div>
+  <div class="fila"><span class="num">21</span><span class="nombre">Molina, Héctor D.</span><span class="fecha">15.08.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">22</span><span class="nombre">Morales, Patricia V.</span><span class="fecha">22.08.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">23</span><span class="nombre">Navarro, Jorge L.</span><span class="fecha">29.08.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">24</span><span class="nombre">Núñez, Elena R.</span><span class="fecha">05.09.1977</span><span class="estado"></span><span class="marca" style="color:#8b0000;">✕</span></div>
+  <div class="fila"><span class="num">25</span><span class="nombre">Ortega, Carlos A.</span><span class="fecha">12.09.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">26</span><span class="nombre">Pereyra, Marta S.</span><span class="fecha">19.09.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">27</span><span class="nombre">Quiroga, Ramón E.</span><span class="fecha">26.09.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">28</span><span class="nombre">Ríos, Beatriz C.</span><span class="fecha">03.10.1977</span><span class="estado"></span><span class="marca" style="color:#8b0000;">✕</span></div>
+  <div class="fila"><span class="num">29</span><span class="nombre">Rodríguez, Alberto N.</span><span class="fecha">10.10.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">30</span><span class="nombre">Romero, Liliana F.</span><span class="fecha">17.10.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">31</span><span class="nombre">Ruiz, Fernando M.</span><span class="fecha">24.10.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">32</span><span class="nombre">Sánchez, Victoria L.</span><span class="fecha">31.10.1977</span><span class="estado"></span><span class="marca" style="color:#8b0000;">✕</span></div>
+  <div class="fila"><span class="num">33</span><span class="nombre">Torres, Miguel Á.</span><span class="fecha">07.11.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">34</span><span class="nombre">Vargas, Cristina B.</span><span class="fecha">14.11.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">35</span><span class="nombre">Vega, Roberto C.</span><span class="fecha">21.11.1977</span><span class="estado">trasladado</span><span class="marca"></span></div>
+  <div class="fila"><span class="num">36</span><span class="nombre">Villalba, Rosa M.</span><span class="fecha">28.11.1977</span><span class="estado"></span><span class="marca" style="color:#8b0000;">✕</span></div>
+
+  <!-- ENTRADA 37 — ALE -->
+  <div class="fila fila-ale">
+    <span class="num">37</span>
+    <span class="nombre"><strong>Ale [redactado]</strong></span>
+    <span class="fecha">05.12.1977</span>
+    <span class="estado">—</span>
+    <span class="cruz-lapiz">✝</span>
+  </div>
+
+  <div class="nota-pie">
+    <div class="nota-label">Nota del archivista</div>
+    <div class="nota-texto">
+      Los registros de egreso correspondientes a este folio se encuentran
+      en expediente separado. Acceso restringido por disposición del
+      Comando. Las marcas en la columna "Obs." corresponden a
+      anotaciones del período 1977–1978. El significado de las mismas
+      no consta en este folio.
+    </div>
+  </div>
+
+  <div class="folio">Folio 7 — Clasificación: Máximo Secreto</div>
+</div>
+</body>
+</html>

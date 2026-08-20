@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Handout 04 — Carta Final Hernández Corp</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&family=Homemade+Apple&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+    font-family: 'Special Elite', 'Courier New', monospace;
+  }
+
+  .sobre-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+  }
+
+  /* ── SOBRE ── */
+  .sobre {
+    width: 185mm;
+    height: 90mm;
+    background: #d4c8a0;
+    position: relative;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  }
+
+  .sobre::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      linear-gradient(135deg, transparent 50%, rgba(0,0,0,0.06) 50%);
+    clip-path: polygon(0 0, 50% 55%, 100% 0);
+  }
+
+  .sobre-frente {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 20px 28px;
+  }
+
+  .sobre-remitente {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: #5a4a20;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .sobre-destinatario {
+    font-family: 'Homemade Apple', cursive;
+    font-size: 16px;
+    color: #1a1208;
+    line-height: 1.6;
+  }
+
+  .sobre-sello {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border: 2px solid rgba(90,70,30,0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    opacity: 0.5;
+  }
+
+  /* ── CARTA ── */
+  .carta {
+    width: 185mm;
+    min-height: 240mm;
+    background: #f5efe0;
+    position: relative;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    padding: 40px 44px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .carta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  /* Línea de máquina de escribir */
+  .lineas-fondo {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      transparent,
+      transparent 27px,
+      rgba(0,0,0,0.04) 27px,
+      rgba(0,0,0,0.04) 28px
+    );
+    top: 40px;
+    pointer-events: none;
+  }
+
+  .carta-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 36px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .carta-org {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: #5a4a30;
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+
+  .carta-fecha {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    color: #5a4a30;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  .carta-cuerpo {
+    font-family: 'Special Elite', monospace;
+    font-size: 13px;
+    color: #1a1208;
+    line-height: 2.1;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+  }
+
+  .carta-cuerpo p {
+    margin-bottom: 20px;
+  }
+
+  .carta-firma {
+    margin-top: 36px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .firma-nombre {
+    font-family: 'Homemade Apple', cursive;
+    font-size: 20px;
+    color: #1a1208;
+    margin-bottom: 4px;
+    margin-left: 40px;
+  }
+
+  .firma-cargo {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: #5a4a30;
+    text-transform: uppercase;
+    margin-left: 40px;
+  }
+
+  /* Marca de máquina de escribir — efecto ligero */
+  .marca-maquina {
+    display: inline;
+    letter-spacing: 0.5px;
+  }
+
+  @media print {
+    body { background: white; flex-direction: column; }
+    .sobre, .carta { box-shadow: none; page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+<div class="sobre-wrapper">
+
+  <!-- SOBRE -->
+  <div class="sobre">
+    <div class="sobre-frente">
+      <div class="sobre-remitente">Hernández Corp. — Confidencial</div>
+      <div class="sobre-destinatario">Para quien actuó<br>esta noche</div>
+    </div>
+    <div class="sobre-sello">⚖</div>
+  </div>
+
+  <!-- CARTA -->
+  <div class="carta">
+    <div class="lineas-fondo"></div>
+
+    <div class="carta-header">
+      <div class="carta-org">
+        Hernández Corp.<br>
+        Departamento de Asuntos<br>
+        Pendientes
+      </div>
+      <div class="carta-fecha">
+        Punta Alta<br>
+        Provincia de Buenos Aires
+      </div>
+    </div>
+
+    <div class="carta-cuerpo">
+      <p>El dinero paga el trabajo.</p>
+      <p>La historia paga la deuda.</p>
+      <p>Nadie que haya mirado hacia otro lado merece
+      llamarse inocente, y nadie que haya actuado
+      merece ser olvidado.</p>
+      <p>Hay familias que llevan
+      décadas esperando una respuesta. Esta noche
+      ustedes se la dieron.</p>
+      <p>Esta noche existió.</p>
+      <p>Eso ahora no lo puede borrar nadie.</p>
+    </div>
+
+    <div class="carta-firma">
+      <div class="firma-nombre">— Hernández Corp.</div>
+      <div class="firma-cargo">Departamento de Asuntos Pendientes</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

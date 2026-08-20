@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Cheat Sheet — Capitán Argentum</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 10.5px;
+    line-height: 1.5;
+    color: #111;
+    background: #fff;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 12mm 14mm;
+  }
+
+  h1 {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-align: center;
+    border-bottom: 1.5px solid #111;
+    padding-bottom: 4px;
+    margin-bottom: 10px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+
+  .col-wide {
+    grid-column: span 2;
+  }
+
+  .box {
+    border: 1px solid #888;
+    border-radius: 2px;
+    padding: 7px 9px;
+  }
+
+  .box h2 {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #555;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 3px;
+    margin-bottom: 6px;
+  }
+
+  .box p, .box li {
+    font-size: 10px;
+    margin-bottom: 3px;
+    line-height: 1.4;
+  }
+
+  .box ul { padding-left: 12px; }
+
+  .box table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9.5px;
+  }
+
+  .box table th {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #ccc;
+    padding: 2px 4px;
+    text-align: left;
+    color: #555;
+  }
+
+  .box table td {
+    padding: 2px 4px;
+    border-bottom: 1px dotted #ddd;
+    vertical-align: top;
+  }
+
+  .box table tr:last-child td { border-bottom: none; }
+
+  .tag {
+    display: inline-block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 1px;
+    background: #111;
+    color: #fff;
+    padding: 1px 5px;
+    border-radius: 2px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  .tag.alert { background: #8b2020; }
+  .tag.ok { background: #1a4a2a; }
+
+  .divider {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 3px 0;
+  }
+
+  .frase {
+    font-style: italic;
+    font-size: 9.5px;
+    border-left: 2px solid #888;
+    padding-left: 7px;
+    margin: 4px 0;
+    color: #333;
+  }
+
+  @media print {
+    body { margin: 0; padding: 12mm 14mm; }
+    @page { size: A4; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Operación Capitán Argentum — DM Cheat Sheet</h1>
+
+<div class="grid">
+
+  <!-- COLUMNA 1 -->
+
+  <div class="box">
+    <h2>Setup del Mundo</h2>
+    <p><strong>Ciudad:</strong> Punta Alta, Buenos Aires.</p>
+    <p><strong>Época:</strong> Dictadura militar argentina (1976–1983), ambientación ficticia.</p>
+    <p><strong>Navegación:</strong> Google Maps en mesa para desplazamientos.</p>
+    <p><strong>Party:</strong> 5 jugadores, Nivel 5, humanos.</p>
+    <p><strong>Tono:</strong> Thriller de infiltración. Sobrio. No heroico clásico.</p>
+    <hr class="divider">
+    <p><strong>Locaciones clave:</strong></p>
+    <ul>
+      <li>Titán — esq. 25 e Irigoyen (gancho)</li>
+      <li>Parroquia M. Auxiliadora — Rivadavia 562</li>
+      <li>Base Naval Puerto Belgrano</li>
+      <li>Iglesia Stella Maris (dentro de la base)</li>
+      <li>Humberto 155 (clímax)</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h2>Stealth — Reglas Rápidas</h2>
+    <span class="tag ok">Con Pass Without Trace</span>
+    <p>+10 a Stealth de todo el grupo. Concentración del Monaguillo. 1 hora.</p>
+    <ul>
+      <li>Patrullas internas: <strong>CD 14</strong> → con +10, casi siempre pasan</li>
+      <li>Patrulla exterior iglesia: <strong>CD 12</strong></li>
+    </ul>
+    <hr class="divider">
+    <span class="tag alert">Sin Pass Without Trace</span>
+    <p>Escape de la base, alerta activa.</p>
+    <ul>
+      <li>Stealth salida base: <strong>CD 14–16</strong></li>
+      <li>Stealth ciudad: <strong>CD 12</strong></li>
+      <li>Desventaja si un jugador miró atrás al disparo de Mati</li>
+    </ul>
+    <hr class="divider">
+    <p><strong>Bajada silenciosa:</strong> 2+ vs 1, fuera de visión → sin tirada.</p>
+    <p><strong>Stealth grupal:</strong> cuenta el resultado más bajo.</p>
+  </div>
+
+  <div class="box">
+    <h2>Sistema de Patrullas</h2>
+    <span class="tag">Dentro de la base</span>
+    <p>Tirar <strong>1d6 en secreto</strong> cada vez que el grupo se mueve, tarda o hace ruido.</p>
+    <p><strong>1–2:</strong> aparece patrulla. 1 round para reaccionar.</p>
+    <p>→ <strong>Tipo A:</strong> 2× Guard (<em>Conscripto</em>) · CD 14</p>
+    <p>→ <strong>Tipo B:</strong> 2× Guard + 1× Veteran (<em>Cabo</em>) · CD 14</p>
+    <hr class="divider">
+    <span class="tag alert">Alerta elevada</span>
+    <p>Después de la llamada de Mario → dado pasa a <strong>1d4</strong>.</p>
+    <p>→ <strong>Tipo A:</strong> 3× Guard + 1× Veteran (<em>Cabo</em>) · CD 16</p>
+    <p>→ <strong>Tipo B:</strong> 2× Veteran (<em>Suboficial</em>) moviéndose rápido · CD 16</p>
+    <p>Entrada por fuerza → <strong>1d4 todo el tiempo</strong>.</p>
+    <hr class="divider">
+    <span class="tag">Exterior Stella Maris</span>
+    <p>Ciclo de 4 pasos. Cada acción afuera = +1 paso. Al 4to, los guardias vuelven.</p>
+    <p>→ 2× Guard (<em>Conscripto</em>). Si detectan: gritan, 1 round antes de alerta.</p>
+  </div>
+
+  <!-- COLUMNA 2 — MOBS -->
+
+  <div class="box col-wide">
+    <h2>Referencia de Mobs</h2>
+    <table>
+      <tr>
+        <th>Mob MM</th>
+        <th>Pág.</th>
+        <th>Nombre en sesión</th>
+        <th>CR</th>
+        <th>HP</th>
+        <th>CA</th>
+        <th>Encuentro</th>
+        <th>Nota</th>
+      </tr>
+      <tr>
+        <td>Guard</td>
+        <td>347</td>
+        <td>Conscripto</td>
+        <td>1/8</td>
+        <td>11</td>
+        <td>16</td>
+        <td>Enc. 1 — patrulla interna</td>
+        <td>Cae en 1–2 golpes. Con PWT activo, no detecta.</td>
+      </tr>
+      <tr>
+        <td>Thug</td>
+        <td>350</td>
+        <td>Agente de Civil</td>
+        <td>1/2</td>
+        <td>32</td>
+        <td>11</td>
+        <td>Enc. 2 (salida) · Enc. 4 Oleada 1</td>
+        <td>Pack Tactics. Multiataque ×2. Peligroso en grupo.</td>
+      </tr>
+      <tr>
+        <td>Veteran</td>
+        <td>350</td>
+        <td>Suboficial de la Armada</td>
+        <td>3</td>
+        <td>58</td>
+        <td>17</td>
+        <td>Enc. 4 Oleada 2</td>
+        <td>Disciplinado. Cubre a Néstor.</td>
+      </tr>
+      <tr>
+        <td>Gladiator</td>
+        <td>346</td>
+        <td><strong>Néstor / Capitán Argentum</strong></td>
+        <td>5</td>
+        <td><strong>130</strong></td>
+        <td>16</td>
+        <td>Enc. 4 — Boss (llega último)</td>
+        <td>3 ataques. Shield Bash prone CD 15. Parry +3 CA. HP ajustado manualmente.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="box">
+    <h2>Combate Final — Oleadas</h2>
+    <span class="tag">Oleada 1</span>
+    <p>4× Thug (Agentes de Civil). Salen de los primeros Falcon.</p>
+    <hr class="divider">
+    <span class="tag">Oleada 2</span>
+    <p>2× Veteran (Suboficiales). Llegan con los segundos Falcon.</p>
+    <hr class="divider">
+    <span class="tag alert">Boss</span>
+    <p>Néstor. Pisadas pesadas. Patea Falcons — elimina 1d2 Thugs al llegar (válvula de presión). No habla.</p>
+    <hr class="divider">
+    <p><strong>Falcon como cobertura:</strong> adyacente = +5 CA y saves DEX.</p>
+    <p><strong>Falcon explota:</strong> 20+ daño en un golpe → DEX CD 14 en 10ft → 3d6 fuego (mitad si pasa).</p>
+  </div>
+
+  <!-- FILA 3 -->
+
+  <div class="box">
+    <h2>Ítems Especiales</h2>
+    <p><strong>Pañuelo de Estela</strong> — 1 por jugador</p>
+    <p>Cuando cae a 0 HP → queda en 1 HP. Escucha: <em>"Ale, volvé."</em> Una vez por sesión. No transferible.</p>
+    <hr class="divider">
+    <p><strong>Pass Without Trace</strong> — Monaguillo</p>
+    <p>+10 Stealth al grupo. 30 ft. del lanzador. Concentración 1h. Se rompe si el Monaguillo recibe daño fuerte.</p>
+    <hr class="divider">
+    <p><strong>Poción de Mario</strong> — para Mati al llegar</p>
+    <p>Restaura <strong>7d8 HP</strong>. Tirar en abierto en la mesa.</p>
+  </div>
+
+  <div class="box">
+    <h2>Buffs de Mario</h2>
+    <p>Otorgados antes del combate final. Uno por uno, con pausa.</p>
+    <hr class="divider">
+    <p><strong>Memoria de los que no están</strong></p>
+    <p>Ventaja en tiradas de ataque durante el <strong>primer round</strong>.</p>
+    <hr class="divider">
+    <p><strong>Pack Tactics</strong></p>
+    <p>2 aliados adyacentes al mismo enemigo → ventaja en el ataque.</p>
+    <hr class="divider">
+    <p><strong>Nunca Más</strong></p>
+    <p>Una vez por combate, ignorar daño a 0 HP → quedar en 1 HP. Uso único por PJ.</p>
+  </div>
+
+  <div class="box">
+    <h2>Frases Clave del DM</h2>
+    <div class="frase">"Ellos creen que no hay ni muertos ni vivos; hay desaparecidos… Que el Señor los cubra con su sombra." — Michael</div>
+    <div class="frase">"Recuerden, Ale siempre los espera. Por favor, vuelvan." — Estela</div>
+    <div class="frase">"Vayan. Yo los alcanzo." — Mati</div>
+    <div class="frase">"Les van a pedir lo más humano que alguien le puede pedir a otra persona. Les van a pedir justicia." — Apertura</div>
+    <div class="frase">"El dinero paga el trabajo. La historia paga la deuda." — Hernández Corp</div>
+  </div>
+
+</div>
+
+</body>
+</html>
