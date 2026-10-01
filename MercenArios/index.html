@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MercenArios · Hernández Corp</title>
+<style>
+:root{--bg:#0b0f0e;--panel:#131a18;--line:#24302c;--ink:#e6efe9;--dim:#8fa39a;--acc:#39d98a;--warn:#f2b84b;--bad:#ef6a5b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+header{padding:18px 16px 10px;border-bottom:1px solid var(--line)}
+.corp{font:600 11px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.18em;color:var(--acc);text-transform:uppercase}
+h1{margin:6px 0 0;font-size:22px;letter-spacing:-.01em}
+nav{display:flex;position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5}
+nav button{flex:1;padding:14px 4px;background:none;border:0;border-bottom:2px solid transparent;color:var(--dim);font:600 14px/1 inherit;cursor:pointer}
+nav button.on{color:var(--ink);border-bottom-color:var(--acc)}
+main{max-width:640px;margin:0 auto;padding:16px 16px 60px}
+section{display:none}section.on{display:block}
+h2{font-size:13px;margin:22px 0 8px;color:var(--dim);text-transform:uppercase;letter-spacing:.12em;font-weight:600}
+h2:first-child{margin-top:4px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px}
+.card h3{margin:0 0 4px;font-size:16px}
+.card p{margin:0;color:var(--dim);font-size:15px}
+.card p b,.card li b{color:var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+td{padding:9px 8px;border-top:1px solid var(--line);vertical-align:top}
+tr:first-child td{border-top:0}
+td:first-child{width:52px;font:700 15px ui-monospace,Menlo,Consolas,monospace;color:var(--acc);white-space:nowrap}
+td span{display:block;color:var(--dim);font-size:14px}
+.opts{display:grid;gap:8px}
+.opt{display:block;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--ink);font:inherit;cursor:pointer}
+.opt b{display:block;font-size:16px}
+.opt span{display:block;color:var(--dim);font-size:14px;margin-top:2px}
+.opt.sel{border-color:var(--acc);box-shadow:inset 0 0 0 1px var(--acc)}
+.opt:disabled{opacity:.4;cursor:not-allowed}
+.btn{display:block;width:100%;padding:14px;border-radius:10px;border:0;background:var(--acc);color:#04130c;font:700 16px inherit;cursor:pointer;margin-top:10px}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.ghost{background:none;border:1px solid var(--line);color:var(--dim);font-weight:600;font-size:14px}
+.btn.danger{border-color:var(--bad);color:var(--bad)}
+.row{display:flex;gap:8px}
+input{flex:1;min-width:0;padding:13px;border-radius:10px;border:1px solid var(--line);background:#0e1412;color:var(--ink);font:16px ui-monospace,Menlo,Consolas,monospace}
+input:focus,button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.row .btn{width:auto;margin:0;padding:0 18px}
+.tag{display:inline-block;font:600 11px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.1em;text-transform:uppercase;padding:5px 8px;border-radius:6px;border:1px solid var(--line);color:var(--dim)}
+.tag.ok{color:var(--acc);border-color:var(--acc)}
+.tag.lock{color:var(--warn);border-color:var(--warn)}
+.msg{font-size:14px;margin:8px 0 0;min-height:20px;color:var(--bad)}
+.note{border-left:3px solid var(--acc);padding:8px 12px;background:var(--panel);border-radius:0 8px 8px 0;font-size:15px;margin:10px 0}
+.head{display:flex;justify-content:space-between;align-items:center;margin:22px 0 8px}
+.head h2{margin:0}
+ul{margin:6px 0 0;padding-left:18px;color:var(--dim);font-size:15px}
+</style>
+</head>
+<body>
+<header>
+  <div class="corp">Hernández Corp · División Prototipos</div>
+  <h1>MercenArios</h1>
+</header>
+<nav>
+  <button data-tab="reglas" class="on">Reglas</button>
+  <button data-tab="clase">Clase</button>
+  <button data-tab="premios">Recompensas</button>
+</nav>
+<main>
+
+<section id="reglas" class="on">
+  <h2>Dado de Arena · 1d6 por ronda</h2>
+  <div class="card"><table>
+    <tr><td>1–2</td><td>Nada.</td></tr>
+    <tr><td>3</td><td>Rotación<span>Cada criatura pasa al lugar de la que sigue en iniciativa. La última va al lugar de la primera.</span></td></tr>
+    <tr><td>4</td><td>Ataque telegrafiado<span>Se marca la zona en el mapa. Pega al inicio de la ronda siguiente.</span></td></tr>
+    <tr><td>5</td><td>Nadie tiene Bonus Action esta ronda.</td></tr>
+    <tr><td>6</td><td>Nadie se cura esta ronda.</td></tr>
+  </table></div>
+  <p class="note">El dado aplica a todos: jugadores y enemigos.</p>
+
+  <h2>Reglas de la casa</h2>
+  <div class="card"><h3>Cambio de arma</h3><p>Sleight of Hand <b>DC 10</b>. Si pasás, el cambio es gratis. Si fallás, te cuesta la <b>Bonus Action</b>.</p></div>
+  <div class="card"><h3>Sobredaño</h3><p>Si en un turno le hacés más de <b>25</b> de daño a un mismo objetivo, todo lo que pase de 25 se multiplica <b>x1.5</b>.</p><p style="margin-top:6px">Ejemplo: 35 de daño → 25 + (10 x1.5) = <b>40</b>.</p></div>
+  <div class="card"><h3>Entre arenas</h3><p>Al ganar una arena tu vida vuelve <b>al máximo</b>. No recuperás habilidades ni slots, salvo que elijas Long Rest como recompensa.</p></div>
+  <div class="card"><h3>Recompensas</h3><p>Al caer cada jefe, el DM te da un código. Cargalo en <b>Recompensas</b> para elegir un premio. Son <b>2 en total</b>.</p></div>
+</section>
+
+<section id="clase">
+  <div id="clasePick">
+    <h2>Elegí tu clase</h2>
+    <div class="opts" id="claseOpts"></div>
+  </div>
+  <div id="claseView" hidden>
+    <h2 id="claseName"></h2>
+    <div id="claseBody"></div>
+    <button class="btn ghost" id="claseChange">Cambiar de clase</button>
+  </div>
+</section>
+
+<section id="premios">
+  <div id="needClass" class="note" hidden>Primero elegí tu clase en la pestaña <b>Clase</b>.</div>
+  <div id="premiosBody"></div>
+  <button class="btn ghost danger" id="reset" style="margin-top:40px">Reiniciar todo</button>
+</section>
+
+</main>
+<script>
+(function(){
+var KEY='hc-arena-v1';
+var HASH=[1141726497880905,1192094970654274];
+var CLASES={
+  monje:{n:'Monje',d:'Crítico en cadena',body:[
+    ['Crítico en cadena','Gastás <b>1 Focus Point</b> al empezar tu turno. Ese turno, cada golpe que <b>impacta</b> baja en 1 el número que necesitás para crítico en el siguiente.'],
+    ['Cómo se cuenta','Primer golpe: crítico con <b>20</b>. Segundo: <b>19–20</b>. Tercero: <b>18–20</b>. Cuarto: <b>17–20</b>. Si un golpe falla, el número no baja. Se reinicia al terminar el turno.']],
+    up:['Cadena afilada','Tu cadena arranca en 19: el primer golpe ya critea con 19–20.'],
+    it:[['Wraps of Unarmed Power +1','Poco común. +1 a ataque y daño de tus golpes sin arma.'],['Bracers of Defense','Raro. +2 a la CA sin armadura ni escudo. Requiere attunement.']]},
+  paladin:{n:'Paladín',d:'Smites corporativos',body:[
+    ['Smite Detonante','Gasta slot como un smite normal. La <b>mitad del daño del smite</b> también les pega a todos los enemigos adyacentes al objetivo.'],
+    ['Convicción','Ganás <b>1 carga</b> cada vez que vos o un aliado recibe daño (máximo 3). Con 3 cargas, al impactar podés gastarlas para sumar <b>2d8 radiante sin gastar slot</b>.'],
+    ['Límite','Un Smite Detonante por turno. Convicción se puede <b>sumar al mismo golpe</b>.']],
+    up:['Smite reforzado','Tus smites hacen +1d8 de daño.'],
+    it:[['Arma +1','Poco común. +1 a ataque y daño.'],['Flame Tongue','Raro. Bonus Action para encenderla: +2d6 de fuego por golpe. Requiere attunement.']]},
+  caster:{n:'Spellcaster',d:'Conjuro acelerado',body:[
+    ['Conjuro acelerado','Una vez por turno podés lanzar como <b>Bonus Action</b> un cantrip o un spell de acción de <b>nivel 2 o menos</b>.'],
+    ['Costo','El spell gasta su slot normal. Los cantrips no gastan nada.'],
+    ['Ejemplo','Fireball con la acción + Fire Bolt con la Bonus Action, en el mismo turno.']],
+    up:['Sobrecarga','Una vez por pelea, tu spell de Bonus Action (nivel 2 o menos) no gasta slot.'],
+    it:[['Pearl of Power','Poco común. Una vez por día recuperás un slot de nivel 3 o menos. Requiere attunement.'],['Wand of the War Mage +2','Raro. +2 a tus ataques de spell e ignorás media cobertura. Requiere attunement.']]}
+};
+var GEN=[['Cloak of Protection','Poco común. +1 a la CA y a todos los saves. Requiere attunement.'],['Boots of Speed','Raro. Bonus Action: duplicás tu velocidad por hasta 10 minutos. Requiere attunement.']];
+var ARENA=['Arena 1','Arena 2'];
+
+var S=load();
+function load(){try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&s.picks)return s}catch(e){}return{cls:null,unlocked:0,picks:[null,null]}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function hash(str){var a=0xdeadbeef^7,b=0x41c6ce57^7;for(var i=0;i<str.length;i++){var c=str.charCodeAt(i);a=Math.imul(a^c,2654435761);b=Math.imul(b^c,1597334677)}a=Math.imul(a^(a>>>16),2246822507)^Math.imul(b^(b>>>13),3266489909);b=Math.imul(b^(b>>>16),2246822507)^Math.imul(a^(a>>>13),3266489909);return 4294967296*(2097151&b)+(a>>>0)}
+function $(id){return document.getElementById(id)}
+function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+
+function options(i){
+  var c=CLASES[S.cls];
+  return [
+    {k:'rest',rep:1,t:'Long Rest',d:'Recuperás todas tus habilidades y slots.'},
+    {k:'ca',rep:1,t:'+1 CA',d:'Permanente. Se puede elegir las dos veces.'},
+    {k:'hp',t:'+15 de vida máxima',d:'Permanente.'},
+    {k:'vel',t:'+10 ft de velocidad',d:'Permanente.'},
+    {k:'umbral',t:'Sobredaño desde 20',d:'Tu umbral de sobredaño baja de 25 a 20.'},
+    {k:'up',t:c.up[0],d:c.up[1]},
+    {k:'item',t:c.it[i][0],d:c.it[i][1]},
+    {k:'item',t:GEN[i][0],d:GEN[i][1]}
+  ];
+}
+function taken(k,i){var o=S.picks[1-i];return o&&o.k===k}
+
+var sel=[null,null];
+function render(){
+  // clase
+  $('clasePick').hidden=!!S.cls;$('claseView').hidden=!S.cls;
+  if(!S.cls){
+    var box=$('claseOpts');box.innerHTML='';
+    Object.keys(CLASES).forEach(function(k){
+      var b=el('button','opt','<b>'+CLASES[k].n+'</b><span>'+CLASES[k].d+'</span>');
+      b.onclick=function(){S.cls=k;save();render()};box.appendChild(b);
+    });
+  }else{
+    var c=CLASES[S.cls];$('claseName').textContent=c.n;
+    $('claseBody').innerHTML=c.body.map(function(x){return '<div class="card"><h3>'+x[0]+'</h3><p>'+x[1]+'</p></div>'}).join('');
+    var has=S.picks[0]||S.picks[1];
+    $('claseChange').hidden=!!has;
+  }
+  // premios
+  $('needClass').hidden=!!S.cls;
+  var body=$('premiosBody');body.innerHTML='';
+  if(!S.cls)return;
+  [0,1].forEach(function(i){
+    var open=S.unlocked>i,p=S.picks[i];
+    var head=el('div','head','<h2>Recompensa '+(i+1)+' · '+ARENA[i]+'</h2><span class="tag '+(p?'ok':open?'ok':'lock')+'">'+(p?'Elegida':open?'Abierta':'Bloqueada')+'</span>');
+    body.appendChild(head);
+    if(p){
+      body.appendChild(el('div','card','<h3>'+p.t+'</h3><p>'+p.d+'</p>'));
+      return;
+    }
+    if(!open){
+      if(i>0&&S.unlocked<i){body.appendChild(el('div','card','<p>Se abre al superar la '+ARENA[i]+'.</p>'));return}
+      var w=el('div','card','<p style="margin-bottom:10px">Ingresá el código que te da el DM al caer el jefe.</p>');
+      var r=el('div','row'),inp=el('input'),go=el('button','btn','Abrir'),m=el('p','msg');
+      inp.placeholder='Código';inp.autocapitalize='off';inp.autocomplete='off';inp.spellcheck=false;
+      inp.setAttribute('aria-label','Código de la '+ARENA[i]);
+      function tryIt(){
+        if(hash(inp.value.trim().toLowerCase())===HASH[i]){S.unlocked=i+1;save();render()}
+        else{m.textContent='Código incorrecto.'}
+      }
+      go.onclick=tryIt;inp.onkeydown=function(e){if(e.key==='Enter')tryIt()};
+      r.appendChild(inp);r.appendChild(go);w.appendChild(r);w.appendChild(m);body.appendChild(w);
+      return;
+    }
+    body.appendChild(el('p','note','Tu vida vuelve <b>al máximo</b>. Ahora elegí <b>una</b> recompensa. La elección es definitiva.'));
+    var box=el('div','opts'),ok=el('button','btn','Confirmar');ok.disabled=sel[i]==null;
+    options(i).forEach(function(o,n){
+      var b=el('button','opt'+(sel[i]===n?' sel':''),'<b>'+o.t+'</b><span>'+o.d+'</span>');
+      if(!o.rep&&taken(o.k,i)){b.disabled=true;b.querySelector('span').textContent='Ya elegiste esto.'}
+      b.onclick=function(){sel[i]=n;render()};
+      box.appendChild(b);
+    });
+    ok.onclick=function(){var o=options(i)[sel[i]];S.picks[i]={k:o.k,t:o.t,d:o.d};sel[i]=null;save();render()};
+    body.appendChild(box);body.appendChild(ok);
+  });
+}
+
+document.querySelectorAll('nav button').forEach(function(b){
+  b.onclick=function(){
+    document.querySelectorAll('nav button').forEach(function(x){x.classList.toggle('on',x===b)});
+    document.querySelectorAll('section').forEach(function(s){s.classList.toggle('on',s.id===b.dataset.tab)});
+    window.scrollTo(0,0);
+  };
+});
+$('claseChange').onclick=function(){S.cls=null;save();render()};
+var armed=0,rb=$('reset');
+rb.onclick=function(){
+  if(!armed){armed=1;rb.textContent='Tocá de nuevo para borrar todo';setTimeout(function(){armed=0;rb.textContent='Reiniciar todo'},3000);return}
+  S={cls:null,unlocked:0,picks:[null,null]};sel=[null,null];armed=0;rb.textContent='Reiniciar todo';save();render();
+};
+render();
+})();
+</script>
+</body>
+</html>
