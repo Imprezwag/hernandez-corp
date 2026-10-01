@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>MercenArios · Guion del DM</title>
+<style>
+:root{--bg:#0b0f0e;--panel:#131a18;--line:#24302c;--ink:#e6efe9;--dim:#9db0a7;--acc:#39d98a;--warn:#f2b84b;--bad:#ef6a5b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+header{padding:18px 16px 10px;border-bottom:1px solid var(--line)}
+.corp{font:600 11px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.18em;color:var(--warn);text-transform:uppercase}
+h1{margin:6px 0 0;font-size:22px;letter-spacing:-.01em}
+nav{display:flex;position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);z-index:5;overflow-x:auto;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:1 0 auto;padding:14px 14px;background:none;border:0;border-bottom:2px solid transparent;color:var(--dim);font:600 14px/1 inherit;cursor:pointer;white-space:nowrap}
+nav button.on{color:var(--ink);border-bottom-color:var(--acc)}
+main{max-width:760px;margin:0 auto;padding:16px 16px 60px}
+section{display:none}section.on{display:block}
+h2{font-size:13px;margin:24px 0 8px;color:var(--dim);text-transform:uppercase;letter-spacing:.12em;font-weight:600}
+h2:first-child{margin-top:4px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px}
+.card h3{margin:0 0 6px;font-size:16px}
+.card p{margin:0 0 6px;color:var(--dim);font-size:15px}
+.card p:last-child{margin-bottom:0}
+b{color:var(--ink)}
+ul{margin:4px 0 0;padding-left:18px;color:var(--dim);font-size:15px}
+li{margin-bottom:4px}
+.read{border-left:3px solid var(--acc);background:var(--panel);border-radius:0 10px 10px 0;padding:12px 14px;margin-bottom:10px;font-size:16px;font-style:italic}
+.read p{margin:0 0 8px}.read p:last-child{margin:0}
+.read .who{display:block;font:600 11px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);font-style:normal;margin-bottom:8px}
+.warn{border-left:3px solid var(--warn);background:var(--panel);border-radius:0 10px 10px 0;padding:10px 14px;margin-bottom:10px;font-size:15px;color:var(--dim)}
+.tw{overflow-x:auto;margin-bottom:10px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{padding:9px 10px;border-top:1px solid var(--line);text-align:left;vertical-align:top}
+tr:first-child th{border-top:0;color:var(--dim);font:600 11px/1.2 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.1em;text-transform:uppercase}
+td.n{font-family:ui-monospace,Menlo,Consolas,monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+td span{display:block;color:var(--dim);font-size:14px}
+pre{white-space:pre-wrap;word-break:break-word;background:#0e1412;border:1px solid var(--line);border-radius:10px;padding:12px;margin:0 0 8px;font:14px/1.5 ui-monospace,Menlo,Consolas,monospace;color:var(--ink)}
+.copy{display:inline-block;padding:10px 16px;border-radius:8px;border:1px solid var(--acc);background:none;color:var(--acc);font:600 14px inherit;cursor:pointer}
+button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+</style>
+</head>
+<body>
+<header>
+  <div class="corp">Solo DM · Hernández Corp</div>
+  <h1>MercenArios · Guion del DM</h1>
+</header>
+<nav>
+  <button data-tab="guion" class="on">Guion</button>
+  <button data-tab="a1">1 · Medusa</button>
+  <button data-tab="a2">2 · Vecna</button>
+  <button data-tab="a3">3 · Comprador</button>
+  <button data-tab="reglas">Reglas</button>
+  <button data-tab="mapas">Mapas</button>
+</nav>
+<main>
+
+<!-- ================= GUION ================= -->
+<section id="guion" class="on">
+  <h2>La historia en tres líneas</h2>
+  <div class="card">
+    <ul>
+      <li>Hernández Corp fabrica <b>copias de laboratorio</b> de monstruos legendarios para venderlas. Son más débiles que el original.</li>
+      <li>Contrata mercenarios (los PJ) para <b>probarlas en una arena</b>. Los que sobreviven salen mejorados.</li>
+      <li>Desde el palco mira <b>el comprador</b>: un Mind Flayer. No vino a comprar monstruos; vino a llevarse a los mercenarios.</li>
+    </ul>
+  </div>
+
+  <div class="tw"><table>
+    <tr><th>Tramo</th><th>Tiempo</th></tr>
+    <tr><td>Recepción y reglas</td><td class="n">15 min</td></tr>
+    <tr><td>Arena 1 · Medusa + recompensa</td><td class="n">45 min</td></tr>
+    <tr><td>Arena 2 · Vecna + recompensa</td><td class="n">45 min</td></tr>
+    <tr><td>Arena 3 · Comprador</td><td class="n">45 min</td></tr>
+    <tr><td>Cierre</td><td class="n">10 min</td></tr>
+  </table></div>
+
+  <h2>1 · Recepción (mapa: Recepción)</h2>
+  <div class="read"><span class="who">Leer</span>
+    <p>El carro los deja frente a un edificio sin ventanas, en medio de la nada. Sobre la puerta, un cartel de bronce: HERNÁNDEZ CORP — DIVISIÓN PROTOTIPOS.</p>
+    <p>Adentro todo es mármol blanco, luz verde y silencio. Detrás de un mostrador los espera una mujer de traje gris con una carpeta bajo el brazo. Sonríe sin mostrar los dientes.</p>
+  </div>
+  <div class="read"><span class="who">Lic. Roldán · Jefa de Pruebas</span>
+    <p>"Bienvenidos. Soy la licenciada Roldán. El trabajo es simple: son tres peleas. Nosotros fabricamos criaturas, ustedes las ponen a prueba. Si la criatura muere, ustedes cobran."</p>
+    <p>"Después de cada pelea los curamos y eligen una mejora. Cortesía de la casa. Lo que ganen acá adentro se lo llevan puesto."</p>
+    <p>"La arena cambia las condiciones en cada ronda: a veces los mueve de lugar, a veces les saca algo. No es personal, es parte de la prueba. Firmen acá."</p>
+  </div>
+  <div class="card">
+    <h3>Qué resolver acá</h3>
+    <ul>
+      <li>Pasales el link de jugadores y que elijan su clase.</li>
+      <li>Explicá las reglas de la pestaña <b>Reglas</b> (cambio de arma, sobredaño, Dado de Arena).</li>
+      <li>Si preguntan por la paga: 500 po por cabeza más las mejoras.</li>
+      <li>Si leen el contrato (Investigation DC 12): una cláusula dice que "el resultado de la prueba es propiedad de la empresa". Roldán: "Formalidades".</li>
+    </ul>
+  </div>
+
+  <h2>2 · Entrada a la arena (mapa: Arena)</h2>
+  <div class="read"><span class="who">Leer</span>
+    <p>Un pasillo de acero termina en una compuerta. Cuando se abre, los golpea la luz de los reflectores.</p>
+    <p>La arena es enorme: arena gris en el piso, columnas de espejo, estatuas rotas de gente que no parece esculpida, y cuatro compuertas cerradas en los muros.</p>
+    <p>Arriba, detrás de un vidrio oscuro, hay un palco con un solo asiento. Alguien está sentado ahí, inmóvil, con una capucha puesta.</p>
+  </div>
+
+  <h2>Si preguntan por la figura del palco</h2>
+  <div class="read"><span class="who">Lic. Roldán, por los parlantes</span>
+    <p>"Es un cliente. Vino a ver el producto. Les recomiendo no mirarlo mucho."</p>
+  </div>
+  <div class="read"><span class="who">Si lo observan (Perception DC 13)</span>
+    <p>Es alto y muy flaco, con una túnica oscura de cuello alto. La piel es violácea y brilla, como si estuviera mojada. Las manos tienen dedos demasiado largos.</p>
+    <p>Debajo de la capucha no hay boca: hay cuatro tentáculos que se mueven despacio, como probando el aire. Los ojos son blancos, sin pupila.</p>
+    <p>No se mueve ni habla. Pero por un segundo sienten que alguien les revisa los pensamientos, como quien hojea un libro.</p>
+  </div>
+
+  <h2>3 · Entre arenas</h2>
+  <div class="read"><span class="who">Lic. Roldán, por los parlantes</span>
+    <p>"Prototipo descartado. Buen trabajo." Una niebla tibia baja del techo y les cierra las heridas. "Pasen a retirar su mejora."</p>
+  </div>
+  <div class="card">
+    <ul>
+      <li>Vida al máximo para todos. No recuperan habilidades ni slots.</li>
+      <li>Dales el código de esa arena y que elijan su recompensa en la página.</li>
+      <li>Los códigos no están en esta hoja porque la página es pública.</li>
+      <li><b>Después de la arena 2:</b> todos sienten una presión detrás de los ojos, como un dedo apoyado en la frente desde adentro. El asiento del palco está vacío.</li>
+    </ul>
+  </div>
+
+  <h2>4 · Baja el comprador</h2>
+  <div class="read"><span class="who">Lic. Roldán, por los parlantes</span>
+    <p>"El cliente pidió una demostración directa. No figuraba en el contrato. Les pido disculpas." Pausa. "Bueno, no."</p>
+  </div>
+  <div class="read"><span class="who">Leer</span>
+    <p>El vidrio del palco se abre. La figura baja flotando, sin tocar la arena, y se saca la capucha. De dos compuertas salen cosas que caminan en cuatro patas: son cerebros.</p>
+    <p>Una voz les habla desde adentro de la cabeza, sin apuro: "Ya vi suficiente. Me los llevo a los tres."</p>
+  </div>
+
+  <h2>5 · Cierre</h2>
+  <div class="read"><span class="who">Si ganan</span>
+    <p>El comprador cae y la presión en sus cabezas se corta de golpe, como un oído que se destapa. Silencio. Después, un aplauso solo, por los parlantes.</p>
+    <p>"Excelente", dice Roldán. "Se nos cayó la venta, pero acabamos de descubrir un producto mejor." La compuerta de salida se abre. Sobre una mesa hay tres bolsas de oro y tres contratos nuevos, ya con sus nombres.</p>
+    <p>"Piénsenlo. Hernández Corp siempre necesita gente que sobreviva."</p>
+  </div>
+  <div class="read"><span class="who">Si pierden</span>
+    <p>Lo último que ven es la arena gris contra la cara. Lo último que escuchan es a Roldán: "Venta cerrada. Embálenlos."</p>
+    <p>Se despiertan en una caja, con dolor de cabeza, y algo que no es de ustedes moviéndose detrás de los ojos.</p>
+  </div>
+</section>
+
+<!-- ================= ARENA 1 ================= -->
+<section id="a1">
+  <h2>Mobs</h2>
+  <div class="tw"><table>
+    <tr><th>Mob (D&amp;D Beyond)</th><th>MM 2024</th><th>CR</th><th>CA</th><th>Vida</th></tr>
+    <tr><td><b>Medusa</b> ×1</td><td class="n">p. 205</td><td class="n">6</td><td class="n">15</td><td class="n">127</td></tr>
+    <tr><td><b>Gargoyle</b> ×2</td><td class="n">p. 128</td><td class="n">2</td><td class="n">15</td><td class="n">67 → <b>45</b></td></tr>
+  </table></div>
+
+  <h2>Ajustes</h2>
+  <div class="card">
+    <h3>Medusa (prototipo M-7)</h3>
+    <ul>
+      <li>Sin cambios de vida ni CA.</li>
+      <li><b>Mirada telegrafiada:</b> con su Bonus Action marca el cono de 30 ft en el mapa. Se resuelve al <b>inicio de su próximo turno</b>, sin costo. El cono queda fijo donde lo marcó.</li>
+      <li>Si ella muere antes, la mirada no se dispara.</li>
+      <li>La petrificación se cura sola al terminar la arena.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Gargoyle (mercenarios anteriores)</h3>
+    <ul>
+      <li>Vida <b>45</b> en vez de 67, para que la pelea no se alargue.</li>
+      <li>Empiezan quietas, como estatuas. Se activan en la ronda 1.</li>
+      <li>Son inmunes a Petrified: pueden pararse dentro del cono.</li>
+    </ul>
+  </div>
+
+  <h2>Mecánicas</h2>
+  <div class="card">
+    <h3>Mirada petrificante</h3>
+    <p>Cono de 30 ft, save de <b>CON DC 13</b>.</p>
+    <ul>
+      <li><b>Primer fallo:</b> Restrained. Repite el save al final de su próximo turno.</li>
+      <li><b>Segundo fallo:</b> Petrified.</li>
+      <li>Recarga 5–6. Empieza cargada: marcala en la ronda 1.</li>
+      <li>Con un <b>4</b> en el Dado de Arena se recarga sola.</li>
+      <li>Con un <b>5</b> (nadie tiene BA) no puede marcarla esa ronda.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Columnas de espejo</h3>
+    <p>Si hay una columna de espejo dentro del cono cuando se resuelve, <b>la Medusa también tira el save</b>. Los jugadores pueden provocarlo empujándola, o aprovechando la rotación del Dado de Arena.</p>
+  </div>
+  <div class="card">
+    <h3>Cómo juega</h3>
+    <ul>
+      <li>Medusa: de lejos, tres Poison Ray. De cerca, dos Claw y un Snake Hair.</li>
+      <li>Gárgolas: vuelan, pegan y se van sin provocar ataque de oportunidad. Molestan al caster.</li>
+    </ul>
+  </div>
+  <div class="warn"><b>Riesgo:</b> con tres jugadores, un petrificado es un tercio de la mesa afuera. Válvula opcional: un aliado adyacente gasta su acción para romper la piedra y lo deja Restrained en vez de Petrified.</div>
+</section>
+
+<!-- ================= ARENA 2 ================= -->
+<section id="a2">
+  <h2>Mobs</h2>
+  <div class="tw"><table>
+    <tr><th>Mob (D&amp;D Beyond)</th><th>MM 2024</th><th>CR</th><th>CA</th><th>Vida</th></tr>
+    <tr><td><b>Mage</b> ×1<span>reskin: Vecna</span></td><td class="n">p. 199</td><td class="n">6</td><td class="n">15</td><td class="n">81 → <b>169</b></td></tr>
+    <tr><td><b>Ghoul</b> ×4 (+2)</td><td class="n">p. 132</td><td class="n">1</td><td class="n">12</td><td class="n">22</td></tr>
+  </table></div>
+
+  <div class="read"><span class="who">Leer al abrir la compuerta</span>
+    <p>Sale un hombre consumido, de túnica negra. Una de sus manos está cosida a la muñeca y es de otro color. Uno de sus ojos brilla y no parpadea. Cuatro cadáveres hambrientos se arrastran detrás, atados a él por hilos de luz violeta.</p>
+  </div>
+
+  <h2>Ajustes</h2>
+  <div class="card">
+    <h3>Mage → Vecna (prototipo V-3)</h3>
+    <ul>
+      <li>Vida <b>169</b> (81 propios + 22 por cada uno de los 4 ghouls).</li>
+      <li><b>Quitar:</b> Cone of Cold, Fireball, Fly, Invisibility.</li>
+      <li><b>Agregar:</b> Lluvia de fuego (abajo), que reemplaza al Fireball.</li>
+      <li>Mantiene: tres Arcane Burst (+6, 3d8+3 force), Misty Step 3/día, Shield.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Ghoul</h3>
+    <ul>
+      <li>Sin cambios. Dos Bite por turno, o Claw: CON DC 10 o Paralyzed hasta el final de su próximo turno.</li>
+    </ul>
+  </div>
+
+  <h2>Mecánicas</h2>
+  <div class="card">
+    <h3>Vida vinculada</h3>
+    <ul>
+      <li>Mientras quede <b>un ghoul vivo</b>, Vecna tiene resistencia a todo el daño.</li>
+      <li>Cada ghoul que muere le descuenta <b>22</b> de vida a Vecna.</li>
+      <li>La primera vez que Vecna baja de <b>85</b>: entran 2 ghouls más por las compuertas. Vuelve la resistencia. También descuentan 22 al morir.</li>
+    </ul>
+  </div>
+  <div class="tw"><table>
+    <tr><th>Ghouls muertos</th><th>Vida de Vecna si nadie le pegó directo</th></tr>
+    <tr><td class="n">1</td><td class="n">147</td></tr>
+    <tr><td class="n">2</td><td class="n">125</td></tr>
+    <tr><td class="n">3</td><td class="n">103</td></tr>
+    <tr><td class="n">4</td><td class="n">81 → entran 2 más</td></tr>
+    <tr><td class="n">6</td><td class="n">37</td></tr>
+  </table></div>
+  <div class="card">
+    <h3>Lluvia de fuego (Bonus Action, Recarga 5–6)</h3>
+    <ul>
+      <li>Marca <b>3 casillas de 5 ft</b> a la vista. Caen al inicio de su próximo turno.</li>
+      <li>Impacto: <b>DEX DC 14</b>, 3d6 fuego, mitad si salva.</li>
+      <li>El fuego queda hasta el final de la pelea: <b>1d6</b> al entrar o al empezar el turno ahí.</li>
+      <li>Empieza cargada. Con un <b>4</b> en el Dado de Arena se recarga sola.</li>
+      <li>Afecta también a los ghouls: los jugadores pueden usar el fuego a su favor.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Cómo juega</h3>
+    <ul>
+      <li>Vecna se queda atrás, tira Arcane Burst al que más daño hizo y usa Misty Step si lo encierran.</li>
+      <li>Los ghouls van en grupo sobre un mismo PJ para intentar paralizarlo.</li>
+    </ul>
+  </div>
+  <div class="warn"><b>A decidir vos:</b> el Mage trae Counterspell 3/día. Contra un solo caster puede ser frustrante; en los ajustes lo dejé solo con Shield. Si querés que Vecna se sienta más mago, devolvele un Counterspell.</div>
+</section>
+
+<!-- ================= ARENA 3 ================= -->
+<section id="a3">
+  <h2>Mobs</h2>
+  <div class="tw"><table>
+    <tr><th>Mob (D&amp;D Beyond)</th><th>MM 2024</th><th>CR</th><th>CA</th><th>Vida</th></tr>
+    <tr><td><b>Mind Flayer</b> ×1</td><td class="n">p. 214</td><td class="n">7</td><td class="n">15</td><td class="n">99</td></tr>
+    <tr><td><b>Intellect Devourer</b> ×2</td><td class="n">p. 179</td><td class="n">2</td><td class="n">12</td><td class="n">28</td></tr>
+  </table></div>
+
+  <h2>Ajustes</h2>
+  <div class="card">
+    <h3>Mind Flayer (el comprador)</h3>
+    <ul>
+      <li>Sin cambios de vida ni CA.</li>
+      <li><b>Quitar:</b> Dominate Monster y Plane Shift. El parásito ocupa ese lugar.</li>
+      <li><b>Mind Blast telegrafiado:</b> gasta su acción para marcar el cono de 60 ft. Se resuelve al inicio de su próximo turno, sin costo.</li>
+      <li><b>Tentacles:</b> el Stunned dura hasta el final del próximo turno del objetivo. Después sigue Grappled (escape DC 14).</li>
+      <li><b>Extract Brain no mata:</b> si deja a alguien en 0, queda inconsciente tirando death saves.</li>
+      <li>Tiene Magic Resistance: ventaja en saves contra spells. Avisale al caster si lo descubre.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Intellect Devourer</h3>
+    <ul>
+      <li><b>Quitar Body Thief</b> (en D&amp;D Beyond puede figurar como Steal Body).</li>
+      <li><b>Devour Intellect:</b> INT DC 12, 2d10 psíquico. Sacale el Stunned.</li>
+    </ul>
+  </div>
+
+  <h2>Mecánicas</h2>
+  <div class="card">
+    <h3>Mind Blast</h3>
+    <ul>
+      <li>Cono de 60 ft, <b>INT DC 15</b>: 6d8+4 psíquico y Stunned <b>hasta el final del próximo turno del objetivo</b> (ajuste: por el telegrafiado, la duración original lo dejaría dos rondas afuera). Mitad de daño y sin Stunned si salva.</li>
+      <li>Recarga 5–6. Empieza cargado: marcalo en la ronda 1.</li>
+      <li>Con un <b>4</b> en el Dado de Arena se recarga solo.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Parásito (una sola vez)</h3>
+    <ul>
+      <li>Se activa la primera vez que el Mind Flayer baja de <b>50</b> de vida.</li>
+      <li>Cada PJ tira <b>INT DC 13</b>. El que falla <b>pierde su próximo turno</b>.</li>
+    </ul>
+    <p style="margin-top:8px"><i>"La presión detrás de los ojos se vuelve un puño. Algo adentro de su cabeza tira de los hilos, y por un momento el cuerpo no les responde."</i></p>
+  </div>
+  <div class="card">
+    <h3>Dado de Arena</h3>
+    <p>Misma tabla. Narralo como voluntad del comprador: él mueve las piezas, él apaga las curaciones.</p>
+  </div>
+  <div class="card">
+    <h3>Cómo juega</h3>
+    <ul>
+      <li>Flota a 10 ft del piso y abre con Mind Blast sobre el grupo.</li>
+      <li>Baja a usar Tentacles solo sobre alguien aislado o ya Stunned.</li>
+      <li>Los Devourers van sobre el caster.</li>
+    </ul>
+  </div>
+  <div class="warn"><b>Riesgo:</b> esta pelea saca muchos turnos (Mind Blast, Tentacles, parásito). Por eso le quité el Stunned a los Devourers. Si la mesa viene golpeada, salteate el parásito.</div>
+</section>
+
+<!-- ================= REGLAS ================= -->
+<section id="reglas">
+  <h2>Dado de Arena · 1d6 al inicio de cada ronda</h2>
+  <div class="tw"><table>
+    <tr><td class="n">1–2</td><td>Nada.</td></tr>
+    <tr><td class="n">3</td><td>Rotación<span>Cada criatura pasa al lugar de la que sigue en iniciativa. La última va al lugar de la primera.</span></td></tr>
+    <tr><td class="n">4</td><td>Ataque telegrafiado<span>El ataque especial del jefe se recarga solo.</span></td></tr>
+    <tr><td class="n">5</td><td>Nadie tiene Bonus Action<span>Tampoco los mobs.</span></td></tr>
+    <tr><td class="n">6</td><td>Nadie se cura<span>Tampoco los mobs.</span></td></tr>
+  </table></div>
+
+  <h2>Reglas de la casa</h2>
+  <div class="card"><h3>Cambio de arma</h3><p>Sleight of Hand <b>DC 10</b>. Si pasa, es gratis. Si falla, gasta la Bonus Action.</p></div>
+  <div class="card"><h3>Sobredaño (solo jugadores)</h3><p>Más de <b>25</b> de daño en un turno contra un mismo objetivo: el excedente va <b>x1.5</b>. Ejemplo: 35 → 40. Con la mejora, el umbral es 20.</p></div>
+
+  <h2>Customs de clase</h2>
+  <div class="card"><h3>Monje · Crítico en cadena</h3><p>1 Focus Point. Ese turno, cada golpe que impacta baja en 1 el número para critear en el siguiente: 20, 19, 18, 17. Con la mejora arranca en 19.</p></div>
+  <div class="card"><h3>Paladín · Smites</h3>
+    <ul>
+      <li><b>Detonante</b> (gasta slot, 1 por turno): la mitad del daño del smite va a los enemigos adyacentes al objetivo.</li>
+      <li><b>Convicción:</b> 1 carga cada vez que él o un aliado recibe daño (máx. 3). Con 3 cargas: +2d8 radiante sin slot. Se puede sumar al Detonante.</li>
+      <li>Con la mejora: +1d8 a sus smites.</li>
+    </ul>
+  </div>
+  <div class="card"><h3>Spellcaster · Conjuro acelerado</h3><p>Una vez por turno, un cantrip o un spell de acción de <b>nivel 2 o menos</b> como Bonus Action, pagando su slot. Con la mejora: una vez por pelea, ese spell no gasta slot.</p></div>
+
+  <h2>Recompensas</h2>
+  <div class="card">
+    <ul>
+      <li>Una por jugador tras las arenas 1 y 2. Vida al máximo en cada una.</li>
+      <li>Long Rest y +1 CA se pueden repetir. El resto, una sola vez.</li>
+      <li>Ítems: poco comunes tras la arena 1, raros tras la arena 2.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= MAPAS ================= -->
+<section id="mapas">
+  <h2>Mapa 1 · Recepción</h2>
+  <pre id="p1">Top-down orthographic battle map for a tabletop RPG, viewed directly from above, no perspective. A corporate reception lobby inside a sinister fantasy biotech company. White marble floor with thin dark veins, cold green accent lighting along the walls. A long curved reception desk of black stone with a brass company plaque. Two rows of waiting benches, potted pale plants, a glass display case holding a strange preserved creature in green liquid. A contract-signing table with papers and a quill. Brass pipes and sealed specimen jars along one wall. At the far end, a heavy riveted steel blast door leading to a long steel corridor. Clean, sterile, unsettling mood. Rectangular room about 40 by 30 feet. Highly detailed, hand-painted fantasy battle map style, even lighting, no characters, no creatures, no text, no labels, no grid lines.</pre>
+  <button class="copy" data-copy="p1">Copiar prompt</button>
+
+  <h2>Mapa 2 · Arena</h2>
+  <pre id="p2">Top-down orthographic battle map for a tabletop RPG, viewed directly from above, no perspective. A very large oval gladiator arena built inside a sinister fantasy biotech laboratory, about 150 by 110 feet. Grey sand floor with scorch marks and old dark stains. High riveted steel walls with green warning lights and four heavy closed gates, one at each compass point. Scattered across the arena for cover and tactics: eight tall cylindrical pillars clad in polished mirror, spaced irregularly; several broken stone statues of terrified adventurers; low crumbling stone barricades and rubble piles; two raised stone platforms with ramps on opposite sides; a circular iron drain grate at the exact center; a shallow trench crossing one quarter of the arena; a few wooden weapon racks and supply crates near the walls. On the north side, clearly visible, an elevated observation box with dark glass and a single high-backed throne inside, overlooking the arena. Bright white floodlights casting pools of light, shadowed corners near the walls for hiding. Highly detailed, hand-painted fantasy battle map style, no characters, no creatures, no text, no labels, no grid lines.</pre>
+  <button class="copy" data-copy="p2">Copiar prompt</button>
+
+  <h2>Cómo usar el mapa de la arena</h2>
+  <div class="card">
+    <ul>
+      <li><b>Columnas de espejo:</b> cobertura total. En la arena 1 reflejan la mirada de la Medusa.</li>
+      <li><b>Estatuas y barricadas:</b> media cobertura (+2 CA). Sirven para esconderse (Stealth contra Perception pasiva).</li>
+      <li><b>Plataformas:</b> 5 ft de altura. Subir por la rampa es movimiento normal; trepar cuesta el doble.</li>
+      <li><b>Trinchera:</b> terreno difícil, da media cobertura al que está adentro.</li>
+      <li><b>Compuertas:</b> por ahí entran los ghouls extra y los Intellect Devourers.</li>
+      <li><b>Palco:</b> a 20 ft de altura, detrás de vidrio. No se puede atacar hasta la arena 3.</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+<script>
+(function(){
+document.querySelectorAll('nav button').forEach(function(b){
+  b.onclick=function(){
+    document.querySelectorAll('nav button').forEach(function(x){x.classList.toggle('on',x===b)});
+    document.querySelectorAll('section').forEach(function(s){s.classList.toggle('on',s.id===b.dataset.tab)});
+    try{localStorage.setItem('hc-merc-dm-tab',b.dataset.tab)}catch(e){}
+    window.scrollTo(0,0);
+  };
+});
+try{var t=localStorage.getItem('hc-merc-dm-tab');var tb=t&&document.querySelector('nav button[data-tab="'+t+'"]');if(tb)tb.click()}catch(e){}
+document.querySelectorAll('.copy').forEach(function(b){
+  b.onclick=function(){
+    var txt=document.getElementById(b.dataset.copy).textContent;
+    function done(){b.textContent='Copiado';setTimeout(function(){b.textContent='Copiar prompt'},1500)}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,fallback)}else{fallback()}
+    function fallback(){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done()}catch(e){}document.body.removeChild(ta)}
+  };
+});
+})();
+</script>
+</body>
+</html>
