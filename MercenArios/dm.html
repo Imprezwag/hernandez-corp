@@ -282,42 +282,45 @@ button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
   <h2>Mobs</h2>
   <div class="tw"><table>
     <tr><th>Mob (D&amp;D Beyond)</th><th>MM 2024</th><th>CR</th><th>CA</th><th>Vida</th></tr>
-    <tr><td><b>Mind Flayer</b> ×1</td><td class="n">p. 214</td><td class="n">7</td><td class="n">15</td><td class="n">99</td></tr>
-    <tr><td><b>Intellect Devourer</b> ×2</td><td class="n">p. 179</td><td class="n">2</td><td class="n">12</td><td class="n">28</td></tr>
+    <tr><td><b>Oni</b> ×1<span>reskin: Mind Flayer, el comprador</span></td><td class="n">p. 232</td><td class="n">7</td><td class="n">17</td><td class="n">119 → <b>99</b></td></tr>
+    <tr><td><b>Grick</b> ×2<span>reskin: cerebros con patas</span></td><td class="n">p. 158</td><td class="n">2</td><td class="n">14</td><td class="n">54 → <b>28</b></td></tr>
   </table></div>
+  <div class="warn">Los dos están en las reglas gratuitas de D&amp;D Beyond. Reemplazan al Mind Flayer y al Intellect Devourer, que son del Monster Manual pago.</div>
 
   <h2>Ajustes</h2>
   <div class="card">
-    <h3>Mind Flayer (el comprador)</h3>
+    <h3>Oni → Mind Flayer (el comprador)</h3>
     <ul>
-      <li>Sin cambios de vida ni CA.</li>
-      <li><b>Quitar:</b> Dominate Monster y Plane Shift. El parásito ocupa ese lugar.</li>
-      <li><b>Mind Blast telegrafiado:</b> gasta su acción para marcar el cono de 60 ft. Se resuelve al inicio de su próximo turno, sin costo.</li>
-      <li><b>Tentacles:</b> el Stunned dura hasta el final del próximo turno del objetivo. Después sigue Grappled (escape DC 14).</li>
-      <li><b>Extract Brain no mata:</b> si deja a alguien en 0, queda inconsciente tirando death saves.</li>
-      <li>Tiene Magic Resistance: ventaja en saves contra spells. Avisale al caster si lo descubre.</li>
+      <li>Vida <b>99</b> en vez de 119. La CA queda en 17.</li>
+      <li><b>Ignorar:</b> Regeneration, Shape-Shift, Invisibility y todos los spells.</li>
+      <li><b>Usar tal cual:</b> dos ataques por turno, a elegir entre Claw y Nightmare Ray. Vuela 30 ft y flota.</li>
+      <li><b>Claw</b> (+7, alcance 10 ft, 1d12+4 más 2d8 necrótico): narralo como los tentáculos.</li>
+      <li><b>Nightmare Ray</b> (+5, 60 ft, 2d6+2 psíquico y Frightened hasta el inicio de su próximo turno): narralo como un golpe mental.</li>
+      <li><b>Agregar a mano:</b> Mind Blast y el parásito (abajo). No están en el stat block.</li>
     </ul>
   </div>
   <div class="card">
-    <h3>Intellect Devourer</h3>
+    <h3>Grick → cerebros con patas</h3>
     <ul>
-      <li><b>Quitar Body Thief</b> (en D&amp;D Beyond puede figurar como Steal Body).</li>
-      <li><b>Devour Intellect:</b> INT DC 12, 2d10 psíquico. Sacale el Stunned.</li>
+      <li>Vida <b>28</b> en vez de 54.</li>
+      <li>Ataques sin cambios: un Beak (+4, 2d6+2) y un Tentacles (+4, 1d10+2, Grappled con escape DC 12).</li>
     </ul>
   </div>
 
   <h2>Mecánicas</h2>
   <div class="card">
-    <h3>Mind Blast</h3>
+    <h3>Mind Blast (lo corrés a mano)</h3>
     <ul>
-      <li>Cono de 60 ft, <b>INT DC 15</b>: 6d8+4 psíquico y Stunned <b>hasta el final del próximo turno del objetivo</b> (ajuste: por el telegrafiado, la duración original lo dejaría dos rondas afuera). Mitad de daño y sin Stunned si salva.</li>
+      <li>Gasta su <b>acción completa</b> para marcar un cono de 60 ft. Se resuelve al inicio de su próximo turno, sin costo.</li>
+      <li><b>INT DC 15</b>: 6d8+4 psíquico y Stunned hasta el final del próximo turno del objetivo. Mitad de daño y sin Stunned si salva.</li>
       <li>Lo usa cuando vos quieras, o cuando sale un <b>4</b> en el Dado de Arena.</li>
+      <li>Si muere antes, no se dispara.</li>
     </ul>
   </div>
   <div class="card">
-    <h3>Parásito (una sola vez)</h3>
+    <h3>Parásito (una sola vez, lo corrés a mano)</h3>
     <ul>
-      <li>Se activa la primera vez que el Mind Flayer baja de <b>50</b> de vida.</li>
+      <li>Se activa la primera vez que el comprador baja de <b>50</b> de vida.</li>
       <li>Cada PJ tira <b>INT DC 13</b>. El que falla <b>pierde su próximo turno</b>.</li>
     </ul>
     <p style="margin-top:8px"><i>"La presión detrás de los ojos se vuelve un puño. Algo adentro de su cabeza tira de los hilos, y por un momento el cuerpo no les responde."</i></p>
@@ -330,11 +333,11 @@ button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
     <h3>Cómo juega</h3>
     <ul>
       <li>Flota a 10 ft del piso y abre con Mind Blast sobre el grupo.</li>
-      <li>Baja a usar Tentacles solo sobre alguien aislado o ya Stunned.</li>
-      <li>Los Devourers van sobre el caster.</li>
+      <li>Desde el aire tira dos Nightmare Ray. Baja a usar Claw sobre alguien aislado o Stunned.</li>
+      <li>Los Gricks van sobre el caster y lo agarran.</li>
     </ul>
   </div>
-  <div class="warn"><b>Criterio:</b> los Stunned no tienen que cortar el juego. Por eso duran un solo turno y los Devourers no stunean. Si la mesa viene golpeada, salteate el parásito.</div>
+  <div class="warn"><b>Criterio:</b> los Stunned no tienen que cortar el juego. El único que stunea es el Mind Blast, y dura un solo turno. Si la mesa viene golpeada, salteate el parásito.</div>
 </section>
 
 <!-- ================= REGLAS ================= -->
@@ -396,7 +399,7 @@ button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
     <tr><td><b>Pozo</b></td><td>10 ft de profundidad.<span>El que cae recibe 1d6 y necesita 20 ft de movimiento para salir.</span></td></tr>
     <tr><td><b>Consola</b></td><td>Acción, Arcana DC 13: se vuelve a tirar el Dado de Arena de esta ronda.<span>Si falla por 5 o más: 1d8 de rayo. Una vez por ronda.</span></td></tr>
     <tr><td><b>Tanques verdes</b></td><td>Explotan con cualquier daño. Radio de 10 ft.<span>CON DC 13 o 2d6 de veneno y Poisoned hasta el final de su próximo turno. Un solo uso.</span></td></tr>
-    <tr><td><b>Compuertas</b> ×3</td><td>Por ahí entran los ghouls extra y los Intellect Devourers.</td></tr>
+    <tr><td><b>Compuertas</b> ×3</td><td>Por ahí entran los ghouls extra y los cerebros con patas.</td></tr>
     <tr><td><b>Palco</b></td><td>A 20 ft, detrás de vidrio.<span>No se puede atacar hasta la arena 3.</span></td></tr>
   </table></div>
 
@@ -404,8 +407,7 @@ button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
   <div class="card">
     <ul>
       <li>Detrás de columnas, cajas o bajo las pasarelas: acción Hide, Stealth contra Perception pasiva.</li>
-      <li>Perception pasiva: Medusa 14, Vecna 14, Mind Flayer 16, Gargoyle y Ghoul 10.</li>
-      <li>De los Intellect Devourers no se puede: detectan cualquier mente a 300 ft.</li>
+      <li>Perception pasiva: Medusa 14, Vecna 14, el comprador 14, Grick 12, Gargoyle y Ghoul 10.</li>
     </ul>
   </div>
 
