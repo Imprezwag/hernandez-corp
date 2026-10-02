@@ -77,7 +77,7 @@ button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
     <tr><td>Cierre</td><td class="n">10 min</td></tr>
   </table></div>
 
-  <h2>1 · Recepción (mapa: Recepción)</h2>
+  <h2>1 · Recepción</h2>
   <div class="read"><span class="who">Leer</span>
     <p>El carro los deja frente a un edificio sin ventanas, en medio de la nada. Sobre la puerta, un cartel de bronce: HERNÁNDEZ CORP — DIVISIÓN PROTOTIPOS.</p>
     <p>Adentro todo es mármol blanco, luz verde y silencio. Detrás de un mostrador los espera una mujer de traje gris con una carpeta bajo el brazo. Sonríe sin mostrar los dientes.</p>
@@ -97,10 +97,11 @@ button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
     </ul>
   </div>
 
-  <h2>2 · Entrada a la arena (mapa: Arena)</h2>
+  <h2>2 · Entrada a la arena</h2>
   <div class="read"><span class="who">Leer</span>
     <p>Un pasillo de acero termina en una compuerta. Cuando se abre, los golpea la luz de los reflectores.</p>
-    <p>La arena es enorme: arena gris en el piso, columnas de espejo, estatuas rotas de gente que no parece esculpida, y cuatro compuertas cerradas en los muros.</p>
+    <p>La arena es enorme y está llena de cosas. Columnas de espejo que les devuelven su propia cara. Pilas de cajas, bancos rotos, una grúa oxidada. Dos plataformas de piedra con escalera, y del otro lado andamios y pasarelas de metal que cuelgan a tres pisos de altura.</p>
+    <p>Entre todo eso hay cuatro estatuas de piedra. Tienen armadura, armas, y cara de haber visto algo horrible. Ninguna parece esculpida.</p>
     <p>Arriba, detrás de un vidrio oscuro, hay un palco con un solo asiento. Alguien está sentado ahí, inmóvil, con una capucha puesta.</p>
   </div>
 
@@ -154,7 +155,7 @@ button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
   <div class="tw"><table>
     <tr><th>Mob (D&amp;D Beyond)</th><th>MM 2024</th><th>CR</th><th>CA</th><th>Vida</th></tr>
     <tr><td><b>Medusa</b> ×1</td><td class="n">p. 205</td><td class="n">6</td><td class="n">15</td><td class="n">127</td></tr>
-    <tr><td><b>Gargoyle</b> ×2</td><td class="n">p. 128</td><td class="n">2</td><td class="n">15</td><td class="n">67 → <b>45</b></td></tr>
+    <tr><td><b>Gargoyle</b> ×4<span>las cuatro estatuas</span></td><td class="n">p. 128</td><td class="n">2</td><td class="n">15</td><td class="n">67 → <b>25</b></td></tr>
   </table></div>
 
   <h2>Ajustes</h2>
@@ -167,10 +168,13 @@ button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
     </ul>
   </div>
   <div class="card">
-    <h3>Gargoyle (mercenarios anteriores)</h3>
+    <h3>Gargoyle (las cuatro estatuas)</h3>
     <ul>
-      <li>Vida <b>45</b> en vez de 67, para que la pelea no se alargue.</li>
-      <li>Empiezan quietas, como estatuas. Se activan en la ronda 1.</li>
+      <li>Son los mercenarios anteriores, petrificados.</li>
+      <li>Vida <b>25</b> en vez de 67.</li>
+      <li><b>Un solo Claw por turno</b> (sin Multiattack). Cuatro gárgolas así pegan lo mismo que dos normales.</li>
+      <li>Se despiertan cuando vos quieras. Sugerencia: dos en la ronda 1 y dos en la ronda 2.</li>
+      <li>Mientras duermen son estatuas: dan media cobertura.</li>
       <li>Son inmunes a Petrified: pueden pararse dentro del cono.</li>
     </ul>
   </div>
@@ -188,14 +192,19 @@ button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
     </ul>
   </div>
   <div class="card">
-    <h3>Columnas de espejo</h3>
-    <p>Si hay una columna de espejo dentro del cono cuando se resuelve, <b>la Medusa también tira el save</b>. Los jugadores pueden provocarlo empujándola, o aprovechando la rotación del Dado de Arena.</p>
+    <h3>Rebote en los espejos</h3>
+    <ul>
+      <li>Si un espejo queda dentro del cono, la mirada <b>rebota</b>: también afecta a todo lo que esté a <b>10 ft de ese espejo</b>, aunque esté detrás.</li>
+      <li>Esconderse detrás de un espejo tapa la mirada directa, pero no el rebote.</li>
+      <li>Si la <b>Medusa</b> queda a 10 ft de un espejo alcanzado, ella también tira el save. Se logra empujándola, o con la rotación del Dado de Arena.</li>
+      <li>Un espejo roto ya no rebota.</li>
+    </ul>
   </div>
   <div class="card">
     <h3>Cómo juega</h3>
     <ul>
       <li>Medusa: de lejos, tres Poison Ray. De cerca, dos Claw y un Snake Hair.</li>
-      <li>Gárgolas: vuelan, pegan y se van sin provocar ataque de oportunidad. Molestan al caster.</li>
+      <li>Gárgolas: vuelan, pegan y se van sin provocar ataque de oportunidad. Molestan al caster y a los que se suben a las pasarelas.</li>
     </ul>
   </div>
 </section>
@@ -364,52 +373,46 @@ button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 
 <!-- ================= MAPAS ================= -->
 <section id="mapas">
-  <h2>Mapa 1 · Recepción</h2>
-  <pre id="p1">Top-down battle map for a tabletop RPG, seen from directly overhead, flat orthographic view, 16:9 landscape image. No grid, no text, no labels, no characters, no creatures.
+  <h2>La arena, para describirla</h2>
+  <div class="read"><span class="who">Leer</span>
+    <p>Es un óvalo de arena gris del tamaño de una plaza, encerrado por un muro de acero. Los reflectores dejan charcos de luz blanca y mucha sombra entre medio.</p>
+    <p>Está llena de cosas. Columnas de espejo, altas como árboles. Pilas de cajas y bancos de madera. Una grúa vieja con el gancho colgando. Dos plataformas de piedra con escalera. Andamios y pasarelas de metal que cruzan por arriba, unidos por una escalera de cadena.</p>
+    <p>En el piso hay un pozo con la reja rota. Contra el muro, una consola que larga chispas y unos tanques de vidrio con algo verde adentro. Y repartidas por la arena, cuatro estatuas de piedra.</p>
+    <p>Todo se puede trepar, empujar, romper o usar. La arena no se repone entre peleas.</p>
+  </div>
 
-Scene: the reception lobby of a sinister biotech corporation in a dark fantasy world. One wide rectangular room that fills the whole image.
+  <h2>Qué hace cada cosa</h2>
+  <div class="tw"><table>
+    <tr><th>Elemento</th><th>Mecánica</th></tr>
+    <tr><td><b>Columnas de espejo</b></td><td>Cobertura total.<span>Rebotan la mirada de la Medusa (ver Arena 1). Romper: CA 13, 15 de vida. Rota da media cobertura.</span></td></tr>
+    <tr><td><b>Estatuas</b> ×4</td><td>Media cobertura.<span>En la arena 1 se despiertan: son las gárgolas. Después quedan los escombros, terreno difícil.</span></td></tr>
+    <tr><td><b>Plataformas</b> ×2</td><td>5 ft de altura, con escalera.<span>Arriba tenés media cobertura contra ataques desde el piso.</span></td></tr>
+    <tr><td><b>Andamios y pasarelas</b></td><td>15 ft de altura.<span>Subir por la escalera de cadena gasta 30 ft de movimiento, o 15 ft con Athletics DC 12. Romper un andamio: CA 15, 20 de vida; los de arriba caen.</span></td></tr>
+    <tr><td><b>Caídas</b></td><td>1d6 cada 10 ft y quedás Prone.<span>Empujar a alguien desde arriba: Shove normal.</span></td></tr>
+    <tr><td><b>Cajas y bancos</b></td><td>Media cobertura. La pila grande es terreno difícil y sube 5 ft.<span>Romper: CA 12, 10 de vida. Cualquier daño en área las destruye.</span></td></tr>
+    <tr><td><b>Grúa</b></td><td>Acción, Athletics DC 13: soltás el gancho.<span>Una criatura en una línea de 15 ft: DEX DC 13 o 2d8 y empujada 10 ft. Un solo uso.</span></td></tr>
+    <tr><td><b>Pozo</b></td><td>10 ft de profundidad.<span>El que cae recibe 1d6 y necesita 20 ft de movimiento para salir.</span></td></tr>
+    <tr><td><b>Consola</b></td><td>Acción, Arcana DC 13: se vuelve a tirar el Dado de Arena de esta ronda.<span>Si falla por 5 o más: 1d8 de rayo. Una vez por ronda.</span></td></tr>
+    <tr><td><b>Tanques verdes</b></td><td>Explotan con cualquier daño. Radio de 10 ft.<span>CON DC 13 o 2d6 de veneno y Poisoned hasta el final de su próximo turno. Un solo uso.</span></td></tr>
+    <tr><td><b>Compuertas</b> ×3</td><td>Por ahí entran los ghouls extra y los Intellect Devourers.</td></tr>
+    <tr><td><b>Palco</b></td><td>A 20 ft, detrás de vidrio.<span>No se puede atacar hasta la arena 3.</span></td></tr>
+  </table></div>
 
-Floor of dark polished steel plates with a strip of pale marble running down the middle like a carpet. Cold green light glowing from thin strips along the base of the walls.
-
-Left side: the entrance doors. Center: a long curved reception desk of black stone with a brass plaque. In front of it, two rows of metal waiting benches. Against the top wall: a row of tall glass specimen tanks filled with glowing green liquid, each holding a dim shape. Against the bottom wall: a small table with a contract and a quill, and a rack of numbered lockers. Right side: a heavy riveted blast door, slightly open, leading to a steel corridor.
-
-Mood: sterile, cold, quiet, unsettling. Dark palette of charcoal, steel grey and black, with green as the only accent color. Highly detailed, crisp, realistic painted battle map style, even readable lighting with soft shadows.</pre>
-  <button class="copy" data-copy="p1">Copiar prompt</button>
-
-  <h2>Mapa 2 · Arena</h2>
-  <pre id="p2">Top-down battle map for a tabletop RPG, seen from directly overhead, flat orthographic view, 16:9 landscape image. No grid, no text, no labels, no characters, no creatures.
-
-Scene: a huge oval combat arena built inside a sinister biotech laboratory in a dark fantasy world. The arena fills almost the entire image, with only a thin ring of steel wall around it.
-
-Floor: fine grey sand with scorch marks and old dark stains, open and easy to read.
-
-Only these features, large and clearly separated, with wide empty sand between them:
-- Six tall round pillars covered in polished mirror, spread evenly around the arena, each casting a clear shadow.
-- Five broken stone statues of frightened adventurers, scattered between the pillars.
-- Two low square stone platforms with a ramp each, one on the left side and one on the right side.
-- Four heavy closed steel gates set into the wall: top, bottom, left and right.
-
-At the top center, cut into the wall and clearly different from everything else: an observation box seen from above, a dark rectangular balcony behind a pane of black glass, with one single high-backed throne inside and a faint purple glow.
-
-Lighting: harsh white floodlights making bright pools on the sand, deep shadows along the walls and behind pillars, small green warning lights along the wall. Dark palette of charcoal, steel grey and ash, with green accents. Highly detailed, crisp, realistic painted battle map style.</pre>
-  <button class="copy" data-copy="p2">Copiar prompt</button>
-
-  <h2>Cómo usar el mapa de la arena</h2>
+  <h2>Esconderse</h2>
   <div class="card">
     <ul>
-      <li><b>Columnas de espejo (6):</b> cobertura total y lugar para esconderse (Stealth contra Perception pasiva). En la arena 1 reflejan la mirada de la Medusa.</li>
-      <li><b>Estatuas (5):</b> media cobertura (+2 CA).</li>
-      <li><b>Plataformas (2):</b> 5 ft de altura. Subir por la rampa es movimiento normal; trepar cuesta el doble.</li>
-      <li><b>Compuertas (4):</b> por ahí entran los ghouls extra y los Intellect Devourers.</li>
-      <li><b>Palco:</b> a 20 ft de altura, detrás de vidrio. No se puede atacar hasta la arena 3.</li>
+      <li>Detrás de columnas, cajas o bajo las pasarelas: acción Hide, Stealth contra Perception pasiva.</li>
+      <li>Perception pasiva: Medusa 14, Vecna 14, Mind Flayer 16, Gargoyle y Ghoul 10.</li>
+      <li>De los Intellect Devourers no se puede: detectan cualquier mente a 300 ft.</li>
     </ul>
   </div>
+
+  <h2>La arena se gasta</h2>
   <div class="card">
-    <h3>Si Gemini no acierta</h3>
     <ul>
-      <li>Pedile la imagen en 16:9 también desde la opción de formato, si la tiene.</li>
-      <li>Si mete grilla o texto, repetí: "remove the grid and all text".</li>
-      <li>Si el palco no se entiende, generá de nuevo: es el elemento que más le cuesta.</li>
+      <li>Lo que se rompe queda roto para las peleas siguientes.</li>
+      <li>La Lluvia de fuego de Vecna quema las cajas y bancos que toca.</li>
+      <li>Para la arena 3 debería quedar poco donde esconderse.</li>
     </ul>
   </div>
 </section>
