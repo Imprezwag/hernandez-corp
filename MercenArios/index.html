@@ -49,13 +49,32 @@ input:focus,button:focus-visible{outline:2px solid var(--acc);outline-offset:2px
 .head{display:flex;justify-content:space-between;align-items:center;margin:22px 0 8px}
 .head h2{margin:0}
 ul{margin:6px 0 0;padding-left:18px;color:var(--dim);font-size:15px}
+[hidden]{display:none!important}
+body.locked nav,body.locked main{display:none}
+body:not(.locked) #gate{display:none}
+#gate{max-width:640px;margin:0 auto;padding:16px 16px 60px}
+#gate h2:first-child{margin-top:4px}
+.who{font:600 12px/1.4 ui-monospace,Menlo,Consolas,monospace;color:var(--warn);margin-top:6px;letter-spacing:.04em}
+.who:empty{display:none}
+ol.cl{margin:0;padding-left:20px;color:var(--dim);font-size:15px}
+ol.cl li{margin-bottom:6px}
+.prog{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);padding:10px 0;margin:0 0 12px;font:600 12px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--warn);z-index:4}
+.lang{border-top:1px solid var(--line);padding:14px 0}
+.lang h3{margin:0 0 6px;font:600 11px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.lang p{margin:0;font-size:12px;line-height:1.7;color:var(--dim);text-align:justify}
+.chk{display:flex;gap:12px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;margin-top:14px;font-size:15px;cursor:pointer}
+.chk input{flex:0 0 22px;width:22px;height:22px;margin:0;padding:0;accent-color:var(--acc)}
+input.wide{display:block;width:100%;font-family:inherit}
+.bond{border:2px solid var(--bad);color:var(--bad);border-radius:10px;padding:12px 14px;margin:14px 0 0;font:600 13px/1.5 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.04em;text-transform:uppercase}
 </style>
 </head>
 <body>
 <header>
   <div class="corp">Hernández Corp · División Prototipos</div>
   <h1>MercenArios</h1>
+  <div class="who" id="who"></div>
 </header>
+<div id="gate"></div>
 <nav>
   <button data-tab="reglas" class="on">Reglas</button>
   <button data-tab="clase">Clase</button>
@@ -104,6 +123,7 @@ ul{margin:6px 0 0;padding-left:18px;color:var(--dim);font-size:15px}
 (function(){
 var KEY='hc-arena-v1';
 var HASH=[1141726497880905,1192094970654274];
+var HASHF=560804629467506;
 var CLASES={
   monje:{n:'Monje',d:'Crítico en cadena',body:[
     ['Crítico en cadena','Gastás <b>1 Focus Point</b> al empezar tu turno. Ese turno, cada golpe que <b>impacta</b> baja en 1 el número que necesitás para crítico en el siguiente.'],
@@ -128,7 +148,7 @@ var GEN=[['Cloak of Protection','Poco común. +1 a la CA y a todos los saves. Re
 var ARENA=['Arena 1','Arena 2'];
 
 var S=load();
-function load(){try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&s.picks)return s}catch(e){}return{cls:null,unlocked:0,picks:[null,null]}}
+function load(){try{var s=JSON.parse(localStorage.getItem(KEY));if(s&&s.picks)return s}catch(e){}return{cls:null,unlocked:0,picks:[null,null],signed:null,gate:'contract'}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function hash(str){var a=0xdeadbeef^7,b=0x41c6ce57^7;for(var i=0;i<str.length;i++){var c=str.charCodeAt(i);a=Math.imul(a^c,2654435761);b=Math.imul(b^c,1597334677)}a=Math.imul(a^(a>>>16),2246822507)^Math.imul(b^(b>>>13),3266489909);b=Math.imul(b^(b>>>16),2246822507)^Math.imul(a^(a>>>13),3266489909);return 4294967296*(2097151&b)+(a>>>0)}
 function $(id){return document.getElementById(id)}
@@ -149,8 +169,91 @@ function options(i){
 }
 function taken(k,i){var o=S.picks[1-i];return o&&o.k===k}
 
+
+var TYC=[
+['English','ltr','TERMS AND CONDITIONS',['The Mercenary agrees to take part in three combat trials.','Hernández Corp accepts no liability for injuries, petrification, loss of limbs or changes of personality.','Every result of the trial, including the Mercenary, is the property of Hernández Corp.','The Mercenary declares having read this text in every language.','No refunds.']],
+['Português','ltr','TERMOS E CONDIÇÕES',['O Mercenário aceita participar em três provas de combate.','A Hernández Corp não se responsabiliza por ferimentos, petrificações, perda de membros ou mudanças de personalidade.','Todo resultado da prova, incluindo o próprio Mercenário, é propriedade da Hernández Corp.','O Mercenário declara ter lido este texto em todos os idiomas.','Não há devoluções.']],
+['Français','ltr','CONDITIONS GÉNÉRALES',['Le Mercenaire accepte de participer à trois épreuves de combat.','Hernández Corp décline toute responsabilité en cas de blessures, de pétrification, de perte de membres ou de changement de personnalité.','Tout résultat de l’épreuve, y compris le Mercenaire lui-même, est la propriété de Hernández Corp.','Le Mercenaire déclare avoir lu ce texte dans toutes les langues.','Aucun remboursement.']],
+['Italiano','ltr','TERMINI E CONDIZIONI',['Il Mercenario accetta di partecipare a tre prove di combattimento.','Hernández Corp non è responsabile di ferite, pietrificazioni, perdita di arti o cambiamenti di personalità.','Ogni risultato della prova, compreso il Mercenario stesso, è proprietà di Hernández Corp.','Il Mercenario dichiara di aver letto questo testo in tutte le lingue.','Nessun rimborso.']],
+['Deutsch','ltr','ALLGEMEINE GESCHÄFTSBEDINGUNGEN',['Der Söldner erklärt sich bereit, an drei Kampfprüfungen teilzunehmen.','Hernández Corp haftet nicht für Verletzungen, Versteinerungen, den Verlust von Gliedmaßen oder Persönlichkeitsveränderungen.','Jedes Ergebnis der Prüfung, einschließlich des Söldners selbst, ist Eigentum von Hernández Corp.','Der Söldner erklärt, diesen Text in allen Sprachen gelesen zu haben.','Keine Rückerstattung.']],
+['Nederlands','ltr','ALGEMENE VOORWAARDEN',['De Huurling stemt ermee in deel te nemen aan drie gevechtsproeven.','Hernández Corp is niet aansprakelijk voor verwondingen, verstening, verlies van ledematen of persoonlijkheidsveranderingen.','Elk resultaat van de proef, met inbegrip van de Huurling zelf, is eigendom van Hernández Corp.','De Huurling verklaart deze tekst in alle talen te hebben gelezen.','Geen restitutie.']],
+['Svenska','ltr','VILLKOR',['Legosoldaten samtycker till att delta i tre stridsprov.','Hernández Corp ansvarar inte för skador, förstening, förlust av lemmar eller personlighetsförändringar.','Varje resultat av provet, inklusive Legosoldaten själv, tillhör Hernández Corp.','Legosoldaten intygar att denna text har lästs på alla språk.','Inga återbetalningar.']],
+['Polski','ltr','REGULAMIN',['Najemnik zgadza się wziąć udział w trzech próbach bojowych.','Hernández Corp nie ponosi odpowiedzialności za obrażenia, skamienienie, utratę kończyn ani zmiany osobowości.','Każdy wynik próby, w tym sam Najemnik, jest własnością Hernández Corp.','Najemnik oświadcza, że przeczytał ten tekst we wszystkich językach.','Zwrotów nie przewiduje się.']],
+['Türkçe','ltr','ŞARTLAR VE KOŞULLAR',['Paralı Asker üç dövüş sınavına katılmayı kabul eder.','Hernández Corp; yaralanmalar, taşa dönüşme, uzuv kaybı veya kişilik değişikliklerinden sorumlu değildir.','Paralı Askerin kendisi dahil, sınavın her sonucu Hernández Corp’un mülkiyetindedir.','Paralı Asker bu metni bütün dillerde okuduğunu beyan eder.','İade yapılmaz.']],
+['Русский','ltr','УСЛОВИЯ И ПОЛОЖЕНИЯ',['Наёмник соглашается принять участие в трёх боевых испытаниях.','Hernández Corp не несёт ответственности за ранения, окаменение, потерю конечностей или изменения личности.','Любой результат испытания, включая самого Наёмника, является собственностью Hernández Corp.','Наёмник заявляет, что прочитал этот текст на всех языках.','Возврат не предусмотрен.']],
+['Español','ltr','TÉRMINOS Y CONDICIONES',['El Mercenario acepta participar en tres pruebas de combate.','Hernández Corp no se hace responsable por heridas, petrificaciones, pérdida de extremidades ni cambios de personalidad.','Todo resultado de la prueba, incluido el propio Mercenario, es propiedad de Hernández Corp.','El Mercenario declara haber leído este texto en todos los idiomas.','No hay devoluciones.']],
+['Ελληνικά','ltr','ΟΡΟΙ ΚΑΙ ΠΡΟΫΠΟΘΕΣΕΙΣ',['Ο Μισθοφόρος δέχεται να λάβει μέρος σε τρεις δοκιμασίες μάχης.','Η Hernández Corp δεν φέρει ευθύνη για τραυματισμούς, απολίθωση, απώλεια άκρων ή αλλαγές προσωπικότητας.','Κάθε αποτέλεσμα της δοκιμασίας, μαζί και ο ίδιος ο Μισθοφόρος, αποτελεί ιδιοκτησία της Hernández Corp.','Ο Μισθοφόρος δηλώνει ότι διάβασε αυτό το κείμενο σε όλες τις γλώσσες.','Δεν γίνονται επιστροφές χρημάτων.']],
+['العربية','rtl','الشروط والأحكام',['يوافق المرتزق على المشاركة في ثلاثة اختبارات قتالية.','لا تتحمل Hernández Corp أي مسؤولية عن الإصابات أو التحجر أو فقدان الأطراف أو تغيّر الشخصية.','كل نتيجة للاختبار، بما في ذلك المرتزق نفسه، هي ملك لـ Hernández Corp.','يقرّ المرتزق بأنه قرأ هذا النص بجميع اللغات.','لا يُستردّ أي مبلغ.']],
+['हिन्दी','ltr','नियम और शर्तें',['भाड़े का सैनिक तीन युद्ध परीक्षाओं में भाग लेने के लिए सहमत है।','चोट, पत्थर बन जाने, अंगों की हानि या व्यक्तित्व में बदलाव के लिए Hernández Corp ज़िम्मेदार नहीं है।','परीक्षा का हर परिणाम, स्वयं भाड़े के सैनिक सहित, Hernández Corp की संपत्ति है।','भाड़े का सैनिक घोषणा करता है कि उसने यह पाठ सभी भाषाओं में पढ़ लिया है।','कोई धनवापसी नहीं।']],
+['中文','ltr','条款与条件',['佣兵同意参加三场战斗测试。','对于受伤、石化、肢体缺失或性格改变，Hernández Corp 概不负责。','测试的一切成果，包括佣兵本人，均归 Hernández Corp 所有。','佣兵声明已阅读本文的所有语言版本。','概不退款。']],
+['日本語','ltr','利用規約',['傭兵は三つの戦闘試験に参加することに同意する。','負傷、石化、四肢の喪失、人格の変化について、Hernández Corp は一切責任を負わない。','試験のあらゆる成果は、傭兵本人を含め、Hernández Corp の所有物とする。','傭兵は本文をすべての言語で読んだことを表明する。','返金はしない。']],
+['한국어','ltr','이용 약관',['용병은 세 번의 전투 시험에 참가하는 데 동의한다.','부상, 석화, 사지 상실 또는 성격 변화에 대해 Hernández Corp는 책임을 지지 않는다.','시험의 모든 결과물은 용병 본인을 포함하여 Hernández Corp의 소유이다.','용병은 이 글을 모든 언어로 읽었음을 선언한다.','환불은 없다.']],
+['Latina','ltr','CONDICIONES ET PACTA',['Mercennarius tribus proeliorum probationibus interesse consentit.','Hernández Corp de vulneribus, de petrificatione, de membrorum amissione, de morum mutatione non tenetur.','Omnis probationis fructus, ipso Mercennario incluso, Hernández Corp proprius est.','Mercennarius affirmat se hunc textum omnibus linguis legisse.','Pecunia non redditur.']]
+];
+var gsel=null;
+function gate(){
+  document.body.classList.toggle('locked',!S.signed);
+  $('who').textContent=S.signed?(S.signed+' · '+CLASES[S.cls].n+' · Propiedad de Hernández Corp'):'';
+  if(S.signed)return;
+  var g=$('gate');g.innerHTML='';
+  if(S.gate==='tyc'){
+    var pr=el('div','prog','Leído: 0%');pr.id='prog';g.appendChild(pr);
+    g.appendChild(el('h2',null,'Letra chica'));
+    TYC.forEach(function(t,n){
+      var d=el('div','lang');d.dir=t[1];
+      var h=el('h3');h.textContent=t[0]+' · '+t[2];d.appendChild(h);
+      var p=el('p');p.textContent=t[3].map(function(x,i){return (n+1)+'.'+(i+1)+' '+x}).join(' ');d.appendChild(p);
+      g.appendChild(d);
+    });
+    var lb=el('label','chk'),cb=el('input'),ok=el('button','btn','Continuar');
+    cb.type='checkbox';ok.disabled=true;
+    lb.appendChild(cb);lb.appendChild(el('span',null,'Doy mi consentimiento de que leí y estoy de acuerdo con los términos y condiciones.'));
+    cb.onchange=function(){ok.disabled=!cb.checked};
+    ok.onclick=function(){S.gate='sign';save();gate();window.scrollTo(0,0)};
+    g.appendChild(lb);g.appendChild(ok);
+    return;
+  }
+  if(S.gate==='sign'){
+    g.appendChild(el('h2',null,'Firma del contrato'));
+    g.appendChild(el('p','note','Elegí tu clase y firmá con el nombre de tu personaje.'));
+    var box=el('div','opts');
+    Object.keys(CLASES).forEach(function(k){
+      var b=el('button','opt'+(gsel===k?' sel':''),'<b>'+CLASES[k].n+'</b>');
+      b.onclick=function(){gsel=k;box.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel');chk()};
+      box.appendChild(b);
+    });
+    g.appendChild(box);
+    var inp=el('input','wide');inp.placeholder='Nombre del personaje';inp.autocomplete='off';inp.maxLength=40;inp.style.marginTop='10px';
+    inp.setAttribute('aria-label','Nombre del personaje');
+    var bd=el('div','bond','Al firmar, el Mercenario pasa a ser propiedad de Hernández Corp hasta el cumplimiento del contrato. No hay vuelta atrás.');
+    var sg=el('button','btn','Firmar');sg.disabled=true;
+    function chk(){sg.disabled=!(gsel&&inp.value.trim().length>=2)}
+    inp.oninput=chk;
+    sg.onclick=function(){S.cls=gsel;S.signed=inp.value.trim();save();render();window.scrollTo(0,0)};
+    g.appendChild(inp);g.appendChild(bd);g.appendChild(sg);
+    return;
+  }
+  g.appendChild(el('h2',null,'Contrato de servicios'));
+  g.appendChild(el('div','card','<ol class="cl"><li>El Mercenario participará en <b>tres pruebas de combate</b> contra prototipos de Hernández Corp.</li><li>Si el prototipo muere, el Mercenario cobra <b>500 piezas de oro</b>.</li><li>Después de cada prueba, la empresa cura al Mercenario y le otorga <b>una mejora</b>.</li><li>La arena puede cambiar las condiciones en cada ronda. No es personal.</li><li>Aplican términos y condiciones.</li></ol>'));
+  var w=el('div','card','<h3>Letra chica</h3><p style="margin-bottom:10px">Solo con autorización. Si tu personaje quiere leerla, pedile el código al DM.</p>');
+  var r=el('div','row'),ci=el('input'),go=el('button','btn','Leer'),m=el('p','msg');
+  ci.placeholder='Código';ci.autocapitalize='off';ci.autocomplete='off';ci.spellcheck=false;ci.setAttribute('aria-label','Código de la letra chica');
+  function tryF(){if(hash(ci.value.trim().toLowerCase())===HASHF){S.gate='tyc';save();gate();window.scrollTo(0,0)}else{m.textContent='Código incorrecto.'}}
+  go.onclick=tryF;ci.onkeydown=function(e){if(e.key==='Enter')tryF()};
+  r.appendChild(ci);r.appendChild(go);w.appendChild(r);w.appendChild(m);g.appendChild(w);
+  var nx=el('button','btn','Firmar sin leer la letra chica');
+  nx.onclick=function(){S.gate='sign';save();gate();window.scrollTo(0,0)};
+  g.appendChild(nx);
+}
+window.addEventListener('scroll',function(){
+  var pr=$('prog');if(!pr)return;
+  var h=document.documentElement.scrollHeight-window.innerHeight;
+  pr.textContent='Leído: '+(h>0?Math.min(100,Math.round(window.scrollY/h*100)):100)+'%';
+},{passive:true});
+
 var sel=[null,null];
 function render(){
+  gate();
   // clase
   $('clasePick').hidden=!!S.cls;$('claseView').hidden=!S.cls;
   if(!S.cls){
@@ -163,7 +266,7 @@ function render(){
     var c=CLASES[S.cls];$('claseName').textContent=c.n;
     $('claseBody').innerHTML=c.body.map(function(x){return '<div class="card"><h3>'+x[0]+'</h3><p>'+x[1]+'</p></div>'}).join('');
     var has=S.picks[0]||S.picks[1];
-    $('claseChange').hidden=!!has;
+    $('claseChange').hidden=true;
   }
   // premios
   $('needClass').hidden=!!S.cls;
@@ -215,7 +318,7 @@ $('claseChange').onclick=function(){S.cls=null;save();render()};
 var armed=0,rb=$('reset');
 rb.onclick=function(){
   if(!armed){armed=1;rb.textContent='Tocá de nuevo para borrar todo';setTimeout(function(){armed=0;rb.textContent='Reiniciar todo'},3000);return}
-  S={cls:null,unlocked:0,picks:[null,null]};sel=[null,null];armed=0;rb.textContent='Reiniciar todo';save();render();
+  S={cls:null,unlocked:0,picks:[null,null],signed:null,gate:'contract'};sel=[null,null];gsel=null;armed=0;rb.textContent='Reiniciar todo';save();render();
 };
 render();
 })();
